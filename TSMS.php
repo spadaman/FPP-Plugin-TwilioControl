@@ -43,7 +43,7 @@ if(file_exists($messageQueuePluginPath."functions.inc.php"))
 require ("lock.helper.php");
 
 define('LOCK_DIR', '/tmp/');
-define('LOCK_SUFFIX', '.lock');
+define('LOCK_SUFFIX', $pluginName.'.lock');
 
 $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
@@ -97,7 +97,7 @@ if (file_exists($pluginConfigFile))
 
 
 
-			if(($pid = lockHelper::lock($pluginName)) === FALSE) {
+			if(($pid = lockHelper::lock()) === FALSE) {
 				exit(0);
 
 			}
