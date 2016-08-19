@@ -213,10 +213,10 @@ if (file_exists($pluginConfigFile))
 							foreach($VALID_COMMANDS as $FPP_CMD=>$FPP_CMD_OPTIONS) {
 								
 								foreach($FPP_CMD_OPTIONS as $SMS_CMD) {
-									echo "SMS CMD: ".$SMS_CMD. " is in array ".$FPP_CMD."\n";
+									logEntry( "SMS CMD: ".$SMS_CMD. " is in array ".$FPP_CMD);
 									
 									if(in_array(trim(strtoupper($messageParts[0])),$FPP_CMD_OPTIONS)) {
-										echo "SMS cmd FOUND!!! \n";
+										logEntry( "SMS cmd FOUND!!!");
 									}
 								}
 								
