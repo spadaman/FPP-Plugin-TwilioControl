@@ -306,7 +306,7 @@ function processSequenceName($sequenceName,$sequenceAction="NONE RECEIVED") {
  //               case "SMS-STATUS-SEND.FSEQ":
 
                 $messageToSend="";
-		$gv = new GoogleVoice($EMAIL, $PASSWORD);
+	//	$gv = new GoogleVoice($EMAIL, $PASSWORD);
 
 		//send a message to all numbers in control array and then delete them from new messages
 		for($i=0;$i<=count($CONTROL_NUMBER_ARRAY)-1;$i++) {
@@ -314,7 +314,7 @@ function processSequenceName($sequenceName,$sequenceAction="NONE RECEIVED") {
 			//get the current running playlist name! :)	
 
 				//$gv->sendSMS($CONTROL_NUMBER_ARRAY[$i], "PLAYLIST EVENT: ".$PLAYLIST_NAME." Action: ".$sequenceAction);
-				$gv->sendSMS($CONTROL_NUMBER_ARRAY[$i], "PLAYLIST EVENT: Action: ".$sequenceAction);
+			//	$gv->sendSMS($CONTROL_NUMBER_ARRAY[$i], "PLAYLIST EVENT: Action: ".$sequenceAction);
 		
 		}		
 		logEntry("Plugin Directory: ".$pluginDirectory);
