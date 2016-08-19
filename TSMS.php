@@ -210,8 +210,11 @@ if (file_exists($pluginConfigFile))
 							logEntry("Control number found: ".$from);
 				
 							
-							foreach ($VALID_COMMANDS as $FPP_CMD => $FPP_CMD_OPTIONS) {
-								echo "FPP CMD: ".$FPP_CMD." ".$FPP_CMD_OPTIONS."\n";
+							foreach($VALID_COMMANDS as $FPP_CMD=>$FPP_CMD_OPTIONS) {
+								
+								foreach($FPP_CMD_OPTIONS as $SMS_CMD) {
+									echo "SMS CMD: ".$SMS_CMD. " is in array ".$FPP_CMD."\n";
+								}
 								
 							}
 
