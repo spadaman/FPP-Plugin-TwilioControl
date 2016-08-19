@@ -87,6 +87,12 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("TSMS_AUTH_TOKEN",urlencode($_POST["TSMS_AUTH_TOKEN"]),$pluginName);
 	WriteSettingToFile("TSMS_PHONE_NUMBER",urlencode($_POST["TSMS_PHONE_NUMBER"]),$pluginName);
 	
+	//fpp command tables
+	WriteSettingToFile("PLAY_COMMANDS",urlencode($_POST["PLAY_COMMANDS"]),$pluginName);
+	WriteSettingToFile("STOP_COMMANDS",urlencode($_POST["STOP_COMMANDS"]),$pluginName);
+	WriteSettingToFile("REPEAT_COMMANDS",urlencode($_POST["REPEAT_COMMANDS"]),$pluginName);
+	WriteSettingToFile("STATUS_COMMANDS",urlencode($_POST["STATUS_COMMANDS"]),$pluginName);
+	
 	
 }
 
@@ -111,6 +117,10 @@ if(isset($_POST['submit']))
 	$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);//'6da171f99cb77e267f48ff3e6cbe1a34';
 	$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);//"+17209999485";
 	
+	$playCommands = urldecode($pluginSettings['PLAY_COMMANDS']);
+	$stopCommands = urldecode($pluginSettings['STOP_COMMANDS']);
+	$repeatCommands = urldecode($pluginSettings['REPEAT_COMMANDS']);
+	$statusCommands = urldecode($pluginSettings['STATUS_COMMANDS']);
 	//if($DEBUG)
 		//print_r($pluginSettings);
 
