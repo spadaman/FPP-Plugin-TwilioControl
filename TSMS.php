@@ -103,6 +103,10 @@ if (file_exists($pluginConfigFile))
 		print_r($pluginSettings);
 
 		$VALID_COMMANDS = $playCommands.",".$stopCommands.",".$repeatCommands.",".$statusCommands;
+		
+		if($DEBUG) {
+			logEntry($VALID_COMMANDS);
+		}
 
 		$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
 		
