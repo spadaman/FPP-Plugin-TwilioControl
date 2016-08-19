@@ -104,14 +104,10 @@ if (file_exists($pluginConfigFile))
 	if($DEBUG)
 		print_r($pluginSettings);
 
-		$VALID_COMMANDS = array ("PLAY => ".array($playCommands),
-								 "STOP => ".array($stopCommands),
-								 "REPEAT =>".array($repeatCommands),
-								 "STATUS =>".array($statusCommands));
-		
-		if($DEBUG) {
-			print_r($VALID_COMMANDS);
-		}
+		$playCommandsArray = explode(",",trim(strtoupper($playCommands)));
+		$stopCommandsArray = explode(",",trim(strtoupper($stopCommands)));
+		$repeatCommandsArray = explode(",",trim(strtoupper($repeatCommands)));
+		$statusCommandsArray = explode(",",trim(strtoupper($statusCommands)));
 
 		$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
 		
@@ -211,35 +207,48 @@ if (file_exists($pluginConfigFile))
 				
 
 									
-							if(in_array(trim(strtoupper($messageParts[0])),$playCommands)) {
+							if(in_array(trim(strtoupper($messageParts[0])),$playCommandsArray)) {
 								logEntry( "SMS play cmd FOUND!!!");
+								$CMD = "PLAY";
+								break;
+							}
 									
 								
-							} elseif(in_array(trim(strtoupper($messageParts[0])),$stopCommands)) {
+							if(in_array(trim(strtoupper($messageParts[0])),$stopCommandsArray)) {
 								logEntry( "SMS stop cmd FOUND!!!");
-								
-							} elseif(in_array(trim(strtoupper($messageParts[0])),$repeatCommands)) {
+								$CMD = "STOP";
+								break;
+							} 
+							
+							if(in_array(trim(strtoupper($messageParts[0])),$repeatCommandsArray)) {
 								logEntry( "SMS repeat cmd FOUND!!!");
+								$CMD = "REPEAT";
 								
-							} elseif(in_array(trim(strtoupper($messageParts[0])),$statusCommands)) {
+							} 
+							
+							if(in_array(trim(strtoupper($messageParts[0])),$statusCommandsArray)) {
 								logEntry( "SMS status cmd FOUND!!!");
+								$CMD = "STATUS";
 							}
 
-							if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
+							
+						//	if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
 								logEntry("Command request: ".$messageText. " in uppercase is in control array");
 								//do we have a playlist name?
 								if($messageParts[1] != "") {
-
-									processSMSCommand($from,$messageParts[0],$messageParts[1]);
+									processSMSCommand($from,$CMD,$messageParts[1]);
+									//processSMSCommand($from,$messageParts[0],$messageParts[1]);
 								} else {
 
 									//play the configured playlist@!!!! from the plugin
-									processSMSCommand($from,$messageParts[0],$PLAYLIST_NAME);
+									processSMSCommand($from,$CMD,$PLAYLIST_NAME);
+									//processSMSCommand($from,$messageParts[0],$PLAYLIST_NAME);
 								}
 								
 								
+								$REPLY_TEXT_CMD = "Thank you - your command has been accepted from control number: ".$TSMS_from;
 								
-								
+								$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT_CMD));
 								
 									
 							} else {
@@ -247,7 +256,7 @@ if (file_exists($pluginConfigFile))
 								processSMSMessage($from,$messageText);
 								$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
 							//	$gv->sendSMS($from,$REPLY_TEXT);
-								sleep(1);
+								//sleep(1);
 
 								//processReadSentMessages();
 							}
@@ -261,9 +270,8 @@ if (file_exists($pluginConfigFile))
 							logEntry($messageText. " is from a white listed number");
 							processSMSMessage($from,$messageText);
 							
-						//	$gv->sendSMS($from,$REPLY_TEXT);
-							//$gv->sendSMS($from,"Thank you for your message, it will be addedd to the queue: WHITELIST");
-							sleep(1);
+						
+						//	sleep(1);
 							
 							//processReadSentMessages();
 
