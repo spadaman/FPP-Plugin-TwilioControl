@@ -249,11 +249,11 @@ if (file_exists($pluginConfigFile))
 							if(!$profanityCheck) {
 
 								logEntry("Message: ".$messageText. " PASSED");
-							//	$gv->sendSMS($from,$REPLY_TEXT);
+						
 								$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
-								processSMSMessage($from,$messageText);
+								processSMSMessage($TSMS_from,$messageText);
 								sleep(1);
-						//		processReadSentMessages();
+					
 
 							} else {
 								logEntry("message: ".$messageText." FAILED");

@@ -56,7 +56,7 @@ function processSMSMessage($from,$messageText) {
         global $pluginName,$MESSAGE_QUEUE_PLUGIN_ENABLED;
 
 
-      //  logEntry("Adding message from: ".$from. ": ".$messageText. " to message queue");
+        logEntry("Adding message from: ".$from. ": ".$messageText. " to message queue");
         if($MESSAGE_QUEUE_PLUGIN_ENABLED) {
                 addNewMessage($messageText,$pluginName,$from);
         } else {
