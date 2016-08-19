@@ -49,6 +49,10 @@ $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
 
+	if(urldecode($pluginSettings['DEBUG'] != "")) {
+		$DEBUG=urldecode($pluginSettings['DEBUG']);
+	}
+
 	$MATRIX_MESSAGE_PLUGIN_NAME = "MatrixMessage";
 	//page name to run the matrix code to output to matrix (remote or local);
 	$MATRIX_EXEC_PAGE_NAME = "matrix.php";
@@ -95,9 +99,7 @@ if (file_exists($pluginConfigFile))
 	}
 	
 	
-	if(urldecode($pluginSettings['DEBUG'] != "")) {
-		$DEBUG=urldecode($pluginSettings['DEBUG']);
-	}
+
 
 	if($DEBUG)
 		print_r($pluginSettings);
