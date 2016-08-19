@@ -22,10 +22,7 @@ include_once("profanity.inc.php");
 // this line loads the library
 require('twilio/Services/Twilio.php');
 
-$account_sid = 'ACde7921f611cb46d9b972447d9b3b2ea9';
-$auth_token = '6da171f99cb77e267f48ff3e6cbe1a34';
-$client = new Services_Twilio($account_sid, $auth_token);
-$TSMS_phoneNumber = "+17209999485";
+
 
 
 $logFile = $settings['logDirectory']."/".$pluginName.".log";
@@ -69,6 +66,10 @@ if (file_exists($pluginConfigFile))
 	$API_USER_ID = urldecode($pluginSettings['API_USER_ID']);
 	$PROFANITY_ENGINE = urldecode($pluginSettings['PROFANITY_ENGINE']);
 
+	$TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);//'ACde7921f611cb46d9b972447d9b3b2ea9';
+	$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);//'6da171f99cb77e267f48ff3e6cbe1a34';
+	$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);//"+17209999485";
+	
 	if(urldecode($pluginSettings['DEBUG'] != "")) {
 		$DEBUG=urldecode($pluginSettings['DEBUG']);
 	}
@@ -100,6 +101,10 @@ if (file_exists($pluginConfigFile))
 				exit(0);
 
 			}
+			
+
+			$client = new Services_Twilio($account_sid, $auth_token);
+	
 			//arg0 is  the program
 			//arg1 is the first argument in the registration this will be --list
 			//$DEBUG=true;

@@ -65,8 +65,7 @@ if(isset($_POST['submit']))
 
 
 //	echo "Writring config fie <br/> \n";
-	WriteSettingToFile("EMAIL",urlencode($_POST["EMAIL"]),$pluginName);
-	WriteSettingToFile("PASSWORD",urlencode($_POST["PASSWORD"]),$pluginName);
+	
 	WriteSettingToFile("PLAYLIST_NAME",urlencode($_POST["PLAYLIST_NAME"]),$pluginName);
 	WriteSettingToFile("WHITELIST_NUMBERS",urlencode($_POST["WHITELIST_NUMBERS"]),$pluginName);
 	WriteSettingToFile("CONTROL_NUMBERS",urlencode($_POST["CONTROL_NUMBERS"]),$pluginName);
@@ -78,8 +77,14 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("API_KEY",urlencode($_POST["API_KEY"]),$pluginName);
 	WriteSettingToFile("IMMEDIATE_OUTPUT",urlencode($_POST["IMMEDIATE_OUTPUT"]),$pluginName);
 	WriteSettingToFile("MATRIX_LOCATION",urlencode($_POST["MATRIX_LOCATION"]),$pluginName);
-	WriteSettingToFile("RESPONSE_METHOD",urlencode($_POST["RESPONSE_METHOD"]),$pluginName);
+	
 	WriteSettingToFile("PROFANITY_ENGINE",urlencode($_POST["PROFANITY_ENGINE"]),$pluginName);
+	
+	WriteSettingToFile("TSMS_ACCOUNT_SID",urlencode($_POST["TSMS_ACCOUNT_SID"]),$pluginName);
+	WriteSettingToFile("TSMS_AUTH_TOKEN",urlencode($_POST["TSMS_AUTH_TOKEN"]),$pluginName);
+	WriteSettingToFile("TSMS_PHONE_NUMBER",urlencode($_POST["TSMS_PHONE_NUMBER"]),$pluginName);
+	
+	
 }
 
 	
@@ -88,17 +93,20 @@ if(isset($_POST['submit']))
 	$CONTROL_NUMBERS = urldecode($pluginSettings['CONTROL_NUMBERS']);
 	$REPLY_TEXT = urldecode($pluginSettings['REPLY_TEXT']);
 	$VALID_COMMANDS = urldecode($pluginSettings['VALID_COMMANDS']);
-	$EMAIL = urldecode($pluginSettings['EMAIL']);
-	$PASSWORD = $pluginSettings['PASSWORD'];
+	
 	$LAST_READ = $pluginSettings['LAST_READ'];
 	$API_USER_ID = urldecode($pluginSettings['API_USER_ID']);
 	$API_KEY = urldecode($pluginSettings['API_KEY']);
 	$IMMEDIATE_OUTPUT = $pluginSettings['IMMEDIATE_OUTPUT'];
 	$MATRIX_LOCATION = $pluginSettings['MATRIX_LOCATION'];
-	$RESPONSE_METHOD = $pluginSettings['RESPONSE_METHOD'];
+
 	$ENABLED = $pluginSettings['ENABLED'];
 	$PROFANITY_ENGINE = urldecode($pluginSettings['PROFANITY_ENGINE']);
 	$DEBUG = urldecode($pluginSettings['DEBUG']);
+	
+	$TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);//'ACde7921f611cb46d9b972447d9b3b2ea9';
+	$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);//'6da171f99cb77e267f48ff3e6cbe1a34';
+	$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);//"+17209999485";
 	
 	//if($DEBUG)
 		//print_r($pluginSettings);
@@ -147,9 +155,9 @@ if($VALID_COMMANDS == "") {
 <head>
 </head>
 
-<div id="SMS" class="settings">
+<div id="TwilioControl" class="settings">
 <fieldset>
-<legend>SMScontrol Support Instructions</legend>
+<legend>Twilio SMScontrol Support Instructions</legend>
 
 <p>Known Issues:
 <ul>
@@ -164,10 +172,7 @@ if($VALID_COMMANDS == "") {
 <li>Control numbers can send valid commands to be processed</li>
 <li>ALL control numbers will get status commands when including the SMS-STATUS-SEND.FSEQ sequence in a playlist</li>
 </ul>
-<ul>
-<li>Add the crontabAdd options to your crontab to have the sms run every X minutes to process commands</li>
-<li>The Writeplaylist script writes the current running playlist (if any) to a tmp file on /tmp</li>
-</ul>
+
 <ul>
 <li>This uses the profanity checker located at: https://www.neutrinoapi.com/api/bad-word-filter/</li>
 <li>You will need to visit this site and generate a userid and API Key</li>
@@ -244,44 +249,27 @@ PrintMediaOptions();
 
 echo "<p/> \n";
 
-echo "Email Address: \n";
-  
-echo "<input type=\"text\" name=\"EMAIL\" size=\"16\" value=\"".$EMAIL."\"> \n";
- 
-echo "<p/> \n";
 
-echo "Password: \n";
 
-echo "<input type=\"password\" name=\"PASSWORD\" size=\"16\" value=\"".$PASSWORD."\"> \n";
+echo "Twilio PHONE NUMBER: \n";
+
+echo "<input type=\"text\" name=\"TSMS_PHONE_NUMBER\" size=\"16\" value=\"".$TSMS_phoneNumber."\"> \n";
 
 
 echo "<p/> \n";
 
-echo "Response method: \n";
-echo "<select name=\"RESPONSE_METHOD\"> \n";
-	if($RESPONSE_METHOD !="" ) {
-              switch ($RESPONSE_METHOD)
-				{
-					case "SMS":
-                                		echo "<option selected value=\"".$RESPONSE_METHOD."\">".$RESPONSE_METHOD."</option> \n";
-                                		echo "<option value=\"EMAIL\">EMAIL</option> \n";
-                                		break;
-					case "EMAIL":
-                                		echo "<option selected value=\"".$RESPONSE_METHOD."\">".$RESPONSE_METHOD."</option> \n";
-                                		echo "<option value=\"SMS\">SMS</option> \n";
-                        			break;
-			
-				
-	
-				}
-	
-			} else {
+echo "Twilio Account SID: \n";
 
-                                echo "<option value=\"SMS\">SMS</option> \n";
-                                echo "<option value=\"EMAIL\">EMAIL</option> \n";
-			}
-               
-			echo "</select> \n";
+echo "<input type=\"text\" name=\"TSMS_ACCOUNT_SID\" size=\"32\" value=\"".$TSMS_account_sid."\"> \n";
+
+
+echo "<p/> \n";
+
+echo "Twilio Auth Token: \n";
+
+echo "<input type=\"text\" name=\"TSMS_AUTH_TOKEN\" size=\"64\" value=\"".$TSMS_auth_token."\"> \n";
+
+
 echo "<p/> \n";
 
 
