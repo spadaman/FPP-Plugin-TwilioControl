@@ -209,17 +209,20 @@ if (file_exists($pluginConfigFile))
 							$MESSAGE_USED=true;
 							logEntry("Control number found: ".$from);
 				
-							
-							foreach($VALID_COMMANDS as $FPP_CMD=>$FPP_CMD_OPTIONS) {
-								
-								foreach($FPP_CMD_OPTIONS as $SMS_CMD) {
-									logEntry( "SMS CMD: ".$SMS_CMD. " is in array ".$FPP_CMD);
+
 									
-									if(in_array(trim(strtoupper($messageParts[0])),$FPP_CMD_OPTIONS)) {
-										logEntry( "SMS cmd FOUND!!!");
-									}
-								}
+							if(in_array(trim(strtoupper($messageParts[0])),$playCommands)) {
+								logEntry( "SMS play cmd FOUND!!!");
+									
 								
+							} elseif(in_array(trim(strtoupper($messageParts[0])),$stopCommands)) {
+								logEntry( "SMS stop cmd FOUND!!!");
+								
+							} elseif(in_array(trim(strtoupper($messageParts[0])),$repeatCommands)) {
+								logEntry( "SMS repeat cmd FOUND!!!");
+								
+							} elseif(in_array(trim(strtoupper($messageParts[0])),$statusCommands)) {
+								logEntry( "SMS status cmd FOUND!!!");
 							}
 
 							if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
