@@ -10,6 +10,9 @@ $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
+
+$playCommands = "PLAY";
+$stopCommands ="TERMINATE";
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
 //$DEBUG=true;
@@ -272,6 +275,8 @@ echo "<input type=\"text\" name=\"TSMS_AUTH_TOKEN\" size=\"64\" value=\"".$TSMS_
 
 echo "<p/> \n";
 
+
+printValidFPPCommands();
 
 echo "Valid Commands: \n";
 

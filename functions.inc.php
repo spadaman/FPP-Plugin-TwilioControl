@@ -1,5 +1,19 @@
 <?php
 
+
+//print the valid commands table and their variables
+
+function printValidFPPCommands() {
+	
+	global $playCommands,$stopCommands;
+	
+	logEntry("Valid Play commands: ".$playCommands);
+	logEntry("Valid Stop commands: ".$stopCommands);
+	
+	
+	
+	
+}
 //get the fpp log level
 function getFPPLogLevel() {
 	
