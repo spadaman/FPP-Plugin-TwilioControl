@@ -111,8 +111,8 @@ if (file_exists($pluginConfigFile))
 			//echo "Enabled: ".$ENABLED."<br/> \n";
 
 
-			if($ENABLED != "on" && $ENABLED != "1") {
-				logEntry("Plugin Status: DISABLED Please enable in Plugin Setup to use & Restart FPPD Daemon");
+			if(strtoupper($ENABLED) != "ON" && $ENABLED != "1") {
+				logEntry("Plugin Status: DISABLED Please enable in Plugin Setup to use");
 				lockHelper::unlock();
 				exit(0);
 			}
