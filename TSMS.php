@@ -110,7 +110,7 @@ if (file_exists($pluginConfigFile))
 								 "STATUS =>".$statusCommands);
 		
 		if($DEBUG) {
-			logEntry($VALID_COMMANDS);
+			print_r($VALID_COMMANDS);
 		}
 
 		$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
