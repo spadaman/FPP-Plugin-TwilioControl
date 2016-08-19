@@ -170,14 +170,17 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
                 //send a message that the daemon is not running and cannot execute the command
                 $client->account->messages->create(array( 'To' => $from, 'From' => $TSMS_phoneNumber, 'Body' => "FPPD is not running, cannot execute cmd"));//: ".$SMSCommand));
                 
-                sleep(1);
+            //    sleep(1);
                
                 return;
         } else {
-                logEntry("Sending message to : ".$from. " that FPPD status: ".$FPPDStatus);
+        
+        	//TODO: Maybe include an option to send message about FPPD is running. only send if FPPD is not running
+        	
+       //         logEntry("Sending message to : ".$from. " that FPPD status: ".$FPPDStatus);
              
-                $client->account->messages->create(array( 'To' => $from, 'From' => $TSMS_phoneNumber, 'Body' => "FPPD is running, I will execute command"));//: ".$SMSCommand));
-                sleep(1);
+        //        $client->account->messages->create(array( 'To' => $from, 'From' => $TSMS_phoneNumber, 'Body' => "FPPD is running, I will execute command"));//: ".$SMSCommand));
+       
               
         } 
        $cmd = "/opt/fpp/bin.pi/fpp ";
