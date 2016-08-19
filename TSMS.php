@@ -210,14 +210,14 @@ if (file_exists($pluginConfigFile))
 							if(in_array(trim(strtoupper($messageParts[0])),$playCommandsArray)) {
 								logEntry( "SMS play cmd FOUND!!!");
 								$CMD = "PLAY";
-								break;
+								
 							}
 									
 								
 							if(in_array(trim(strtoupper($messageParts[0])),$stopCommandsArray)) {
 								logEntry( "SMS stop cmd FOUND!!!");
 								$CMD = "STOP";
-								break;
+							
 							} 
 							
 							if(in_array(trim(strtoupper($messageParts[0])),$repeatCommandsArray)) {
