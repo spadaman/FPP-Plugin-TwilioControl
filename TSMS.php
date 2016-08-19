@@ -103,7 +103,7 @@ if (file_exists($pluginConfigFile))
 			}
 			
 
-			$client = new Services_Twilio($account_sid, $auth_token);
+			$client = new Services_Twilio($TSMS_account_sid, $TSMS_auth_token);
 	
 			//arg0 is  the program
 			//arg1 is the first argument in the registration this will be --list
@@ -137,13 +137,7 @@ if (file_exists($pluginConfigFile))
 			
 		//$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $TSMS_outgoingMessage));
 
-			// Send an SMS to a phone number.
-			//$gv->sendSMS('6198840018', 'Sending a message!');
 
-
-		//	processReadSentMessages();
-
-		//	sleep($GVSleepTime);
 			$messageQueue = processNewMessages($SMS_TYPE="TWILIO", $TSMS_from, $TSMS_body);
 
 			if($DEBUG)
