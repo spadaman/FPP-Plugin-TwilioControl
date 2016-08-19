@@ -199,12 +199,12 @@ $reboot=0;
 
 echo "ENABLE PLUGIN: ";
 
-if($ENABLED== 1 || $ENABLED == "on") {
-		echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
-//PrintSettingCheckbox("Radio Station", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
-	} else {
-		echo "<input type=\"checkbox\"  name=\"ENABLED\"> \n";
-}
+//if($ENABLED== 1 || $ENABLED == "on") {
+	//	echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
+PrintSettingCheckbox("Plugin: ".$pluginName." ", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+//	} else {
+//		echo "<input type=\"checkbox\"  name=\"ENABLED\"> \n";
+//}
 
 echo "<p/> \n";
 echo "Immediately output to Matrix (Run MATRIX plugin): ";
