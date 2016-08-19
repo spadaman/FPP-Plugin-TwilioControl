@@ -104,7 +104,10 @@ if (file_exists($pluginConfigFile))
 	if($DEBUG)
 		print_r($pluginSettings);
 
-		$VALID_COMMANDS = $playCommands.",".$stopCommands.",".$repeatCommands.",".$statusCommands;
+		$VALID_COMMANDS = array ("PLAY => ".$playCommands,
+								 "STOP => ".$stopCommands,
+								 "REPEAT =>".$repeatCommands,
+								 "STATUS =>".$statusCommands);
 		
 		if($DEBUG) {
 			logEntry($VALID_COMMANDS);

@@ -183,14 +183,6 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
        $cmd = "/opt/fpp/bin.pi/fpp ";
 
         switch (trim(strtoupper($SMSCommand))) {
-
-        	case "MERRY CHRISTMAS":
-        		$cmd .= "-P \"".$PLAYLIST_NAME."\"";
-        		break;
-        		
-        		case "HOHOHO":
-        			$cmd .= "-P \"".$PLAYLIST_NAME."\"";
-        			break;
         		
                 case "PLAY":
                          $cmd .= "-P \"".$PLAYLIST_NAME."\"";
