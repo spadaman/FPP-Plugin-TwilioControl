@@ -97,7 +97,7 @@ if (file_exists($pluginConfigFile))
 
 
 
-			if(($pid = lockHelper::lock()) === FALSE) {
+			if(($pid = lockHelper::lock($pluginName)) === FALSE) {
 				exit(0);
 
 			}
