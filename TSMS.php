@@ -123,8 +123,8 @@ if (file_exists($pluginConfigFile))
 					$TSMS_body = $_POST['Body'];
 			
 			if($DEBUG) {
-				logEntry("Twilio account_sid: ".$account_sid);
-				logEntry("Twilio account pass: ".$auth_token);
+				logEntry("Twilio account_sid: ".$TSMS_account_sid);
+				logEntry("Twilio account pass: ".$TSMS_auth_token);
 				
 				logEntry("TSMS message from: ".$TSMS_from);
 				logEntry("TSMS Message body: ".$TSMS_body);

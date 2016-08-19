@@ -273,9 +273,9 @@ function processSequenceName($sequenceName,$sequenceAction="NONE RECEIVED") {
 
 }
 //process new messages
-function processNewMessages($SMS_TYPE="twilio", $SMS_FROM, $SMS_BODY) {
+function processNewMessages($SMS_TYPE="TWILIO", $SMS_FROM, $SMS_BODY) {
 
-	global $gv,$EMAIL,$DEBUG;
+	global $DEBUG;
 	logEntry("processing new entries in SMS queue - if any");
 	$messageQueue = array();
 	$newmsgIDs = array();
@@ -307,50 +307,7 @@ function processNewMessages($SMS_TYPE="twilio", $SMS_FROM, $SMS_BODY) {
 			
 			break;
 			
-		case "GVOICE":
-			$sms = $gv->getUnreadSMS();
-			logEntry("GVOICE SMS COUNT: ".count($sms)." ----");
 		
-	
-	
-	
-
-	
-			foreach($sms as $s) {
-			
-				logEntry("NEW Message from: ".$s->phoneNumber." on ".$s->displayStartDateTime.": ".$s->messageText);
-			
-				$from = $s->phoneNumber;
-				$msgText = $s->messageText;
-				
-				if($DEBUG) {
-					logEntry("From: ".$from." MsgText: ".$msgText);
-				}
-			
-				//strip the +1 from the phone number
-				if(substr($from,0,2) == "+1")
-				{
-					$from=substr($from,2);
-				}
-			
-				$messageQueue[$newMessageCount]=array($from,$msgText);
-				
-				if($DEBUG){
-					print_r($messageQueue);
-				}
-			
-				$newMessageCount++;
-			
-				if(!in_array($s->id, $newmsgIDs)) {
-					// Mark the message as read in your Google Voice Inbox.
-					//	$gv->markMessageRead($s->id);
-					//sleep(1);
-				//	$gv->deleteMessage($s->id);
-				//	$newmsgIDs[] = $s->id;
-				}
-			}
-			
-			break;
 	}
 	
 	if($newMessageCount > 0) {
@@ -367,35 +324,7 @@ function processNewMessages($SMS_TYPE="twilio", $SMS_FROM, $SMS_BODY) {
 }
 //process read/sent messages
 
-function processReadSentMessages() {
 
-	global $gv;
-	
-	logEntry("Processing read/sent messages in queue - if any");
-	$readmsgIDs = array();
-	
-	//clean up old READ messages
-	$smsRead = $gv->getReadSMS();
-	$readMessageCount=0;
-	
-	foreach($smsRead as $s) {
-		logEntry("Erasing Message from: ".$s->phoneNumber." on ".$s->displayStartDateTime.": ".$s->messageText);
-		if(!in_array($s->id, $readmsgIDs)) {
-		$readMessageCount++;
-	
-			$gv->deleteMessage($s->id);//
-			$readmsgIDs[] = $s->id;
-		}
-	}
-	
-	if($readMessageCount>0 ) {
-		logEntry("Erased ".$readMessageCount." Messages from READ queue");
-	} else {
-		logEntry(" No READ messages to purge from queue");
-	}
-	
-	
-}
 function logEntry($data,$logLevel=1) {
 
 	global $logFile,$myPid, $LOG_LEVEL;
