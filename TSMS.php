@@ -233,6 +233,7 @@ if (file_exists($pluginConfigFile))
 
 							
 						//	if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
+						if($CMD != "") {
 								logEntry("Command request: ".$messageText. " in uppercase is in control array");
 								//do we have a playlist name?
 								if($messageParts[1] != "") {
