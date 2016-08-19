@@ -70,9 +70,9 @@ if (file_exists($pluginConfigFile))
 	$API_USER_ID = urldecode($pluginSettings['API_USER_ID']);
 	$PROFANITY_ENGINE = urldecode($pluginSettings['PROFANITY_ENGINE']);
 
-	$TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);//'ACde7921f611cb46d9b972447d9b3b2ea9';
-	$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);//'6da171f99cb77e267f48ff3e6cbe1a34';
-	$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);//"+17209999485";
+	$TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);
+	$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);
+	$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);
 	
 	$playCommands = urldecode($pluginSettings['PLAY_COMMANDS']);
 	$stopCommands = urldecode($pluginSettings['STOP_COMMANDS']);
