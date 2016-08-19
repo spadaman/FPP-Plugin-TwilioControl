@@ -5,15 +5,22 @@
 
 function printValidFPPCommands() {
 	
-	global $playCommands,$stopCommands;
+	global $DEBUG, $playCommands,$stopCommands, $repeatCommands, $statusCommands;
 	
-	logEntry("Valid Play commands: ".$playCommands);
-	logEntry("Valid Stop commands: ".$stopCommands);
+	if($DEBUG) {
+		logEntry("Valid Play commands: ".$playCommands);
+		logEntry("Valid Stop commands: ".$stopCommands);
 	
+		logEntry("Valid Repeat commands: ".$repeatCommands);
+		logEntry("Valid Status commands: ".$statusCommands);
+	}
 	//print a table
 	
 	echo "<table border=\"3\" cellspacing=\"2\" cellpadding=\"2\"> \n";
 	
+	echo "<th colspan=\"2\"> \n";
+	echo "Valid Commands \n";
+	echo "</th> \n";
 	
 	echo "<tr> \n";
 	echo "<td> \n";
@@ -32,6 +39,27 @@ function printValidFPPCommands() {
 	
 	echo "<td> \n";
 	echo "<input type=\"text\" size=\"32\" name=\"STOP_COMMANDS\" value=\"".$stopCommands."\"> \n";
+	echo "</td> \n";
+	
+	echo "</tr> \n";
+	
+	echo "<tr> \n";
+	echo "<td> \n";
+	echo "Repeat commands: \n";
+	echo "</td> \n";
+	
+	echo "<td> \n";
+	echo "<input type=\"text\" size=\"32\" name=\"REPEAT_COMMANDS\" value=\"".$repeatCommands."\"> \n";
+	echo "</td> \n";
+	
+	echo "</tr> \n";
+	echo "<tr> \n";
+	echo "<td> \n";
+	echo "Status commands: \n";
+	echo "</td> \n";
+	
+	echo "<td> \n";
+	echo "<input type=\"text\" size=\"32\" name=\"STATUS_COMMANDS\" value=\"".$statusCommands."\"> \n";
 	echo "</td> \n";
 	
 	echo "</tr> \n";
