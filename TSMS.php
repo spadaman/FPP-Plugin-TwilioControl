@@ -210,6 +210,10 @@ if (file_exists($pluginConfigFile))
 							logEntry("Control number found: ".$from);
 				
 							
+							foreach ($VALID_COMMANDS as $FPP_CMD => $FPP_CMD_OPTIONS) {
+								echo "FPP CMD: ".$FPP_CMD." ".$FPP_CMD_OPTIONS."\n";
+								
+							}
 
 							if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
 								logEntry("Command request: ".$messageText. " in uppercase is in control array");
@@ -222,6 +226,11 @@ if (file_exists($pluginConfigFile))
 									//play the configured playlist@!!!! from the plugin
 									processSMSCommand($from,$messageParts[0],$PLAYLIST_NAME);
 								}
+								
+								
+								
+								
+								
 									
 							} else {
 								//generic message to display from control number just like a regular user
