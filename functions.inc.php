@@ -149,7 +149,7 @@ function profanityChecker($messageText) {
 //process the SMS commnadn coming in from a control number
 function processSMSCommand($from,$SMSCommand="",$playlistName="") {
 
-        global $gv,$DEBUG,$client,$SMS_TYPE, $TSMS_phoneNumber;
+        global $DEBUG,$client,$SMS_TYPE, $TSMS_phoneNumber;
         $FPPDStatus=false;
         $output="";
 
@@ -169,17 +169,16 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
                 logEntry("FPPD NOT RUNNING: Sending message to : ".$from. " that FPPD status: ".$FPPDStatus);
                 //send a message that the daemon is not running and cannot execute the command
                 $client->account->messages->create(array( 'To' => $from, 'From' => $TSMS_phoneNumber, 'Body' => "FPPD is not running, cannot execute cmd"));//: ".$SMSCommand));
-                //$gv->sendSMS($from, "FPPD is not running, cannot execute cmd: ".$SMSCommand);
+                
                 sleep(1);
-               // processReadSentMessages();
+               
                 return;
         } else {
                 logEntry("Sending message to : ".$from. " that FPPD status: ".$FPPDStatus);
-               // $gv->sendSMS($from,"FPPD is running, I will execute command: ".$SMSCommand);
+             
                 $client->account->messages->create(array( 'To' => $from, 'From' => $TSMS_phoneNumber, 'Body' => "FPPD is running, I will execute command"));//: ".$SMSCommand));
                 sleep(1);
-                //if sending a message.. need to clear it as it may hose up the next queue of messages
-               // processReadSentMessages();
+              
         } 
        $cmd = "/opt/fpp/bin.pi/fpp ";
 
@@ -214,7 +213,7 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
                         }
                         logEntry("Sending SMS to : ".$from. " playlist: ".$playlistName);
                         
-                       // $gv->sendSMS($from,"Playlist STATUS: ".$playlistName);
+                 
                         $client->account->messages->create(array( 'To' => $from, 'From' => $TSMS_phoneNumber, 'Body' => "Playlist STATUS: ".$playlistName));
                         break;
 

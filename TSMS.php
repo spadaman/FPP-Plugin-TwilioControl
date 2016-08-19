@@ -70,6 +70,31 @@ if (file_exists($pluginConfigFile))
 	$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);//'6da171f99cb77e267f48ff3e6cbe1a34';
 	$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);//"+17209999485";
 	
+	$playCommands = urldecode($pluginSettings['PLAY_COMMANDS']);
+	$stopCommands = urldecode($pluginSettings['STOP_COMMANDS']);
+	$repeatCommands = urldecode($pluginSettings['REPEAT_COMMANDS']);
+	$statusCommands = urldecode($pluginSettings['STATUS_COMMANDS']);
+	
+	//if the command values do not have anything, set some defaults
+	if(trim($playCommands) == "") {
+		$playCommands = "PLAY";
+		
+	}
+	
+	if(trim($stopCommands) == "") {
+		$stopCommands = "TERMINATE";
+	
+	}
+	if(trim($repeatCommands) == "") {
+		$repeatCommands = "REPEAT";
+	
+	}
+	if(trim($statusCommands) == "") {
+		$statusCommands = "STATUS";
+	
+	}
+	
+	
 	if(urldecode($pluginSettings['DEBUG'] != "")) {
 		$DEBUG=urldecode($pluginSettings['DEBUG']);
 	}
@@ -77,8 +102,10 @@ if (file_exists($pluginConfigFile))
 	if($DEBUG)
 		print_r($pluginSettings);
 
+		$VALID_COMMANDS = $playCommands.",".$stopCommands.",".$repeatCommands.",".$statusCommands;
 
 		$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
+		
 		$CONTROL_NUMBER_ARRAY = explode(",",$CONTROL_NUMBERS);
 
 
@@ -154,7 +181,7 @@ if (file_exists($pluginConfigFile))
 
 					//process the message queue or exit
 					//check to see if the request is in the valid commands
-					logEntry("Messages to process qyt: ".count($messageQueue));
+					logEntry("Messages to process qty: ".count($messageQueue));
 
 					for($i=0;$i<=count($messageQueue)-1;$i++) {
 						//prevent messages to get entered more than once if in control and whitelist array
@@ -172,16 +199,8 @@ if (file_exists($pluginConfigFile))
 							///message used is to make sure that we do not process a message twice if it is from a number that is both a whitelist AND control numbers
 							$MESSAGE_USED=true;
 							logEntry("Control number found: ".$from);
-							//process the command see if it is in the valid commands
-
-							//see if they sent in a playlist name???
-							//that would mean there is a space in the command.
-
-							//if(count($messageParts) > 1) {
-							//	logEntry("did we get a command with playlist");
-							//	logEntry("Command: ".$messageParts[0]);
-							//	logEntry("playlist: ".$messageParts[1]);
-							//}
+				
+							
 
 							if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
 								logEntry("Command request: ".$messageText. " in uppercase is in control array");
