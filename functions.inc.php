@@ -10,7 +10,33 @@ function printValidFPPCommands() {
 	logEntry("Valid Play commands: ".$playCommands);
 	logEntry("Valid Stop commands: ".$stopCommands);
 	
+	//print a table
 	
+	echo "<table border=\"3\" cellspacing=\"2\" cellpadding=\"2\"> \n";
+	
+	
+	echo "<tr> \n";
+	echo "<td> \n";
+	echo "Play commands: \n";
+	echo "</td> \n";
+		
+	echo "<td> \n";
+	echo "<input type=\"text\" size=\"32\" name=\"PLAY_COMMANDS\" value=\"".$playCommands."\"> \n";
+	echo "</td> \n";
+	
+	echo "</tr> \n";
+	echo "<tr> \n";
+	echo "<td> \n";
+	echo "Stop commands: \n";
+	echo "</td> \n";
+	
+	echo "<td> \n";
+	echo "<input type=\"text\" size=\"32\" name=\"STOP_COMMANDS\" value=\"".$stopCommands."\"> \n";
+	echo "</td> \n";
+	
+	echo "</tr> \n";
+	
+	echo "</table> \n";
 	
 	
 }
