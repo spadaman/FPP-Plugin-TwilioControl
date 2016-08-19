@@ -320,7 +320,7 @@ if (file_exists($pluginConfigFile))
 
 					}
 
-					if($IMMEDIATE_OUTPUT != "on" && $IMMEDIATE_OUTPUT != "1") {
+					if($IMMEDIATE_OUTPUT != "ON" && $IMMEDIATE_OUTPUT != "1") {
 						logEntry("NOT immediately outputting to matrix");
 					} else {
 						logEntry("IMMEDIATE OUTPUT ENABLED");
@@ -340,6 +340,6 @@ if (file_exists($pluginConfigFile))
 
 
 					lockHelper::unlock();
-				//	exit(0);
+					exit(0);
 
 					?>

@@ -73,12 +73,12 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("WHITELIST_NUMBERS",urlencode($_POST["WHITELIST_NUMBERS"]),$pluginName);
 	WriteSettingToFile("CONTROL_NUMBERS",urlencode($_POST["CONTROL_NUMBERS"]),$pluginName);
 	WriteSettingToFile("REPLY_TEXT",urlencode($_POST["REPLY_TEXT"]),$pluginName);
-	WriteSettingToFile("VALID_COMMANDS",urlencode($_POST["VALID_COMMANDS"]),$pluginName);
+	//WriteSettingToFile("VALID_COMMANDS",urlencode($_POST["VALID_COMMANDS"]),$pluginName);
 	//WriteSettingToFile("ENABLED",urlencode($_POST["ENABLED"]),$pluginName);
 	WriteSettingToFile("LAST_READ",urlencode($_POST["LAST_READ"]),$pluginName);
 	WriteSettingToFile("API_USER_ID",urlencode($_POST["API_USER_ID"]),$pluginName);
 	WriteSettingToFile("API_KEY",urlencode($_POST["API_KEY"]),$pluginName);
-	WriteSettingToFile("IMMEDIATE_OUTPUT",urlencode($_POST["IMMEDIATE_OUTPUT"]),$pluginName);
+	//WriteSettingToFile("IMMEDIATE_OUTPUT",urlencode($_POST["IMMEDIATE_OUTPUT"]),$pluginName);
 	WriteSettingToFile("MATRIX_LOCATION",urlencode($_POST["MATRIX_LOCATION"]),$pluginName);
 	
 	WriteSettingToFile("PROFANITY_ENGINE",urlencode($_POST["PROFANITY_ENGINE"]),$pluginName);
@@ -101,12 +101,12 @@ if(isset($_POST['submit']))
 	$WHITELIST_NUMBERS = urldecode($pluginSettings['WHITELIST_NUMBERS']);
 	$CONTROL_NUMBERS = urldecode($pluginSettings['CONTROL_NUMBERS']);
 	$REPLY_TEXT = urldecode($pluginSettings['REPLY_TEXT']);
-	$VALID_COMMANDS = urldecode($pluginSettings['VALID_COMMANDS']);
+	//$VALID_COMMANDS = urldecode($pluginSettings['VALID_COMMANDS']);
 	
 	$LAST_READ = $pluginSettings['LAST_READ'];
 	$API_USER_ID = urldecode($pluginSettings['API_USER_ID']);
 	$API_KEY = urldecode($pluginSettings['API_KEY']);
-	$IMMEDIATE_OUTPUT = $pluginSettings['IMMEDIATE_OUTPUT'];
+	//$IMMEDIATE_OUTPUT = $pluginSettings['IMMEDIATE_OUTPUT'];
 	$MATRIX_LOCATION = $pluginSettings['MATRIX_LOCATION'];
 
 	//$ENABLED = $pluginSettings['ENABLED'];
@@ -222,12 +222,12 @@ PrintSettingCheckbox("Plugin: ".$pluginName." ", "ENABLED", $restart = 0, $reboo
 echo "<p/> \n";
 echo "Immediately output to Matrix (Run MATRIX plugin): ";
 
-if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
-	echo "<input type=\"checkbox\" checked name=\"IMMEDIATE_OUTPUT\"> \n";
-	//PrintSettingCheckbox("Radio Station", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
-} else {
-	echo "<input type=\"checkbox\"  name=\"IMMEDIATE_OUTPUT\"> \n";
-}
+//if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
+//	echo "<input type=\"checkbox\" checked name=\"IMMEDIATE_OUTPUT\"> \n";
+	PrintSettingCheckbox("Immediate output to Matrix", "IMMEDIATE_OUTPUT", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+//} else {
+	//echo "<input type=\"checkbox\"  name=\"IMMEDIATE_OUTPUT\"> \n";
+//}
 echo "<p/> \n";
 ?>
 MATRIX Message Plugin Location: (IP Address. default 127.0.0.1);
@@ -288,9 +288,9 @@ echo "<p/> \n";
 
 printValidFPPCommands();
 
-echo "Valid Commands: \n";
+//echo "Valid Commands: \n";
 
-echo "<input type=\"text\" name=\"VALID_COMMANDS\" size=\"16\" value=\"".$VALID_COMMANDS."\"> \n";
+//echo "<input type=\"text\" name=\"VALID_COMMANDS\" size=\"16\" value=\"".$VALID_COMMANDS."\"> \n";
 
 
 echo "<p/> \n";
