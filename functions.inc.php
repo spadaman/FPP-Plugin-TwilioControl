@@ -3,7 +3,7 @@
 //strip hex characters from message - possible emoticons
 
 function stripHexChars($line) {
-	$newLine = preg_replace('/[A-Fa-f0-9]/', '', $line);
+	$newLine = preg_replace('/0x[0-9a-fA-F]/', '', $line);
 	
 	return $newLine;
 }
