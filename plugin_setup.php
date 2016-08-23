@@ -250,7 +250,7 @@ echo "<p/> \n";
 Remote FPP IP : (IP Address. default 127.0.0.1);
 <input type="text" size="15" value="<? if($REMOTE_FPP_IP !="" ) { echo $REMOTE_FPP_IP; } else { echo "127.0.0.1";}?>" name="REMOTE_FPP_IP" id="REMOTE_FPP_IP"></input>
 <p/>
-
+<?
 echo "<p/> \n";
 
 echo "Playlist Name: ";
