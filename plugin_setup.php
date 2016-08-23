@@ -92,11 +92,14 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("REPEAT_COMMANDS",urlencode($_POST["REPEAT_COMMANDS"]),$pluginName);
 	WriteSettingToFile("STATUS_COMMANDS",urlencode($_POST["STATUS_COMMANDS"]),$pluginName);
 	
-	
+	WriteSettingToFile("REMOTE_FPP_ENABLED",urlencode($_POST["REMOTE_FPP_ENABLED"]),$pluginName);
+	WriteSettingToFile("REMOTE_FPP_IP",urlencode($_POST["REMOTE_FPP_IP"]),$pluginName);
 }
 
 	
-	$PLAYLIST_NAME = $pluginSettings['PLAYLIST_NAME'];
+	$PLAYLIST_NAME = urldecode($pluginSettings['PLAYLIST_NAME']);
+	$REMOTE_FPP_ENABLED = urldecode($pluginSettings['REMOTE_FPP_ENABLED']);
+	$REMOTE_FPP_IP = urldecode($pluginSettings['REMOTE_FPP_IP']);
 	$WHITELIST_NUMBERS = urldecode($pluginSettings['WHITELIST_NUMBERS']);
 	$CONTROL_NUMBERS = urldecode($pluginSettings['CONTROL_NUMBERS']);
 	$REPLY_TEXT = urldecode($pluginSettings['REPLY_TEXT']);
@@ -233,7 +236,20 @@ MATRIX Message Plugin Location: (IP Address. default 127.0.0.1);
 <input type="text" size="15" value="<? if($MATRIX_LOCATION !="" ) { echo $MATRIX_LOCATION; } else { echo "127.0.0.1";}?>" name="MATRIX_LOCATION" id="MATRIX_LOCATION"></input>
 <p/>
 <?
+echo "<p/> \n";
+echo "Send Commands to Remote FPP: ";
 
+//if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
+//	echo "<input type=\"checkbox\" checked name=\"IMMEDIATE_OUTPUT\"> \n";
+PrintSettingCheckbox("Remote FPP Commands", "REMOTE_FPP_ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+//} else {
+//echo "<input type=\"checkbox\"  name=\"IMMEDIATE_OUTPUT\"> \n";
+//}
+echo "<p/> \n";
+?>
+Remote FPP IP : (IP Address. default 127.0.0.1);
+<input type="text" size="15" value="<? if($REMOTE_FPP_IP !="" ) { echo $REMOTE_FPP_IP; } else { echo "127.0.0.1";}?>" name="REMOTE_FPP_IP" id="REMOTE_FPP_IP"></input>
+<p/>
 
 echo "<p/> \n";
 

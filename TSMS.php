@@ -79,6 +79,9 @@ if (file_exists($pluginConfigFile))
 	$repeatCommands = urldecode($pluginSettings['REPEAT_COMMANDS']);
 	$statusCommands = urldecode($pluginSettings['STATUS_COMMANDS']);
 	
+	$REMOTE_FPP_ENABLED = urldecode($pluginSettings['REMOTE_FPP_ENABLED']);
+	$REMOTE_FPP_IP = urldecode($pluginSettings['REMOTE_FPP_IP']);
+	
 	//if the command values do not have anything, set some defaults
 	if(trim($playCommands) == "") {
 		$playCommands = "PLAY";
@@ -109,7 +112,7 @@ if (file_exists($pluginConfigFile))
 		$repeatCommandsArray = explode(",",trim(strtoupper($repeatCommands)));
 		$statusCommandsArray = explode(",",trim(strtoupper($statusCommands)));
 
-		$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
+		//$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
 		
 		$CONTROL_NUMBER_ARRAY = explode(",",$CONTROL_NUMBERS);
 
@@ -117,8 +120,7 @@ if (file_exists($pluginConfigFile))
 		$WHITELIST_NUMBER_ARRAY = explode(",",$WHITELIST_NUMBERS);
 
 		$logFile = $settings['logDirectory']."/".$pluginName.".log";
-		if($DEBUG)
-			print_r($COMMAND_ARRAY);
+		
 
 			//give google voice time to sleep
 			$GVSleepTime = 5;

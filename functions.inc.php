@@ -155,7 +155,8 @@ function profanityChecker($messageText) {
 //process the SMS commnadn coming in from a control number
 function processSMSCommand($from,$SMSCommand="",$playlistName="") {
 
-        global $DEBUG,$client,$SMS_TYPE, $TSMS_phoneNumber;
+        global $DEBUG,$client,$SMS_TYPE, $TSMS_phoneNumber, $REMOTE_FPP_ENABLED, $REMOTE_FPP_IP;
+       
         $FPPDStatus=false;
         $output="";
 
@@ -190,6 +191,8 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
               
         } 
        $cmd = "/opt/fpp/bin.pi/fpp ";
+       $REMOTE_cmd = "/usr/bin/curl \"http://".$REMOTE_FPP_IP."/fppxml.php?command=startPlaylist&playList=".$PLAYLIST_NAME."\"";
+       
 
         switch (trim(strtoupper($SMSCommand))) {
         		
@@ -224,13 +227,20 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
                         break;
         }
 
+        if($REMOTE_FPP_ENABLED) {
+        	logEntry("Remote FPP Command ENABLED");
+        	$cmd = $REMOTE_cmd;
+        } else {
+        	logEntry("Remote FPP command NOT ENABLED");
+        }
+        
         if($cmd !="" ) {
                 logEntry("Executing SMS command: ".$cmd);
                 exec($cmd,$output);
                 //system($cmd,$output);
 
         }
-logEntry("Processing command: ".$cmd);
+//logEntry("Processing command: ".$cmd);
 
 }
 //is fppd running?????
