@@ -163,6 +163,10 @@ if (file_exists($pluginConfigFile))
 				
 				
 			}
+			$TSMS_body = stripHexChars($TSMS_body);
+		
+			//if($DEBUG) 
+				logEntry("TSMS Message body after strip hex function: ".$TSMS_body);
 			
 			//respond back 
 			$TSMS_outgoingMessage = "You sent in message: ".$TSMS_body;

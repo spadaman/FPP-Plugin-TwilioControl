@@ -1,5 +1,12 @@
 <?php
 
+//strip hex characters from message - possible emoticons
+
+function stripHexChars($line) {
+	$newLine = preg_replace('/[A-Fa-f0-9]/', '', $line);
+	
+	return $newLine;
+}
 
 //print the valid commands table and their variables
 
