@@ -1,5 +1,5 @@
 <?php
-//$DEBUG=true;
+
 
 include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
@@ -41,7 +41,7 @@ if(file_exists($messageQueuePluginPath."functions.inc.php"))
 }
 
 
-$gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-SMS.git";
+$gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
 
 
 $pluginUpdateFile = $settings['pluginDirectory']."/".$pluginName."/"."pluginUpdate.inc";
@@ -129,11 +129,7 @@ if(isset($_POST['submit']))
 if($REPLY_TEXT == "") {
 	$REPLY_TEXT = "Thank you for your message, it has been added to the Queue";
 }
-if($VALID_COMMANDS == "") {
 
-	//populate with default valid commands
-	$VALID_COMMANDS = "play,stop,repeat,status";
-}
 	
 	//crate the event file
 	function createSMSEventFile() {
