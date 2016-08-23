@@ -191,23 +191,26 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
               
         } 
        $cmd = "/opt/fpp/bin.pi/fpp ";
-       $REMOTE_cmd = "/usr/bin/curl \"http://".$REMOTE_FPP_IP."/fppxml.php?command=startPlaylist&playList=".$PLAYLIST_NAME."\"";
+      
        
 
         switch (trim(strtoupper($SMSCommand))) {
         		
                 case "PLAY":
                          $cmd .= "-P \"".$PLAYLIST_NAME."\"";
+                         $REMOTE_cmd = "/usr/bin/curl \"http://".$REMOTE_FPP_IP."/fppxml.php?command=startPlaylist&playList=".$PLAYLIST_NAME."\"";
                         break;
 
                 case "STOP":
                         $cmd .= "-c stop";
+                        $REMOTE_cmd = "/usr/bin/curl \"http://".$REMOTE_FPP_IP."/fppxml.php?command=stopNow\"";
 
                         break;
 
                 case "REPEAT":
 
                         $cmd .= "-p \"".$PLAYLIST_NAME."\"";
+                        $REMOTE_cmd = "/usr/bin/curl \"http://".$REMOTE_FPP_IP."/fppxml.php?command=startPlaylist&playList=".$PLAYLIST_NAME."&repeat=checked\"";
                         break;
 
                 case "STATUS":
