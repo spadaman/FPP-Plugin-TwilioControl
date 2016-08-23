@@ -92,7 +92,7 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("REPEAT_COMMANDS",urlencode($_POST["REPEAT_COMMANDS"]),$pluginName);
 	WriteSettingToFile("STATUS_COMMANDS",urlencode($_POST["STATUS_COMMANDS"]),$pluginName);
 	
-	WriteSettingToFile("REMOTE_FPP_ENABLED",urlencode($_POST["REMOTE_FPP_ENABLED"]),$pluginName);
+	
 	WriteSettingToFile("REMOTE_FPP_IP",urlencode($_POST["REMOTE_FPP_IP"]),$pluginName);
 }
 
