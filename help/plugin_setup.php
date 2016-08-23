@@ -3,5 +3,5 @@
 
 
 <p>
-Welcome to the SMS tools plugin
+Welcome to the Twilio Control tools plugin Help page
 

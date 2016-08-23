@@ -11,8 +11,7 @@ $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
 
-$playCommands = "PLAY";
-$stopCommands ="TERMINATE";
+
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
 //$DEBUG=true;
@@ -314,19 +313,7 @@ echo "<input type=\"text\" name=\"CONTROL_NUMBERS\" size=\"16\" value=\"".$CONTR
 
 echo "<p/> \n";
 
-echo "Profanity API User ID: \n";
 
-echo "<input type=\"text\" name=\"API_USER_ID\" size=\"32\" value=\"".$API_USER_ID."\"> \n";
-
-
-echo "<p/> \n";
-
-echo "Profanity API KEY: \n";
-
-echo "<input type=\"text\" name=\"API_KEY\" size=\"64\" value=\"".$API_KEY."\"> \n";
-
-
-echo "<p/> \n";
 
 echo "Profanity Engine: \n";
 echo "<select name=\"PROFANITY_ENGINE\"> \n";
@@ -358,6 +345,20 @@ echo "<select name=\"PROFANITY_ENGINE\"> \n";
                
 			echo "</select> \n";
 echo "<p/> \n";
+echo "Profanity API User ID: \n";
+
+echo "<input type=\"text\" name=\"API_USER_ID\" size=\"32\" value=\"".$API_USER_ID."\"> \n";
+
+
+echo "<p/> \n";
+
+echo "Profanity API KEY: \n";
+
+echo "<input type=\"text\" name=\"API_KEY\" size=\"64\" value=\"".$API_KEY."\"> \n";
+
+
+echo "<p/> \n";
+
 ?>
 <p/>
 <input id="submit_button" name="submit" type="submit" class="buttons" value="Save Config">
