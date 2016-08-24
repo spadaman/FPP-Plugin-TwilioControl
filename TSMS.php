@@ -136,9 +136,9 @@ if (file_exists($pluginConfigFile))
 	}
 	logEntry("TSMS Message body contain hex: ".$TSMS_BODY_CONTAINED_HEX);
 	//remove emoticon stuff
-	$TSMS_body_NEW = stripHexChars($TSMS_body);
+	$TSMS_body_NEW = stripHexChars(trim($TSMS_body));
 	
-	if(strlen($TSMS_body_NEW <> strlen($TSMS_body))) {
+	if(strlen(trim($TSMS_body_NEW) < strlen(trim($TSMS_body)))) {
 		
 		$TSMS_BODY_CONTAINED_HEX = true;
 	}
