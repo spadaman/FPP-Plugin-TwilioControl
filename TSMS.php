@@ -92,6 +92,7 @@ if (file_exists($pluginConfigFile))
 
 	$TSMS_from = "";
 	$TSMS_body = "";
+	$TSMS_BODY_CONTAINED_HEX = false;
 	
 	//	$TSMS_from = "+16195666240";
 	//	$TSMS_from = "+16198840018";
@@ -134,7 +135,13 @@ if (file_exists($pluginConfigFile))
 	
 	}
 	//remove emoticon stuff
-	$TSMS_body = stripHexChars($TSMS_body);
+	$TSMS_body_NEW = stripHexChars($TSMS_body);
+	
+	if(strlen($TSMS_body_NEW != strlen($TSMS_body))) {
+		
+		$TSMS_BODY_CONTAINED_HEX = true;
+	}
+	$TSMS_body = $TSMS_body_NEW;
 	
 	if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY)) {
 		if($DEBUG) {
@@ -313,6 +320,8 @@ if (file_exists($pluginConfigFile))
 						{
 							$MESSAGE_USED=true;
 							logEntry($messageText. " is from a white listed number");
+							
+							
 							processSMSMessage($TSMS_from,$messageText);
 							
 						

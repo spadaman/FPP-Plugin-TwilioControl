@@ -6,8 +6,11 @@ function do_nothing($curl, $input) {
 }
 //send a TSMS message https post
 function sendTSMSMessage($messageText) {
-	global $DEBUG,$TSMS_phoneNumber,$TSMS_from,$TSMS_body,$TSMS_account_sid, $TSMS_auth_token;
+	global $DEBUG,$TSMS_BODY_CONTAINED_HEX,$TSMS_phoneNumber,$TSMS_from,$TSMS_body,$TSMS_account_sid, $TSMS_auth_token;
 	
+	if($TSMS_BODY_CONTAINED_HEX) {
+		$messageText .= " However; we removed any emoticons or non text characters";
+	}
 if($DEBUG)
 	logEntry("Inside sendTSMSMessage");
 	
