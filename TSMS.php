@@ -82,11 +82,7 @@ if (file_exists($pluginConfigFile))
 	
 	$ENABLED = urldecode($pluginSettings['ENABLED']);
 	
-	if(($pid = lockHelper::lock()) === FALSE) {
-		exit(0);
-	
-	}
-		
+
 
 	
 	
@@ -111,8 +107,23 @@ if (file_exists($pluginConfigFile))
 		exit(0);
 	}
 	
+	if($DEBUG) {
+		logEntry("Twilio account_sid: ".$TSMS_account_sid);
+		logEntry("Twilio account pass: ".$TSMS_auth_token);
 	
-	if(strtoupper($ENABLED) != "ON" && $ENABLED != "1") {
+		logEntry("TSMS message from: ".$TSMS_from);
+		logEntry("TSMS Message body: ".$TSMS_body);
+	
+	
+	}
+		//remove emoticon stuff
+	$TSMS_body = stripHexChars($TSMS_body);
+	
+	if($DEBUG)
+		logEntry("TSMS Message body after strip hex function: ".$TSMS_body);
+			
+	
+	if(strtoupper($ENABLED) != "ON") {
 		$REPLY_TEXT_PLUGIN_DISABLED = "We're sorry, the system is not accepting SMS at this time";
 		sendTSMSMessage($REPLY_TEXT_PLUGIN_DISABLED);
 		logEntry("Plugin Status: DISABLED Please enable in Plugin Setup to use");
@@ -120,6 +131,12 @@ if (file_exists($pluginConfigFile))
 		exit(0);
 	}
 		
+	
+	//want to reply even if locked / disabled
+	if(($pid = lockHelper::lock()) === FALSE) {
+		exit(0);
+	
+	}
 	
 	
 	//if the command values do not have anything, set some defaults
@@ -171,26 +188,7 @@ if (file_exists($pluginConfigFile))
 			//	$TSMS_body = "test";
 
 			
-			if($DEBUG) {
-				logEntry("Twilio account_sid: ".$TSMS_account_sid);
-				logEntry("Twilio account pass: ".$TSMS_auth_token);
-				
-				logEntry("TSMS message from: ".$TSMS_from);
-				logEntry("TSMS Message body: ".$TSMS_body);
-				
-				
-			}
-			
-	
-			
-			
-			$TSMS_body = stripHexChars($TSMS_body);
-		
-			if($DEBUG) 
-				logEntry("TSMS Message body after strip hex function: ".$TSMS_body);
-			
-			//respond back 
-			$TSMS_outgoingMessage = "You sent in message: ".$TSMS_body;
+
 			
 						if($DEBUG)
 							logEntry("processing message: from: ".$TSMS_from." Message: ".$TSMS_body);

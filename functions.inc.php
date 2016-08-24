@@ -3,7 +3,7 @@
 
 //send a TSMS message https post
 function sendTSMSMessage($messageText) {
-	global $DEBUG,$TSMS_client,$TSMS_phoneNumber,$TSMS_from,$TSMS_body,$TSMS_account_sid, $TSMS_auth_token;
+	global $DEBUG,$TSMS_phoneNumber,$TSMS_from,$TSMS_body,$TSMS_account_sid, $TSMS_auth_token;
 	
 if($DEBUG)
 	logEntry("Inside sendTSMSMessage");
