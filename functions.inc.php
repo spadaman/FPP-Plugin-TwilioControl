@@ -42,6 +42,7 @@ if($DEBUG)
 	//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // On dev server only!
 	$result2 = curl_exec($ch2);
 	
+	if($DEBUG)
 	logEntry("TSMS Curl result: ".$result2);
 
 	//$TSMS_CURL_CMD = "curl -s -X POST 'https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json' \
@@ -50,9 +51,7 @@ if($DEBUG)
 	//--data-urlencode 'Body=$messageText' \
 	//-u $TSMS_account_sid:$TSMS_auth_token";
 	
-	if($DEBUG) {
-		logEntry("TSMS CURL CMD: ".print_r($postfields));
-	}
+
 	//exec($TSMS_CURL_CMD);
 	
 	if($DEBUG) {
