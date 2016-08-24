@@ -20,8 +20,8 @@ if($DEBUG)
 			
 	//					);
 	
-	$postfields = array('To' => urlencode($TSMS_from),
-						'From' => urlencode($TSMS_phoneNumber),
+	$postfields = array('To' => $TSMS_from,
+						'From' => $TSMS_phoneNumber,
 						'Body' => urlencode($messageText)
 					//	'-u' => $TSMS_account_sid.":".$TSMS_auth_token
 	
