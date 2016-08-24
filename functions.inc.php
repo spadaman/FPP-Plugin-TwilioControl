@@ -22,17 +22,18 @@ if($DEBUG)
 	
 	$postfields = array('To=' => urlencode($TSMS_from),
 						'From=' => urlencode($TSMS_phoneNumber),
-						'Body=' => urlencode($messageText),
-						'-u' => $TSMS_account_sid.":".$TSMS_auth_token
+						'Body=' => urlencode($messageText)
+					//	'-u' => $TSMS_account_sid.":".$TSMS_auth_token
 	
 				
 	);
 	
 	$ch2 = curl_init();
+	curl_setopt($ch2, CURLOPT_USERPWD, "$TSMS_account_sid:$TSMS_auth_token");
 	curl_setopt($ch2, CURLOPT_URL, $TSMS_URL);
 	curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 	//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	//curl_setopt($ch2, CURLOPT_WRITEFUNCTION, 'do_nothing');
 	curl_setopt($ch2, CURLOPT_VERBOSE, false);
 	curl_setopt($ch2, CURLOPT_POST, 1);
