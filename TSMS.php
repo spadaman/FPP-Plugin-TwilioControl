@@ -137,6 +137,9 @@ if (file_exists($pluginConfigFile))
 	$TSMS_body = stripHexChars($TSMS_body);
 	
 	if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY)) {
+		if($DEBUG) {
+			logEntry("Inside checking for enable / disable");
+		}
 		if(trim(strtoupper($TSMS_body)) == "ENABLE" && $ENABLED != "ON") {
 			$messageText = "ENABLING VIA CONTROL NUMBER";
 	
