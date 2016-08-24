@@ -15,18 +15,20 @@ if($DEBUG)
 			
 						);
 	
-	$ch = curl_init();
-	curl_setopt($ch, CURLOPT_URL, $TSMS_URL);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$ch2 = curl_init();
+	curl_setopt($ch2, CURLOPT_URL, $TSMS_URL);
+	curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 	//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 	//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
-	curl_setopt($ch, CURLOPT_VERBOSE, false);
-	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch2, CURLOPT_WRITEFUNCTION, 'do_nothing');
+	curl_setopt($ch2, CURLOPT_VERBOSE, false);
+	curl_setopt($ch2, CURLOPT_POST, 1);
 	// Edit: prior variable $postFields should be $postfields;
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+	curl_setopt($ch2, CURLOPT_POSTFIELDS, $postfields);
 	//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // On dev server only!
-	$result = curl_exec($ch);
+	$result2 = curl_exec($ch2);
+	
+	logEntry("TSMS Curl result: ".$result2);
 
 	//$TSMS_CURL_CMD = "curl -s -X POST 'https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json' \
 	//--data-urlencode 'To=$TSMS_from' \

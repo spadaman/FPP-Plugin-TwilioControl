@@ -86,7 +86,15 @@ if (file_exists($pluginConfigFile))
 	$TSMS_from = "";
 	$TSMS_body = "";
 	
+	//	$TSMS_from = "+16195666240";
+		$TSMS_from = "+16198840018";
+		$TSMS_body = "test";
+		
 	
+	
+	//	$TSMS_from = "+16195666240";
+	//	$TSMS_from = "+16198840018";
+	//	$TSMS_body = "test";
 	
 	//arg0 is  the program
 	//arg1 is the first argument in the registration this will be --list
@@ -108,6 +116,12 @@ if (file_exists($pluginConfigFile))
 		lockHelper::unlock();
 		exit(0);
 	}
+	
+	
+//	$TSMS_from = "+16195666240";
+	$TSMS_from = "+16198840018";
+	$TSMS_body = "test";
+	
 	
 	if($DEBUG) {
 		logEntry("Twilio account_sid: ".$TSMS_account_sid);
@@ -179,15 +193,7 @@ if (file_exists($pluginConfigFile))
 		$WHITELIST_NUMBER_ARRAY = explode(",",$WHITELIST_NUMBERS);
 
 
-		//	$TSMS_from = "+16195666240";
-		//	$TSMS_from = "+16198840018";
-		//	$TSMS_body = "test";
-			
 
-				
-			//	$TSMS_from = "+16195666240";
-			//	$TSMS_from = "+16198840018";
-			//	$TSMS_body = "test";
 
 			
 
