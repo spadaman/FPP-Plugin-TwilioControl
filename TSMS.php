@@ -372,7 +372,5 @@ if (file_exists($pluginConfigFile))
 	lockHelper::unlock();
 	exit(0);
 	
-	function do_nothing($curl, $input) {
-		return 0; // aborts transfer with an error
-	}
+	
 ?>
