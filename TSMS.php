@@ -148,10 +148,11 @@ if (file_exists($pluginConfigFile))
 	
 	
 	
-	if(strlen(trim($TSMS_body_NEW) < strlen(trim($TSMS_body)))) {
+	if($lenNew !== $lenOriginal) {
 		
 		$TSMS_BODY_CONTAINED_HEX = true;
 	}
+	
 	$TSMS_body = $TSMS_body_NEW;
 	
 	logEntry("TSMS Message body contain hex: ".$TSMS_BODY_CONTAINED_HEX);
