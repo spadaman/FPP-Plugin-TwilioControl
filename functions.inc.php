@@ -15,17 +15,17 @@ if($DEBUG)
 	--data-urlencode 'Body=$messageText' \
 	-u $TSMS_account_sid:$TSMS_auth_token";
 	
-	if($DEBUG)
-	logEntry("TSMS CURL CMD: ".$TSMS_CURL_CMD);
+	if($DEBUG) {
+		logEntry("TSMS CURL CMD: ".$TSMS_CURL_CMD);
+	}
 	exec($TSMS_CURL_CMD);
 	
-	if($DEBUG)
-	logEntry("exiting sending TSMS Message");
-	return ;
-	
-	
-	
-	
+	if($DEBUG) {
+		logEntry("exiting sending TSMS Message");
+		
+	}
+	return;
+
 }
 //strip hex characters from message - possible emoticons
 
