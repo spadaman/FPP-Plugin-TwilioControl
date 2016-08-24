@@ -18,9 +18,9 @@ if($DEBUG)
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $TSMS_URL);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	//curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
+	//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
 	curl_setopt($ch, CURLOPT_VERBOSE, false);
 	curl_setopt($ch, CURLOPT_POST, 1);
 	// Edit: prior variable $postFields should be $postfields;

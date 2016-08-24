@@ -83,7 +83,9 @@ if (file_exists($pluginConfigFile))
 	$ENABLED = urldecode($pluginSettings['ENABLED']);
 	
 
-
+	$TSMS_from = "";
+	$TSMS_body = "";
+	
 	
 	
 	//arg0 is  the program
