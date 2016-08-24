@@ -1,5 +1,32 @@
 <?php
 
+
+//send a TSMS message https post
+function sendTSMSMessage($messageText) {
+	global $DEBUG,$TSMS_client,$TSMS_phoneNumber,$TSMS_from,$TSMS_body,$TSMS_account_sid, $TSMS_auth_token;
+	
+if($DEBUG)
+	logEntry("Inside sendTSMSMessage");
+	
+
+	$TSMS_CURL_CMD = "curl -s -X POST 'https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json' \
+	--data-urlencode 'To=$TSMS_from' \
+	--data-urlencode 'From=$TSMS_phoneNumber' \
+	--data-urlencode 'Body=$messageText' \
+	-u $TSMS_account_sid:$TSMS_auth_token";
+	
+	if($DEBUG)
+	logEntry("TSMS CURL CMD: ".$TSMS_CURL_CMD);
+	exec($TSMS_CURL_CMD);
+	
+	if($DEBUG)
+	logEntry("exiting sending TSMS Message");
+	return ;
+	
+	
+	
+	
+}
 //strip hex characters from message - possible emoticons
 
 function stripHexChars($line) {
@@ -342,30 +369,18 @@ function processSequenceName($sequenceName,$sequenceAction="NONE RECEIVED") {
 
 		exec($cmd,$output); 
 
-//		break;
-//                exit(0);
 
- //               default:
-  //                      logEntry("We do not support sequence name: ".$sequenceName." at this time");
-
-   //                     exit(0);
-
-    //    }
 
 }
 //process new messages
-function processNewMessages($SMS_TYPE="TWILIO", $SMS_FROM, $SMS_BODY) {
+function processNewMessages($SMS_FROM, $SMS_BODY) {
 
 	global $DEBUG;
-	logEntry("processing new entries in SMS queue - if any");
+	
 	$messageQueue = array();
 	$newmsgIDs = array();
 	
-	$newMessageCount=0;
 	
-	switch($SMS_TYPE) {
-		
-		case "TWILIO":
 			$from = $SMS_FROM;
 			$msgText = $SMS_BODY;
 			if($DEBUG) {
@@ -378,29 +393,14 @@ function processNewMessages($SMS_TYPE="TWILIO", $SMS_FROM, $SMS_BODY) {
 				$from=substr($from,2);
 			}
 				
+			//$messageQueue[$newMessageCount]=array($from,$msgText);
 			$messageQueue[$newMessageCount]=array($from,$msgText);
 			
 			if($DEBUG){
 				print_r($messageQueue);
 			}
 				
-			$newMessageCount++;
 			
-			break;
-			
-		
-	}
-	
-	if($newMessageCount > 0) {
-		logEntry ("Received : ".$newMessageCount. " Messages in Queue");
-	} else {
-		logEntry("No messages in queue: ".$EMAIL." to process");
-			//exit here : dec 9
-			lockHelper::unlock();
-			exit(0);
-		//return null;
-	
-	}
 	return $messageQueue;
 }
 //process read/sent messages

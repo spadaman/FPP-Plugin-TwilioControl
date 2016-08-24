@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?
-error_reporting(0);
+//error_reporting(0);
 //
 
 $pluginName ="TwilioControl";
@@ -19,8 +19,8 @@ include_once("commonFunctions.inc.php");
 include_once("profanity.inc.php");
 
 // this line loads the library
-require('twilio/Services/Twilio.php');
-
+//require('Twilio/Services/Twilio.php');
+require ('Twilio/autoload.php');
 
 
 
@@ -48,16 +48,14 @@ $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
 
-	if(urldecode($pluginSettings['DEBUG'] != "")) {
-		$DEBUG=urldecode($pluginSettings['DEBUG']);
-	}
+	$logFile = $settings['logDirectory']."/".$pluginName.".log";
+	$DEBUG=urldecode($pluginSettings['DEBUG']);
+	
 
 	$MATRIX_MESSAGE_PLUGIN_NAME = "MatrixMessage";
 	//page name to run the matrix code to output to matrix (remote or local);
 	$MATRIX_EXEC_PAGE_NAME = "matrix.php";
 
-	$EMAIL = urldecode($pluginSettings['EMAIL']);
-	$PASSWORD = urldecode($pluginSettings['PASSWORD']);
 	$PLAYLIST_NAME = urldecode($pluginSettings['PLAYLIST_NAME']);
 	$WHITELIST_NUMBERS = urldecode($pluginSettings['WHITELIST_NUMBERS']);
 	$CONTROL_NUMBERS = urldecode($pluginSettings['CONTROL_NUMBERS']);
@@ -80,6 +78,31 @@ if (file_exists($pluginConfigFile))
 	
 	$REMOTE_FPP_ENABLED = urldecode($pluginSettings['REMOTE_FPP_ENABLED']);
 	$REMOTE_FPP_IP = urldecode($pluginSettings['REMOTE_FPP_IP']);
+	
+	
+	$ENABLED = urldecode($pluginSettings['ENABLED']);
+	
+	if(($pid = lockHelper::lock()) === FALSE) {
+		exit(0);
+	
+	}
+		
+	$DEBUG=true;
+	
+	
+	//arg0 is  the program
+	//arg1 is the first argument in the registration this will be --list
+	//$DEBUG=true;
+	//echo "Enabled: ".$ENABLED."<br/> \n";
+	
+	
+	if(strtoupper($ENABLED) != "ON" && $ENABLED != "1") {
+		logEntry("Plugin Status: DISABLED Please enable in Plugin Setup to use");
+		lockHelper::unlock();
+		exit(0);
+	}
+		
+	
 	
 	//if the command values do not have anything, set some defaults
 	if(trim($playCommands) == "") {
@@ -118,42 +141,39 @@ if (file_exists($pluginConfigFile))
 
 		$WHITELIST_NUMBER_ARRAY = explode(",",$WHITELIST_NUMBERS);
 
-		$logFile = $settings['logDirectory']."/".$pluginName.".log";
+	
 		
 
-			//give google voice time to sleep
-			$GVSleepTime = 5;
-
-			$ENABLED="";
-
-			$ENABLED = trim(urldecode(ReadSettingFromFile("ENABLED",$pluginName)));
-
-
-
-			if(($pid = lockHelper::lock()) === FALSE) {
-				exit(0);
-
-			}
 			
 
-			$client = new Services_Twilio($TSMS_account_sid, $TSMS_auth_token);
-	
-			//arg0 is  the program
-			//arg1 is the first argument in the registration this will be --list
-			//$DEBUG=true;
-			//echo "Enabled: ".$ENABLED."<br/> \n";
+		
+			
+			
+		//	$TSMS_from = "+16195666240";
+		//	$TSMS_from = "+16198840018";
+		//	$TSMS_body = "test";
+			
 
-
-			if(strtoupper($ENABLED) != "ON" && $ENABLED != "1") {
-				logEntry("Plugin Status: DISABLED Please enable in Plugin Setup to use");
+			if(isset($_POST['From']) || $TSMS_from != "") {
+				
+				$TSMS_from = $_POST['From'];
+			} else {
+				logEntry("No Post data in FROM: Exiting");
 				lockHelper::unlock();
 				exit(0);
 			}
-
-			if(isset($_POST['From']))
-				$TSMS_from = $_POST['From'];
-				if(isset($_POST['Body']))
+				if(isset($_POST['Body']) || $TSMS_body != "") {
 					$TSMS_body = $_POST['Body'];
+				} else {
+					logEntry("No Post data in BODY: Exiting");
+					lockHelper::unlock();
+					exit(0);
+				}
+				
+			//	$TSMS_from = "+16195666240";
+			//	$TSMS_from = "+16198840018";
+			//	$TSMS_body = "test";
+
 			
 			if($DEBUG) {
 				logEntry("Twilio account_sid: ".$TSMS_account_sid);
@@ -163,6 +183,14 @@ if (file_exists($pluginConfigFile))
 				logEntry("TSMS Message body: ".$TSMS_body);
 				
 				
+			}
+			
+		//	$TSMS_client = new Services_Twilio($TSMS_account_sid, $TSMS_auth_token);
+			
+			if($DEBUG) {
+				echo "Twilio client \n";
+				//	print_r($client);
+			
 			}
 			$TSMS_body = stripHexChars($TSMS_body);
 		
@@ -175,40 +203,19 @@ if (file_exists($pluginConfigFile))
 		//$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $TSMS_outgoingMessage));
 
 
-			$messageQueue = processNewMessages($SMS_TYPE="TWILIO", $TSMS_from, $TSMS_body);
 
-			if($DEBUG)
-				print_r($messageQueue);
+						logEntry("processing message: from: ".$TSMS_from." Message: ".$TSMS_body);
 
-				if($messageQueue == null) {
-					lockHelper::unlock();
-					exit(0);
-				}
-
-				if($DEBUG)
-					print_r($messageQueue);
-
-
-					//process the message queue or exit
-					//check to see if the request is in the valid commands
-					logEntry("Messages to process qty: ".count($messageQueue));
-
-					for($i=0;$i<=count($messageQueue)-1;$i++) {
-						//prevent messages to get entered more than once if in control and whitelist array
-						$MESSAGE_USED=false;
-						$from = $messageQueue[$i][0];
-						$messageText = $messageQueue[$i][1];
-
-						logEntry("processing message: ".$i." from: ".$from." Message: ".$messageText);
-
-						$messageText= preg_replace('/\s+/', ' ', $messageText);
+						$messageText= preg_replace('/\s+/', ' ', $TSMS_body);
 						$messageParts = explode(" ",$messageText);
+						
+						//need to reformat from ISO +1 format to local number format or use +1 in control numbers
 
-						if(in_array($from,$CONTROL_NUMBER_ARRAY))
+						if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY))
 						{
 							///message used is to make sure that we do not process a message twice if it is from a number that is both a whitelist AND control numbers
 							$MESSAGE_USED=true;
-							logEntry("Control number found: ".$from);
+							logEntry("Control number found: ".$TSMS_from);
 				
 
 									
@@ -242,29 +249,39 @@ if (file_exists($pluginConfigFile))
 								logEntry("Command request: ".$messageText. " in uppercase is in control array");
 								//do we have a playlist name?
 								if($messageParts[1] != "") {
-									processSMSCommand($from,$CMD,$messageParts[1]);
+									processSMSCommand($TSMS_from,$CMD,$messageParts[1]);
 									//processSMSCommand($from,$messageParts[0],$messageParts[1]);
 								} else {
 
 									//play the configured playlist@!!!! from the plugin
-									processSMSCommand($from,$CMD,$PLAYLIST_NAME);
+									processSMSCommand($TSMS_from,$CMD,$PLAYLIST_NAME);
 									//processSMSCommand($from,$messageParts[0],$PLAYLIST_NAME);
 								}
 								
 								
 								$REPLY_TEXT_CMD = "Thank you - your command has been accepted from control number: ".$TSMS_from;
+								sendTSMSMessage($REPLY_TEXT_CMD);
 								
-								$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT_CMD));
-								
+								//$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT_CMD));
+								//we do not want to do any more besides commands here
+								logEntry("Exiting because command executed");
+								lockHelper::unlock();
+								exit(0);
 									
 							} else {
 								//generic message to display from control number just like a regular user
-								processSMSMessage($from,$messageText);
-								$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
-							//	$gv->sendSMS($from,$REPLY_TEXT);
-								//sleep(1);
-
-								//processReadSentMessages();
+								processSMSMessage($TSMS_from,$messageText);
+								logEntry("Back from Control number adding new message");
+							//	if($DEBUG) {
+									logEntry("TSMS to (user): ".$TSMS_from);
+									logEntry("TSMS FROM (tsms number): ".$TSMS_phoneNumber);
+									logEntry("TSMS message going out: ".$REPLY_TEXT);
+									
+							//	}
+									sendTSMSMessage($REPLY_TEXT);
+									
+								
+							
 							}
 								
 						}
@@ -274,12 +291,9 @@ if (file_exists($pluginConfigFile))
 						{
 							$MESSAGE_USED=true;
 							logEntry($messageText. " is from a white listed number");
-							processSMSMessage($from,$messageText);
+							processSMSMessage($TSMS_from,$messageText);
 							
 						
-						//	sleep(1);
-							
-							//processReadSentMessages();
 
 						} else if(!$MESSAGE_USED){
 
@@ -301,31 +315,32 @@ if (file_exists($pluginConfigFile))
 									$profanityCheck == false;
 									break;
 							}
+							
 							if(!$profanityCheck) {
 
 								logEntry("Message: ".$messageText. " PASSED");
 						
-								$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
+							//	$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
 								processSMSMessage($TSMS_from,$messageText);
-								sleep(1);
+								sendTSMSMessage($REPLY_TEXT);
 					
 
 							} else {
 								logEntry("message: ".$messageText." FAILED");
 								$REPLY_TEXT = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
 
-							//	$gv->sendSMS($from,$REPLY_TEXT);
-								$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
-								sleep(1);
-							//	processReadSentMessages();
+				
+								//$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
+								sendTSMSMessage($REPLY_TEXT);
+					
 
 							}
+						
+
 						}
+					
 
-
-					}
-
-					if($IMMEDIATE_OUTPUT != "ON" && $IMMEDIATE_OUTPUT != "1") {
+					if($IMMEDIATE_OUTPUT != "ON") {
 						logEntry("NOT immediately outputting to matrix");
 					} else {
 						logEntry("IMMEDIATE OUTPUT ENABLED");
@@ -333,18 +348,41 @@ if (file_exists($pluginConfigFile))
 						logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
 
 						if($MATRIX_LOCATION != "127.0.0.1") {
-							$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1' > /dev/null";
+							$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1'";// > /dev/null";
+							$curlURL = "http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1";
 							logEntry("REMOTE MATRIX TRIGGER: ".$remoteCMD);
-							exec($remoteCMD);
+							
+							$ch = curl_init();
+							curl_setopt($ch,CURLOPT_URL,$curlURL);
+							//curl_setopt($ch,CURLOPT_POST,count($fields));
+							//curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
+							//curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100);
+							$result = curl_exec($ch);
+							logEntry("Curl result: ".$result);// $result;
+							curl_close ($ch);
+						//	forkExec($remoteCMD);
+						//	lockHelper::unlock();
+						//	exit(0);
+							//exec($remoteCMD);
 						} else {
 							$IMMEDIATE_CMD = $settings['pluginDirectory']."/".$MATRIX_MESSAGE_PLUGIN_NAME."/matrix.php";
 							logEntry("LOCAL command: ".$IMMEDIATE_CMD);
+						//	$forkResult = fork($IMMEDIATE_CMD);
 							exec($IMMEDIATE_CMD);
+							//forkExec($IMMEDIATE_CMD);
+							//lockHelper::unlock();
+							//exit(0);
 						}
 					}
 
-
-					lockHelper::unlock();
-					exit(0);
-
-					?>
+			//	sleep(1);
+				
+	lockHelper::unlock();
+	exit(0);
+	
+	function do_nothing($curl, $input) {
+		return 0; // aborts transfer with an error
+	}
+?>

@@ -112,6 +112,9 @@ function sendMail($to, $from, $subject, $body) {
 function forkExec($cmd) {
 	global $DEBUG;
 
+	if($DEBUG)
+		logEntry("Forking command: ".$cmd);
+	
 	
 	//$safe_arg["arg_2"] = escapeshellarg($arg_2);
 	$pid = pcntl_fork();
