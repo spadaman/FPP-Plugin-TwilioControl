@@ -9,9 +9,12 @@ if($DEBUG)
 	logEntry("Inside sendTSMSMessage");
 	
 	$TSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json";
-	$postfields = array(urlencode("To=".$TSMS_from),
-						urlencode("From=".$TSMS_phoneNumber),
-						urlencode("Body=".$messageText));
+	$postfields = array('To' => urlencode($TSMS_from),
+						'From' => urlencode($TSMS_phoneNumber),
+						'Body' => urlencode($messageText)
+			
+						);
+	
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $TSMS_URL);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
