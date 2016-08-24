@@ -14,7 +14,9 @@ if($DEBUG)
 	$TSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json";
 	$postfields = array(urlencode("To=".$TSMS_from),
 						urlencode("From=".$TSMS_phoneNumber),
-						urlencode("Body=".$messageText)
+						urlencode("Body=".$messageText),
+						"-u ".$TSMS_account_sid.":".$TSMS_auth_token
+						
 			
 						);
 	
