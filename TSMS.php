@@ -276,7 +276,7 @@ if (file_exists($pluginConfigFile))
 								
 						}
 
-						if(in_array($from,$WHITELIST_NUMBER_ARRAY) && !$MESSAGE_USED)
+						if(in_array($TSMS_from,$WHITELIST_NUMBER_ARRAY) && !$MESSAGE_USED)
 
 						{
 							$MESSAGE_USED=true;
