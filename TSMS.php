@@ -194,7 +194,8 @@ if (file_exists($pluginConfigFile))
 				logEntry($messageText);
 				
 				WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
-				
+				lockHelper::unlock();
+				exit(0);
 			}
 			if(trim(strtoupper($TSMS_body)) == "DISABLE" && $ENABLED == "ON") {
 				$messageText = "DISABLING VIA CONTROL NUMBER";
@@ -205,8 +206,10 @@ if (file_exists($pluginConfigFile))
 				}
 				
 				WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
+				lockHelper::unlock();
+				exit(0);
 			}
-			logEntry($messageText);
+			//logEntry($messageText);
 		}
 		
 	
