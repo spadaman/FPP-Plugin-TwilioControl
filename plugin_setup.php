@@ -182,6 +182,7 @@ if($REPLY_TEXT == "") {
 <li>Your control numbers, and white list numbers should be comma separated</li>
 <li>Control numbers can send valid commands to be processed</li>
 <li>ALL control numbers will get status commands when including the SMS-STATUS-SEND.FSEQ sequence in a playlist</li>
+<li>The phone numbers for any field need to be in the format of +(countryCode)(number) example USA number 800-555-1212 = +18005551212</li>
 </ul>
 
 <ul>

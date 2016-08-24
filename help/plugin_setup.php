@@ -1,9 +1,5 @@
-<b>SMS Control help</b>
-
-
-
-<p>
-Welcome to the Twilio Control tools plugin Help page
+<b>
+Welcome to the Twilio Control tools plugin Help page</b>
 
 <p>You will need to create an account at Twilio
 
