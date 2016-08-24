@@ -138,6 +138,11 @@ if (file_exists($pluginConfigFile))
 	//remove emoticon stuff
 	$TSMS_body_NEW = stripHexChars(trim($TSMS_body));
 	
+	if($DEBUG) {
+		logEntry("String length of original body: ".strlen(trim($TSMS_body)));
+		logEntry("string length of new body after processing: ".strlen($TSMS_body_NEW));
+	}
+	
 	if(strlen(trim($TSMS_body_NEW) < strlen(trim($TSMS_body)))) {
 		
 		$TSMS_BODY_CONTAINED_HEX = true;
