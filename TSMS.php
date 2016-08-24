@@ -209,7 +209,7 @@ if (file_exists($pluginConfigFile))
 				lockHelper::unlock();
 				exit(0);
 			}
-			//logEntry($messageText);
+			
 		}
 		
 	
