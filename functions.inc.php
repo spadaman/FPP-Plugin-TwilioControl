@@ -8,17 +8,33 @@ function sendTSMSMessage($messageText) {
 if($DEBUG)
 	logEntry("Inside sendTSMSMessage");
 	
+	$TSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json";
+	$postfields = array(urlencode("To=".$TSMS_from),
+						urlencode("From=".$TSMS_phoneNumber),
+						urlencode("Body=".$messageText));
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $TSMS_URL);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+	//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	//curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
+	curl_setopt($ch, CURLOPT_VERBOSE, false);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	// Edit: prior variable $postFields should be $postfields;
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
+	//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // On dev server only!
+	$result = curl_exec($ch);
 
-	$TSMS_CURL_CMD = "curl -s -X POST 'https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json' \
-	--data-urlencode 'To=$TSMS_from' \
-	--data-urlencode 'From=$TSMS_phoneNumber' \
-	--data-urlencode 'Body=$messageText' \
-	-u $TSMS_account_sid:$TSMS_auth_token";
+	//$TSMS_CURL_CMD = "curl -s -X POST 'https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json' \
+	//--data-urlencode 'To=$TSMS_from' \
+	//--data-urlencode 'From=$TSMS_phoneNumber' \
+	//--data-urlencode 'Body=$messageText' \
+	//-u $TSMS_account_sid:$TSMS_auth_token";
 	
 	if($DEBUG) {
-		logEntry("TSMS CURL CMD: ".$TSMS_CURL_CMD);
+		logEntry("TSMS CURL CMD: ".$postfields);
 	}
-	exec($TSMS_CURL_CMD);
+	//exec($TSMS_CURL_CMD);
 	
 	if($DEBUG) {
 		logEntry("exiting sending TSMS Message");
