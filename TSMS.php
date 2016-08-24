@@ -94,9 +94,27 @@ if (file_exists($pluginConfigFile))
 	//arg1 is the first argument in the registration this will be --list
 	//$DEBUG=true;
 	//echo "Enabled: ".$ENABLED."<br/> \n";
+
+	if(isset($_POST['From']) || $TSMS_from != "") {
+	
+		$TSMS_from = $_POST['From'];
+	} else {
+		logEntry("No Post data in FROM: Exiting");
+		lockHelper::unlock();
+		exit(0);
+	}
+	if(isset($_POST['Body']) || $TSMS_body != "") {
+		$TSMS_body = $_POST['Body'];
+	} else {
+		logEntry("No Post data in BODY: Exiting");
+		lockHelper::unlock();
+		exit(0);
+	}
 	
 	
 	if(strtoupper($ENABLED) != "ON" && $ENABLED != "1") {
+		$REPLY_TEXT_PLUGIN_DISABLED = "We're sorry, the system is not accepting SMS at this time";
+		sendTSMSMessage($REPLY_TEXT_PLUGIN_DISABLED);
 		logEntry("Plugin Status: DISABLED Please enable in Plugin Setup to use");
 		lockHelper::unlock();
 		exit(0);
@@ -141,34 +159,12 @@ if (file_exists($pluginConfigFile))
 
 		$WHITELIST_NUMBER_ARRAY = explode(",",$WHITELIST_NUMBERS);
 
-	
-		
 
-			
-
-		
-			
-			
 		//	$TSMS_from = "+16195666240";
 		//	$TSMS_from = "+16198840018";
 		//	$TSMS_body = "test";
 			
 
-			if(isset($_POST['From']) || $TSMS_from != "") {
-				
-				$TSMS_from = $_POST['From'];
-			} else {
-				logEntry("No Post data in FROM: Exiting");
-				lockHelper::unlock();
-				exit(0);
-			}
-				if(isset($_POST['Body']) || $TSMS_body != "") {
-					$TSMS_body = $_POST['Body'];
-				} else {
-					logEntry("No Post data in BODY: Exiting");
-					lockHelper::unlock();
-					exit(0);
-				}
 				
 			//	$TSMS_from = "+16195666240";
 			//	$TSMS_from = "+16198840018";
@@ -187,11 +183,7 @@ if (file_exists($pluginConfigFile))
 			
 	
 			
-			if($DEBUG) {
-				echo "Twilio client \n";
-				//	print_r($client);
 			
-			}
 			$TSMS_body = stripHexChars($TSMS_body);
 		
 			if($DEBUG) 
@@ -200,11 +192,8 @@ if (file_exists($pluginConfigFile))
 			//respond back 
 			$TSMS_outgoingMessage = "You sent in message: ".$TSMS_body;
 			
-		
-
-
-
-						logEntry("processing message: from: ".$TSMS_from." Message: ".$TSMS_body);
+						if($DEBUG)
+							logEntry("processing message: from: ".$TSMS_from." Message: ".$TSMS_body);
 
 						$messageText= preg_replace('/\s+/', ' ', $TSMS_body);
 						$messageParts = explode(" ",$messageText);
