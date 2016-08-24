@@ -132,16 +132,19 @@ if (file_exists($pluginConfigFile))
 		logEntry("TSMS message from: ".$TSMS_from);
 		logEntry("TSMS Message body: ".$TSMS_body);
 	
-	
+		//logEntry("TSMS Message body contain hex: ".$TSMS_BODY_CONTAINED_HEX);
 	}
+	logEntry("TSMS Message body contain hex: ".$TSMS_BODY_CONTAINED_HEX);
 	//remove emoticon stuff
 	$TSMS_body_NEW = stripHexChars($TSMS_body);
 	
-	if(strlen($TSMS_body_NEW != strlen($TSMS_body))) {
+	if(strlen($TSMS_body_NEW <> strlen($TSMS_body))) {
 		
 		$TSMS_BODY_CONTAINED_HEX = true;
 	}
 	$TSMS_body = $TSMS_body_NEW;
+	
+	logEntry("TSMS Message body contain hex: ".$TSMS_BODY_CONTAINED_HEX);
 	
 	if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY)) {
 		if($DEBUG) {
