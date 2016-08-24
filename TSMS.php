@@ -338,7 +338,8 @@ if (file_exists($pluginConfigFile))
 							//curl_setopt($ch,CURLOPT_POST,count($fields));
 							//curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
 							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-							curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
+							//curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
+							curl_setopt($ch, CURLOPT_VERBOSE, false);
 							//curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100);
 							$result = curl_exec($ch);
 							logEntry("Curl result: ".$result);// $result;
