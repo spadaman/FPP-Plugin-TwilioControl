@@ -22,7 +22,7 @@ if($DEBUG)
 	
 	$postfields = array('To' => $TSMS_from,
 						'From' => $TSMS_phoneNumber,
-						'Body' => urlencode($messageText)
+						'Body' => $messageText
 					//	'-u' => $TSMS_account_sid.":".$TSMS_auth_token
 	
 				

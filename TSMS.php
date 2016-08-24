@@ -87,8 +87,8 @@ if (file_exists($pluginConfigFile))
 	$TSMS_body = "";
 	
 	//	$TSMS_from = "+16195666240";
-		$TSMS_from = "+16198840018";
-		$TSMS_body = "test";
+	//	$TSMS_from = "+16198840018";
+		//$TSMS_body = "test";
 		
 	
 	
@@ -119,8 +119,8 @@ if (file_exists($pluginConfigFile))
 	
 	
 //	$TSMS_from = "+16195666240";
-	$TSMS_from = "+16198840018";
-	$TSMS_body = "test";
+	//$TSMS_from = "+16198840018";
+	//$TSMS_body = "test";
 	
 	
 	if($DEBUG) {
