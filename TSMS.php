@@ -143,18 +143,14 @@ if (file_exists($pluginConfigFile))
 		if(trim(strtoupper($TSMS_body)) == "ENABLE" && $ENABLED != "ON") {
 			$messageText = "ENABLING VIA CONTROL NUMBER";
 	
-	
 			foreach($CONTROL_NUMBER_ARRAY as $NOTIFY_NUMBER) {
-				
-				
 				$TSMS_from = $NOTIFY_NUMBER;
 				logEntry("Sending notification to number: ".$TSMS_from);
 				sendTSMSMessage($messageText);
-				
 			}
-			logEntry($messageText);
 	
 			WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
+			logEntry($messageText);
 			lockHelper::unlock();
 			exit(0);
 		}
