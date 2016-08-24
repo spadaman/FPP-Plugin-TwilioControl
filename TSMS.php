@@ -144,22 +144,24 @@ if (file_exists($pluginConfigFile))
 			$messageText = "ENABLING VIA CONTROL NUMBER";
 	
 	
-			foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
+			foreach($CONTROL_NUMBER_ARRAY as $NOTIFY_NUMBER) {
 				
 				
 				$TSMS_from = $NOTIFY_NUMBER;
 				logEntry("Sending notification to number: ".$TSMS_from);
 				sendTSMSMessage($messageText);
+				
 			}
 			logEntry($messageText);
 	
 			WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
-			
+			lockHelper::unlock();
+			exit(0);
 		}
 		if(trim(strtoupper($TSMS_body)) == "DISABLE" && $ENABLED == "ON") {
 			$messageText = "DISABLING VIA CONTROL NUMBER";
 	
-			foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
+			foreach($CONTROL_NUMBER_ARRAY as $NOTIFY_NUMBER) {
 				$TSMS_from = $NOTIFY_NUMBER;
 				logEntry("Sending notification to number: ".$TSMS_from);
 				sendTSMSMessage($messageText);
@@ -167,7 +169,8 @@ if (file_exists($pluginConfigFile))
 	
 			WriteSettingToFile("ENABLED",urlencode("OFF"),$pluginName);
 			logEntry($messageText);
-			
+			lockHelper::unlock();
+			exit(0);
 		}
 		
 	}
@@ -176,41 +179,7 @@ if (file_exists($pluginConfigFile))
 	//$TSMS_from = "+16198840018";
 	//$TSMS_body = "test";
 	
-	
 
-	
-	if($DEBUG)
-		logEntry("TSMS Message body after strip hex function: ".$TSMS_body);
-			
-		if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY)) {
-			if(trim(strtoupper($TSMS_body)) == "ENABLE" && $ENABLED != "ON") {
-				$messageText = "ENABLING VIA CONTROL NUMBER";
-				
-				
-				foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
-					$TSMS_from = $NOTIFY_NUMBER;
-					sendTSMSMessage($messageText);
-				}
-				logEntry($messageText);
-				
-				WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
-				lockHelper::unlock();
-				exit(0);
-			}
-			if(trim(strtoupper($TSMS_body)) == "DISABLE" && $ENABLED == "ON") {
-				$messageText = "DISABLING VIA CONTROL NUMBER";
-				
-				foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
-					$TSMS_from = $NOTIFY_NUMBER;
-					sendTSMSMessage($messageText);
-				}
-				
-				WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
-				lockHelper::unlock();
-				exit(0);
-			}
-			
-		}
 		
 	
 	if(strtoupper($ENABLED) != "ON") {
