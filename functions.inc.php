@@ -12,21 +12,21 @@ if($DEBUG)
 	logEntry("Inside sendTSMSMessage");
 	
 	$TSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json";
-	$postfields = array(urlencode("To=".$TSMS_from),
-						urlencode("From=".$TSMS_phoneNumber),
-						urlencode("Body=".$messageText),
+	//$postfields = array(urlencode("To=".$TSMS_from),
+	//					urlencode("From=".$TSMS_phoneNumber),
+	//					urlencode("Body=".$messageText),
 	//					"-u " => $TSMS_account_sid.":".$TSMS_auth_token
 						
 			
-						);
+	//					);
 	
-	//$postfields = array('To=' => urlencode($TSMS_from),
-	//					'From=' => urlencode($TSMS_phoneNumber),
-	//					'Body=' => urlencode($messageText)
+	$postfields = array('To' => urlencode($TSMS_from),
+						'From' => urlencode($TSMS_phoneNumber),
+						'Body' => urlencode($messageText)
 					//	'-u' => $TSMS_account_sid.":".$TSMS_auth_token
 	
 				
-	//);
+	);
 	
 	$ch2 = curl_init();
 	curl_setopt($ch2, CURLOPT_USERPWD, "$TSMS_account_sid:$TSMS_auth_token");
@@ -51,7 +51,7 @@ if($DEBUG)
 	//-u $TSMS_account_sid:$TSMS_auth_token";
 	
 	if($DEBUG) {
-		logEntry("TSMS CURL CMD: ".$postfields);
+		logEntry("TSMS CURL CMD: ".print_r($postfields));
 	}
 	//exec($TSMS_CURL_CMD);
 	
