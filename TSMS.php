@@ -9,7 +9,7 @@ $myPid = getmypid();
 $messageQueue_Plugin = "MessageQueue";
 $MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
-$DEBUG=false;
+
 
 $skipJSsettings = 1;
 include_once("/opt/fpp/www/config.php");
@@ -87,7 +87,7 @@ if (file_exists($pluginConfigFile))
 	
 	}
 		
-	$DEBUG=true;
+
 	
 	
 	//arg0 is  the program
@@ -185,7 +185,7 @@ if (file_exists($pluginConfigFile))
 				
 			}
 			
-		//	$TSMS_client = new Services_Twilio($TSMS_account_sid, $TSMS_auth_token);
+	
 			
 			if($DEBUG) {
 				echo "Twilio client \n";
@@ -194,13 +194,13 @@ if (file_exists($pluginConfigFile))
 			}
 			$TSMS_body = stripHexChars($TSMS_body);
 		
-			//if($DEBUG) 
+			if($DEBUG) 
 				logEntry("TSMS Message body after strip hex function: ".$TSMS_body);
 			
 			//respond back 
 			$TSMS_outgoingMessage = "You sent in message: ".$TSMS_body;
 			
-		//$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $TSMS_outgoingMessage));
+		
 
 
 
@@ -262,7 +262,7 @@ if (file_exists($pluginConfigFile))
 								$REPLY_TEXT_CMD = "Thank you - your command has been accepted from control number: ".$TSMS_from;
 								sendTSMSMessage($REPLY_TEXT_CMD);
 								
-								//$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT_CMD));
+						
 								//we do not want to do any more besides commands here
 								logEntry("Exiting because command executed");
 								lockHelper::unlock();
@@ -272,12 +272,7 @@ if (file_exists($pluginConfigFile))
 								//generic message to display from control number just like a regular user
 								processSMSMessage($TSMS_from,$messageText);
 								logEntry("Back from Control number adding new message");
-							//	if($DEBUG) {
-									logEntry("TSMS to (user): ".$TSMS_from);
-									logEntry("TSMS FROM (tsms number): ".$TSMS_phoneNumber);
-									logEntry("TSMS message going out: ".$REPLY_TEXT);
-									
-							//	}
+				
 									sendTSMSMessage($REPLY_TEXT);
 									
 								
@@ -320,7 +315,7 @@ if (file_exists($pluginConfigFile))
 
 								logEntry("Message: ".$messageText. " PASSED");
 						
-							//	$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
+					
 								processSMSMessage($TSMS_from,$messageText);
 								sendTSMSMessage($REPLY_TEXT);
 					
@@ -329,8 +324,7 @@ if (file_exists($pluginConfigFile))
 								logEntry("message: ".$messageText." FAILED");
 								$REPLY_TEXT = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
 
-				
-								//$client->account->messages->create(array( 'To' => $TSMS_from, 'From' => $TSMS_phoneNumber, 'Body' => $REPLY_TEXT));
+
 								sendTSMSMessage($REPLY_TEXT);
 					
 
