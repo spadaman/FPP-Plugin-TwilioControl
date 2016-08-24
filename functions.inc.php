@@ -50,8 +50,6 @@ if($DEBUG)
 	//--data-urlencode 'From=$TSMS_phoneNumber' \
 	//--data-urlencode 'Body=$messageText' \
 	//-u $TSMS_account_sid:$TSMS_auth_token";
-	
-
 	//exec($TSMS_CURL_CMD);
 	
 	if($DEBUG) {
