@@ -81,6 +81,13 @@ if (file_exists($pluginConfigFile))
 	
 	
 	$ENABLED = urldecode($pluginSettings['ENABLED']);
+	//$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
+	
+	$CONTROL_NUMBER_ARRAY = explode(",",$CONTROL_NUMBERS);
+	
+	
+	$WHITELIST_NUMBER_ARRAY = explode(",",$WHITELIST_NUMBERS);
+	
 	
 
 	$TSMS_from = "";
@@ -117,12 +124,6 @@ if (file_exists($pluginConfigFile))
 		exit(0);
 	}
 	
-	
-//	$TSMS_from = "+16195666240";
-	//$TSMS_from = "+16198840018";
-	//$TSMS_body = "test";
-	
-	
 	if($DEBUG) {
 		logEntry("Twilio account_sid: ".$TSMS_account_sid);
 		logEntry("Twilio account pass: ".$TSMS_auth_token);
@@ -132,12 +133,77 @@ if (file_exists($pluginConfigFile))
 	
 	
 	}
-		//remove emoticon stuff
+	//remove emoticon stuff
 	$TSMS_body = stripHexChars($TSMS_body);
+	
+	if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY)) {
+		if(trim(strtoupper($TSMS_body)) == "ENABLE" && $ENABLED != "ON") {
+			$messageText = "ENABLING VIA CONTROL NUMBER";
+	
+	
+			foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
+				$TSMS_from = $NOTIFY_NUMBER;
+				sendTSMSMessage($messageText);
+			}
+			logEntry($messageText);
+	
+			WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
+			lockHelper::unlock();
+			exit(0);
+		}
+		if(trim(strtoupper($TSMS_body)) == "DISABLE" && $ENABLED == "ON") {
+			$messageText = "DISABLING VIA CONTROL NUMBER";
+	
+			foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
+				$TSMS_from = $NOTIFY_NUMBER;
+				sendTSMSMessage($messageText);
+			}
+	
+			WriteSettingToFile("ENABLED",urlencode("OFF"),$pluginName);
+			logEntry($messageText);
+			lockHelper::unlock();
+			exit(0);
+		}
+		
+	}
+	
+//	$TSMS_from = "+16195666240";
+	//$TSMS_from = "+16198840018";
+	//$TSMS_body = "test";
+	
+	
+
 	
 	if($DEBUG)
 		logEntry("TSMS Message body after strip hex function: ".$TSMS_body);
 			
+		if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY)) {
+			if(trim(strtoupper($TSMS_body)) == "ENABLE" && $ENABLED != "ON") {
+				$messageText = "ENABLING VIA CONTROL NUMBER";
+				
+				
+				foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
+					$TSMS_from = $NOTIFY_NUMBER;
+					sendTSMSMessage($messageText);
+				}
+				logEntry($messageText);
+				
+				WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
+				
+			}
+			if(trim(strtoupper($TSMS_body)) == "DISABLE" && $ENABLED == "ON") {
+				$messageText = "DISABLING VIA CONTROL NUMBER";
+				
+				foreach($CONTROL_NUMBERS as $NOTIFY_NUMBER) {
+					$TSMS_from = $NOTIFY_NUMBER;
+					sendTSMSMessage($messageText);
+				}
+				
+				WriteSettingToFile("ENABLED",urlencode("ON"),$pluginName);
+			}
+			logEntry($messageText);
+		}
+		
 	
 	if(strtoupper($ENABLED) != "ON") {
 		$REPLY_TEXT_PLUGIN_DISABLED = "We're sorry, the system is not accepting SMS at this time";
@@ -185,14 +251,7 @@ if (file_exists($pluginConfigFile))
 		$repeatCommandsArray = explode(",",trim(strtoupper($repeatCommands)));
 		$statusCommandsArray = explode(",",trim(strtoupper($statusCommands)));
 
-		//$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
 		
-		$CONTROL_NUMBER_ARRAY = explode(",",$CONTROL_NUMBERS);
-
-
-		$WHITELIST_NUMBER_ARRAY = explode(",",$WHITELIST_NUMBERS);
-
-
 
 
 			
