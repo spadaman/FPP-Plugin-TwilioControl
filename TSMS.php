@@ -190,6 +190,36 @@ if (file_exists($pluginConfigFile))
 			exit(0);
 		}
 		
+		if(trim(strtoupper($TSMS_body)) == "DISABLE" && $ENABLED == "OFF") {
+			$messageText = "The SMS request of DISABLE was not processed, the system is currently DISABLED";
+		
+		//	foreach($CONTROL_NUMBER_ARRAY as $NOTIFY_NUMBER) {
+			//	$TSMS_from = $NOTIFY_NUMBER;
+				logEntry("Sending notification to number: ".$TSMS_from);
+				sendTSMSMessage($messageText);
+			//}
+		
+			//WriteSettingToFile("ENABLED",urlencode("OFF"),$pluginName);
+			logEntry($messageText);
+			lockHelper::unlock();
+			exit(0);
+		}
+		
+		if(trim(strtoupper($TSMS_body)) == "ENABLE" && $ENABLED == "ON") {
+			$messageText = "The SMS request of ENABLE was not processed, the system is currently ENABLED";
+		
+			//	foreach($CONTROL_NUMBER_ARRAY as $NOTIFY_NUMBER) {
+			//	$TSMS_from = $NOTIFY_NUMBER;
+			logEntry("Sending notification to number: ".$TSMS_from);
+			sendTSMSMessage($messageText);
+			//}
+		
+			//WriteSettingToFile("ENABLED",urlencode("OFF"),$pluginName);
+			logEntry($messageText);
+			lockHelper::unlock();
+			exit(0);
+		}
+		
 	}
 	
 //	$TSMS_from = "+16195666240";
