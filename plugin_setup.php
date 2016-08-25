@@ -172,8 +172,7 @@ if($REPLY_TEXT == "") {
 
 <p>Known Issues:
 <ul>
-<li>the fpp daemon doesn't return an active playlist if the command is currently loading a function (i.e. starting a playlist or transitioning to events</li>
-<li>Thus you may get a No playlist active at this time</li>
+<li>None
 </ul>
 
 <p>Configuration:
@@ -186,9 +185,12 @@ if($REPLY_TEXT == "") {
 </ul>
 
 <ul>
-<li>This uses the profanity checker located at: https://www.neutrinoapi.com/api/bad-word-filter/</li>
-<li>You will need to visit this site and generate a userid and API Key</li>
-<li>NOTE: it has limited checks on FREE accounts</li>
+<li>This plugin allows the use of two profanity checkers. NeutrinoAPI and WebPurify</li>
+<li>Users have reported that Web Purify is much more thurough than Neutrino</li>
+<li>NeutrinoAPI profanity checker located at: https://www.neutrinoapi.com/api/bad-word-filter/</li>
+<li>WebPurify is located at http://webpurify.com</li>
+<li>You will need to visit their site and generate a userid and API Key</li>
+<li>NOTE: Each have limited checks on FREE accounts</li>
 
 <p>DISCLAIMER:
 <ul>
