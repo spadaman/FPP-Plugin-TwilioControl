@@ -1,5 +1,9 @@
 <?php
 
+//curl do nothing function
+function do_nothing($curl, $input) {
+	return 0; // aborts transfer with an error
+}
 //send response function
 function sendResponse($from,$REPLY_TEXT,$GMAIL_ADDRESS,$subject) {
 	global $DEBUG, $gv, $EMAIL, $RESPONSE_METHOD;

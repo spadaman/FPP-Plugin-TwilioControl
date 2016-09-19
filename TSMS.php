@@ -94,20 +94,7 @@ if (file_exists($pluginConfigFile))
 	$TSMS_body = "";
 	$TSMS_BODY_CONTAINED_HEX = false;
 	
-	//	$TSMS_from = "+16195666240";
-	//	$TSMS_from = "+16198840018";
-		//$TSMS_body = "test";
-		
 	
-	
-	//	$TSMS_from = "+16195666240";
-	//	$TSMS_from = "+16198840018";
-	//	$TSMS_body = "test";
-	
-	//arg0 is  the program
-	//arg1 is the first argument in the registration this will be --list
-	//$DEBUG=true;
-	//echo "Enabled: ".$ENABLED."<br/> \n";
 
 	if(isset($_POST['From']) || $TSMS_from != "") {
 	
@@ -222,10 +209,7 @@ if (file_exists($pluginConfigFile))
 		
 	}
 	
-//	$TSMS_from = "+16195666240";
-	//$TSMS_from = "+16198840018";
-	//$TSMS_body = "test";
-	
+
 
 		
 	

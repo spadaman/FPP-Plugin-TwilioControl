@@ -1,9 +1,6 @@
 <?php
 
-//curl do nothing function
-function do_nothing($curl, $input) {
-	return 0; // aborts transfer with an error
-}
+
 //send a TSMS message https post
 function sendTSMSMessage($messageText) {
 	global $DEBUG,$TSMS_BODY_CONTAINED_HEX,$TSMS_phoneNumber,$TSMS_from,$TSMS_body,$TSMS_account_sid, $TSMS_auth_token;
