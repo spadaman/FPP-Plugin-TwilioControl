@@ -94,6 +94,10 @@ if(isset($_POST['submit']))
 	
 	
 	WriteSettingToFile("REMOTE_FPP_IP",urlencode($_POST["REMOTE_FPP_IP"]),$pluginName);
+	
+	WriteSettingToFile("MATRIX_MODE",urlencode($_POST["MATRIX_MODE"]),$pluginName);
+	WriteSettingToFile("NAMES_PRE_TEXT",urlencode($_POST["NAMES_PRE_TEXT"]),$pluginName);
+	
 }
 
 	
@@ -123,6 +127,11 @@ if(isset($_POST['submit']))
 	$stopCommands = urldecode($pluginSettings['STOP_COMMANDS']);
 	$repeatCommands = urldecode($pluginSettings['REPEAT_COMMANDS']);
 	$statusCommands = urldecode($pluginSettings['STATUS_COMMANDS']);
+	
+	$MATRIX_MODE = urldecode($pluginSettings['MATRIX_MODE']);
+	
+	$NAMES_PRE_TEXT = urldecode($pluginSettings['NAMES_PRE_TEXT']);
+	
 	//if($DEBUG)
 		//print_r($pluginSettings);
 
@@ -328,7 +337,44 @@ echo "<input type=\"text\" name=\"CONTROL_NUMBERS\" size=\"16\" value=\"".$CONTR
 
 echo "<p/> \n";
 
+echo "Matrix Mode (Names Only, or Free Text): \n";
+echo "<select name=\"MATRIX_MODE\"> \n";
+if($MATRIX_MODE !="" ) {
+	switch ($MATRIX_MODE)
+	{
+		case "NAMES":
+			echo "<option selected value=\"".$MATRIX_MODE."\">Names Only</option> \n";
+			echo "<option value=\"FREE\">FREE TEXT</option> \n";
+			break;
 
+		case "FREE":
+			echo "<option selected value=\"".$MATRIX_MODE."\">Free Text</option> \n";
+			echo "<option value=\"NAMES\">NAMES Only</option> \n";
+			break;
+				
+		default:
+			echo "<option value=\"FREE\">Free Text</option> \n";
+			echo "<option value=\"NAMES\">NAMES Only</option> \n";
+			break;
+
+	}
+
+} else {
+
+	echo "<option value=\"FREE\">Free Text</option> \n";
+	echo "<option value=\"NAMES\">NAMES Only</option> \n";
+}
+echo "</select> \n";
+echo "<p/> \n";
+
+echo "If (NAMES) Mode, the Pre text to send in front of their name (e.g. Merry Christmas <name>) \n";
+echo "<br/> \n";
+
+echo "<input type=\"text\" name=\"NAMES_PRE_TEXT\" size=\"64\" value=\"".$NAMES_PRE_TEXT."\"> \n";
+
+ 
+
+echo "<p/> \n";
 
 echo "Profanity Engine: \n";
 echo "<select name=\"PROFANITY_ENGINE\"> \n";

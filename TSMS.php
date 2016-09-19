@@ -9,7 +9,8 @@ $myPid = getmypid();
 $messageQueue_Plugin = "MessageQueue";
 $MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
-
+//MATRIX ACTIVE - true / false to catch more messages if they arrive
+$MATRIX_ACTIVE = false;
 
 $skipJSsettings = 1;
 include_once("/opt/fpp/www/config.php");
@@ -79,6 +80,16 @@ if (file_exists($pluginConfigFile))
 	$REMOTE_FPP_ENABLED = urldecode($pluginSettings['REMOTE_FPP_ENABLED']);
 	$REMOTE_FPP_IP = urldecode($pluginSettings['REMOTE_FPP_IP']);
 	
+	$MATRIX_MODE = urldecode($pluginSettings['MATRIX_MODE']);
+	
+	$NAMES_PRE_TEXT = urldecode($pluginSettings['NAMES_PRE_TEXT']);
+	
+	$MATRIX_ACTIVE = urldecode($pluginSettings['MATRIX_ACTIVE']);
+	if($MATRIX_MODE == "") {
+		//default to free text
+		$MATRIX_MODE = "FREE";
+	}
+	
 	
 	$ENABLED = urldecode($pluginSettings['ENABLED']);
 	//$COMMAND_ARRAY = explode(",",trim(strtoupper($VALID_COMMANDS)));
@@ -133,6 +144,10 @@ if (file_exists($pluginConfigFile))
 		logEntry("string length of new body after processing: ".$lenNew);
 	}
 	
+	if($DEBUG) {
+		logEntry("Matrix mode: ".$MATRIX_MODE);
+		logEntry("Names pre text: ".$NAMES_PRE_TEXT);
+	}
 	
 	
 	if($lenNew !== $lenOriginal) {
@@ -223,10 +238,12 @@ if (file_exists($pluginConfigFile))
 		
 	
 	//want to reply even if locked / disabled
-	if(($pid = lockHelper::lock()) === FALSE) {
-		exit(0);
+	//if(($pid = lockHelper::lock()) === FALSE) {
+		
+	//	logEntry("System is busy: Matrix active status: ".$MATRIX_ACTIVE);
+	//	exit(0);
 	
-	}
+	//}
 	
 	
 	//if the command values do not have anything, set some defaults
@@ -261,87 +278,116 @@ if (file_exists($pluginConfigFile))
 
 		
 
+		//change the mode!
+		
 
 			
 
+
+			if($DEBUG)
+				logEntry("processing message: from: ".$TSMS_from." Message: ".$TSMS_body);
+
+			$messageText= preg_replace('/\s+/', ' ', $TSMS_body);
+			$messageParts = explode(" ",$messageText);
 			
-						if($DEBUG)
-							logEntry("processing message: from: ".$TSMS_from." Message: ".$TSMS_body);
+			//need to reformat from ISO +1 format to local number format or use +1 in control numbers
 
-						$messageText= preg_replace('/\s+/', ' ', $TSMS_body);
-						$messageParts = explode(" ",$messageText);
+			if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY))
+			{
+				///message used is to make sure that we do not process a message twice if it is from a number that is both a whitelist AND control numbers
+				$MESSAGE_USED=true;
+				logEntry("Control number found: ".$TSMS_from);
+	
+
 						
-						//need to reformat from ISO +1 format to local number format or use +1 in control numbers
-
-						if(in_array($TSMS_from,$CONTROL_NUMBER_ARRAY))
-						{
-							///message used is to make sure that we do not process a message twice if it is from a number that is both a whitelist AND control numbers
-							$MESSAGE_USED=true;
-							logEntry("Control number found: ".$TSMS_from);
-				
-
-									
-							if(in_array(trim(strtoupper($messageParts[0])),$playCommandsArray)) {
-								logEntry( "SMS play cmd FOUND!!!");
-								$CMD = "PLAY";
-								
-							}
-									
-								
-							if(in_array(trim(strtoupper($messageParts[0])),$stopCommandsArray)) {
-								logEntry( "SMS stop cmd FOUND!!!");
-								$CMD = "STOP";
-							
-							} 
-							
-							if(in_array(trim(strtoupper($messageParts[0])),$repeatCommandsArray)) {
-								logEntry( "SMS repeat cmd FOUND!!!");
-								$CMD = "REPEAT";
-								
-							} 
-							
-							if(in_array(trim(strtoupper($messageParts[0])),$statusCommandsArray)) {
-								logEntry( "SMS status cmd FOUND!!!");
-								$CMD = "STATUS";
-							}
-
-							
-						//	if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
-						if($CMD != "") {
-								logEntry("Command request: ".$messageText. " in uppercase is in control array");
-								//do we have a playlist name?
-								if($messageParts[1] != "") {
-									processSMSCommand($TSMS_from,$CMD,$messageParts[1]);
-									//processSMSCommand($from,$messageParts[0],$messageParts[1]);
-								} else {
-
-									//play the configured playlist@!!!! from the plugin
-									processSMSCommand($TSMS_from,$CMD,$PLAYLIST_NAME);
-									//processSMSCommand($from,$messageParts[0],$PLAYLIST_NAME);
-								}
-								
-								
-								$REPLY_TEXT_CMD = "Thank you - your command has been accepted from control number: ".$TSMS_from;
-								sendTSMSMessage($REPLY_TEXT_CMD);
-								
+				if(in_array(trim(strtoupper($messageParts[0])),$playCommandsArray)) {
+					logEntry( "SMS play cmd FOUND!!!");
+					$CMD = "PLAY";
+					
+				}
 						
-								//we do not want to do any more besides commands here
-								logEntry("Exiting because command executed");
-								lockHelper::unlock();
-								exit(0);
-									
-							} else {
-								//generic message to display from control number just like a regular user
-								processSMSMessage($TSMS_from,$messageText);
-								logEntry("Back from Control number adding new message");
+					
+				if(in_array(trim(strtoupper($messageParts[0])),$stopCommandsArray)) {
+					logEntry( "SMS stop cmd FOUND!!!");
+					$CMD = "STOP";
 				
-									sendTSMSMessage($REPLY_TEXT);
-									
-								
-							
-							}
-								
+				} 
+				
+				if(in_array(trim(strtoupper($messageParts[0])),$repeatCommandsArray)) {
+					logEntry( "SMS repeat cmd FOUND!!!");
+					$CMD = "REPEAT";
+					
+				} 
+				
+				if(in_array(trim(strtoupper($messageParts[0])),$statusCommandsArray)) {
+					logEntry( "SMS status cmd FOUND!!!");
+					$CMD = "STATUS";
+				}
+
+				if(trim(strtoupper($messageParts[0]))== "MODE") {
+				
+					//find the mode
+					
+					$MODE = strtoupper($messageParts[1]);
+					
+					logEntry("Mode: ".$MODE);
+					
+					if($MODE == "NAMES" || $MODE == "FREE") {
+						logEntry("We got a mode from a control number");
+					
+					
+						WriteSettingToFile("MATRIX_MODE",urlencode($MODE),$pluginName);
+					
+						$REPLY_TEXT_CMD = "Mode changed to ".$MODE." from control number: ".$TSMS_from;
+						sendTSMSMessage($REPLY_TEXT_CMD);
+						lockHelper::unlock();
+						exit(0);
+						
+						} else {
+							$REPLY_TEXT_CMD = "Not a valid mode: ".$MODE." from control number: ".$TSMS_from;
+							sendTSMSMessage($REPLY_TEXT_CMD);
+							lockHelper::unlock();
+							exit(0);
+					}
+				}
+				
+				
+				//	if(in_array(trim(strtoupper($messageParts[0])),$COMMAND_ARRAY)) {
+				if($CMD != "") {
+						logEntry("Command request: ".$messageText. " in uppercase is in control array");
+						//do we have a playlist name?
+						if($messageParts[1] != "") {
+							processSMSCommand($TSMS_from,$CMD,$messageParts[1]);
+							//processSMSCommand($from,$messageParts[0],$messageParts[1]);
+						} else {
+
+							//play the configured playlist@!!!! from the plugin
+							processSMSCommand($TSMS_from,$CMD,$PLAYLIST_NAME);
+							//processSMSCommand($from,$messageParts[0],$PLAYLIST_NAME);
 						}
+						
+						
+						$REPLY_TEXT_CMD = "Thank you - your command has been accepted from control number: ".$TSMS_from;
+						sendTSMSMessage($REPLY_TEXT_CMD);
+						
+				
+						//we do not want to do any more besides commands here
+						logEntry("Exiting because command executed");
+						lockHelper::unlock();
+						exit(0);
+							
+					} else {
+						//generic message to display from control number just like a regular user
+						processSMSMessage($TSMS_from,$messageText);
+						logEntry("Back from Control number adding new message");
+		
+							sendTSMSMessage($REPLY_TEXT);
+							
+						
+					
+					}
+						
+				}
 
 						if(in_array($TSMS_from,$WHITELIST_NUMBER_ARRAY) && !$MESSAGE_USED)
 
@@ -396,14 +442,19 @@ if (file_exists($pluginConfigFile))
 						
 
 						}
+						
 					
 
 					if($IMMEDIATE_OUTPUT != "ON") {
 						logEntry("NOT immediately outputting to matrix");
-					} else {
+					} elseif(!$MATRIX_ACTIVE) {
 						logEntry("IMMEDIATE OUTPUT ENABLED");
 						logEntry("Matrix location: ".$MATRIX_LOCATION);
 						logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
+						$MATRIX_ACTIVE = true;
+						WriteSettingToFile("MATRIX_ACTIVE",urlencode($MATRIX_ACTIVE),$pluginName);
+						logEntry("MATRIX ACTIVE: ".$MATRIX_ACTIVE);
+						
 
 						if($MATRIX_LOCATION != "127.0.0.1") {
 							$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1'";// > /dev/null";
@@ -434,6 +485,8 @@ if (file_exists($pluginConfigFile))
 							//lockHelper::unlock();
 							//exit(0);
 						}
+						$MATRIX_ACTIVE = false;
+						WriteSettingToFile("MATRIX_ACTIVE",urlencode($MATRIX_ACTIVE),$pluginName);
 					}
 
 			//	sleep(1);

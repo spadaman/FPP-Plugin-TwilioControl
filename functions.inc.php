@@ -184,8 +184,28 @@ function getFPPLogLevel() {
 	
 }
 function processSMSMessage($from,$messageText) {
-        global $pluginName,$MESSAGE_QUEUE_PLUGIN_ENABLED;
+        global $pluginName,$MESSAGE_QUEUE_PLUGIN_ENABLED, $MATRIX_MODE, $NAMES_PRE_TEXT;
 
+        switch ($MATRIX_MODE) {
+        	
+        	case "FREE":
+        	
+        		
+        		//do nothing
+        	
+        		break;
+        		
+        	case "NAMES":
+        		
+        		$messageText = $NAMES_PRE_TEXT." ".$messageText;
+        		
+        		break;
+        	
+        	default:
+        		
+        		break;
+        		
+        }
 
         logEntry("Adding message from: ".$from. ": ".$messageText. " to message queue");
         if($MESSAGE_QUEUE_PLUGIN_ENABLED) {
