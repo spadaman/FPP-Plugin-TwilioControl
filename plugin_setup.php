@@ -5,7 +5,7 @@ include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
-
+$pluginVersion ="2.0";
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
@@ -177,7 +177,7 @@ if($REPLY_TEXT == "") {
 
 <div id="TwilioControl" class="settings">
 <fieldset>
-<legend>Twilio SMScontrol Support Instructions</legend>
+<legend><?php echo $pluginName." Version: ".$pluginVersion;?> Support Instructions</legend>
 
 <p>Known Issues:
 <ul>
