@@ -456,10 +456,11 @@ if (file_exists($pluginConfigFile))
 						logEntry("MATRIX ACTIVE: ".$MATRIX_ACTIVE);
 						
 
-						if($MATRIX_LOCATION != "127.0.0.1") {
-							$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1'";// > /dev/null";
-							$curlURL = "http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1";
-							logEntry("REMOTE MATRIX TRIGGER: ".$remoteCMD);
+						//if($MATRIX_LOCATION != "127.0.0.1") {
+							//$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1'";// > /dev/null";
+							$curlURL = "http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1&subscribedPlugin=".$pluginName."&onDemandMessage=".urlencode($messageText);
+							if($DEBUG)
+							logEntry("MATRIX TRIGGER: ".$curlURL);
 							
 							$ch = curl_init();
 							curl_setopt($ch,CURLOPT_URL,$curlURL);
@@ -476,15 +477,13 @@ if (file_exists($pluginConfigFile))
 						//	lockHelper::unlock();
 						//	exit(0);
 							//exec($remoteCMD);
-						} else {
-							$IMMEDIATE_CMD = $settings['pluginDirectory']."/".$MATRIX_MESSAGE_PLUGIN_NAME."/matrix.php";
-							logEntry("LOCAL command: ".$IMMEDIATE_CMD);
-						//	$forkResult = fork($IMMEDIATE_CMD);
-							exec($IMMEDIATE_CMD);
-							//forkExec($IMMEDIATE_CMD);
-							//lockHelper::unlock();
-							//exit(0);
-						}
+					//	} else {
+					//		$IMMEDIATE_CMD = $settings['pluginDirectory']."/".$MATRIX_MESSAGE_PLUGIN_NAME."/matrix.php";
+					//		logEntry("LOCAL command: ".$IMMEDIATE_CMD);
+					
+						//	exec($IMMEDIATE_CMD);
+							
+						//}
 						$MATRIX_ACTIVE = false;
 						WriteSettingToFile("MATRIX_ACTIVE",urlencode($MATRIX_ACTIVE),$pluginName);
 					}
