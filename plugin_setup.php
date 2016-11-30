@@ -5,12 +5,14 @@ include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
-$pluginVersion ="2.2";
+$pluginVersion ="2.3";
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
 
+
+//2.3 - Nov 30 2016 - Add default commands to new install
 
 //2.2 - Nov 30 2016 - remove the /usr/bin/php from the header of TSMS.php - causing debugger errors on Twilio side. May need to 
 //investigate providing a proper response XML to Twilio as well.
@@ -138,6 +140,24 @@ if(isset($_POST['submit']))
 	
 	//if($DEBUG)
 		//print_r($pluginSettings);
+		
+	//load default commands if first install
+	if(trim($playCommands) == "") {
+		$playCommands = "play";
+	}
+	
+	if(trim($stopCommands) == "") {
+		$stopCommands = "terminate";
+	}
+	
+	if(trim($repeatCommands) == "") {
+		$repeatCommands = "repeat";
+	}
+	
+	if(trim($statusCommands) == "") {
+		$statusCommands = "status";
+	}
+	
 
 if($REPLY_TEXT == "") {
 	$REPLY_TEXT = "Thank you for your message, it has been added to the Queue";
