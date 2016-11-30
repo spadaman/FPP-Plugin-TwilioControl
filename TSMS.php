@@ -1,5 +1,4 @@
-#!/usr/bin/php
-<?
+<?php
 error_reporting(0);
 //
 //Version 1 for release
