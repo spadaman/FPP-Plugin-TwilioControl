@@ -5,11 +5,15 @@ include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
-$pluginVersion ="2.1";
+$pluginVersion ="2.2";
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
+
+
+//2.2 - Nov 30 2016 - remove the /usr/bin/php from the header of TSMS.php - causing debugger errors on Twilio side. May need to 
+//investigate providing a proper response XML to Twilio as well.
 
 
 //arg0 is  the program
