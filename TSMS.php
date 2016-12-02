@@ -451,6 +451,9 @@ if (file_exists($pluginConfigFile))
 								}
 							}
 							
+							logEntry("No blacklist");
+							
+							logEntry("Continuing to check for Profanity");
 							//need to check for profanity
 							//profanity checker API
 							switch($PROFANITY_ENGINE) {
