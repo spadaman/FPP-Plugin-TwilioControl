@@ -56,7 +56,7 @@ $profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName
 
 
 
-$pluginMessages = getPluginMessages($pluginName, 0);
+$pluginMessages = getPluginMessages($pluginName, 0, $messageQueueFile);
 
 //print_r($pluginMessages);
 $messageCount = count($pluginMessages);
