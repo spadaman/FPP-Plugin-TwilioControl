@@ -19,7 +19,7 @@ function addBlacklist($messageText,$pluginName,$pluginData="") {
 	file_put_contents($blacklistFile, $messageLine, FILE_APPEND | LOCK_EX);
 
 }
-?>
+
 
 //add profanity message to profanity file
 function addProfanityMessage($messageText,$pluginName,$pluginData="") {
