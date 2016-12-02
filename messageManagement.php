@@ -13,6 +13,9 @@ $MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
 $logFile = $settings['logDirectory']."/".$pluginName.".log";
 
+$pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
+if (file_exists($pluginConfigFile))
+	$pluginSettings = parse_ini_file($pluginConfigFile);
 
 $messageQueuePluginPath = $settings['pluginDirectory']."/".$messageQueue_Plugin."/";
 
