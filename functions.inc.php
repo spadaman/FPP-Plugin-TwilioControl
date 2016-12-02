@@ -12,15 +12,15 @@ function checkBlacklistNumber($numberToCheck) {
 	
 	//open same file and use "w" to clear file
 	
-	$f=fopen($blacklistFile,"r");
+		$fc=file($blacklistFile);
 	
 	//loop through array using foreach
 	
-	foreach($f as $line)
+	foreach($fc as $line)
 	{
-		if (strstr($line,$numberToCheck)) //look for $key in each line
+		if (strstr(urldecode($line),urldecode($numberToCheck))) //look for $key in each line
 			logEntry("Found number: ".$numberToCheck." in blacklist");
-			fclose($f);
+			fclose($fc);
 			return true;
 	}
 	if($DEBUG){
