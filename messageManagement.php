@@ -13,7 +13,6 @@ $MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 $logFile = $settings['logDirectory']."/".$pluginName.".log";
 
 
-
 $messageQueuePluginPath = $settings['pluginDirectory']."/".$messageQueue_Plugin."/";
 
 $messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
@@ -27,8 +26,27 @@ if(file_exists($messageQueuePluginPath."functions.inc.php"))
 	logEntry("Message Queue Plugin not installed, some features will be disabled");
 }
 
+$blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
+
+if($_POST['addBlacklist'] != "") {
+	logEntry("Adding a blacklist number");
+	
+	for($i=0;$i<count($_POST["product_name"]);$i++)
+	{
+		$arr[]["product_id"]=$i;
+		$arr[]["product_name_".$id]=$_POST["product_name"][$i];
+		$arr[]["product_license_".$id]=$_POST["product_license"][$i];
+	}
+	
+	$blacklistNumber = $_POST['phoneNumber'];
+	$messageText = $_POST['messageText'];
+	
+	addBlacklist($messageText,$pluginName,$blacklistNumber);
+}
 
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
+
+
 
 $profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
 
@@ -39,6 +57,8 @@ $pluginMessages = getPluginMessages($pluginName, 0);
 
 //print_r($pluginMessages);
 $messageCount = count($pluginMessages);
+
+echo "<form name=\"messageManagement\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."\"> \n";
 
 
 echo "<center><h1><b>".$pluginName." Message Management</b></h1></center> <br/> \n";
@@ -72,11 +92,17 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[1]);
+	echo "<input type=\"hidden\" name=\"messageText[]\"> \n";
 	echo "</td> \n";
 	
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
+	echo "<input type=\"hidden\" name=\"phoneNumber[]\"> \n";
+	echo "</td> \n";
+	
+	echo "<td> \n";
+	echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
 	echo "</td> \n";
 	//plugin Subscription
 	//echo "<td> \n";
@@ -132,11 +158,17 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[1]);
+	echo "<input type=\"hidden\" name=\"messageText[]\"> \n";
 	echo "</td> \n";
 	
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
+	echo "<input type=\"hidden\" name=\"phoneNumber[]\"> \n";
+	echo "</td> \n";
+	
+	echo "<td> \n";
+	echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
 	echo "</td> \n";
 
 	//plugin Subscription
@@ -151,5 +183,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 
 echo "</table> \n";
 //echo "</textarea> \n";
+
+echo "</form> \n";
 
 ?>

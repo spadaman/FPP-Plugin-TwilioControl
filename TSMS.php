@@ -32,6 +32,8 @@ $messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_P
 
 $profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
 
+$blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
+
 if(file_exists($messageQueuePluginPath."functions.inc.php"))
 {
 	include $messageQueuePluginPath."functions.inc.php";
