@@ -188,13 +188,8 @@ $messageCount = count($pluginMessages);
 //echo "<textarea class=\"FormElement\" name=\"messages\" id=\"messages\" cols=\"40\" rows=\"".$messageCount."\">\n";
 echo "<table cellspacing=\"3\" cellpadding=\"3\" border=\"1\"> \n";
 //check if blacklisted..
-	$blackListCheck = checkBlacklistNumber(urldecode($messageQueueParts[3]));
+echo "<tr> \n";
 	
-	if($blackListCheck) {
-		echo "<tr bgcolor=\"red\"> \n";
-	} else {
-		echo "<tr> \n";
-	}
 echo "<td> \n";
 echo "Date Received \n";
 echo "</td> \n";
@@ -207,10 +202,16 @@ echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
 
-	echo "<tr> \n";
+	
 
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
-
+	$blackListCheck = checkBlacklistNumber(urldecode($messageQueueParts[3]));
+	
+	if($blackListCheck) {
+		echo "<tr bgcolor=\"red\"> \n";
+	} else {
+		echo "<tr> \n";
+	}
 	//unix timestamp
 	echo "<td> \n";
 
