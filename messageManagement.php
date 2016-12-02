@@ -127,6 +127,10 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	//check if blacklisted..
 	$blackListCheck = checkBlacklistNumber(urldecode($messageQueueParts[3]));
 	
+	if($DEBUG) {
+		logEntry("Returned blaklist check: ".$blackListCheck);
+	
+	}
 	if($blackListCheck) {
 		echo "<tr bgcolor=\"red\"> \n";
 	} else {
@@ -213,6 +217,10 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
 	$blackListCheck = checkBlacklistNumber(urldecode($messageQueueParts[3]));
 	
+	if($DEBUG) {
+		logEntry("Returned blaklist check: ".$blackListCheck);
+		
+	}
 	if($blackListCheck) {
 		echo "<tr bgcolor=\"red\"> \n";
 	} else {
