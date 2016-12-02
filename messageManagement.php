@@ -189,4 +189,70 @@ echo "</table> \n";
 
 echo "</form> \n";
 
+
+$pluginMessages = null;
+$messageCount = 0;
+$pluginMessages = getPluginMessages($pluginName, 0, $blacklistFile);
+
+//print_r($pluginMessages);
+$messageCount = count($pluginMessages);
+
+echo "<hr> \n";
+echo "<center><b><h2>Blacklisted Messages</h2></b></center>\n";
+
+
+//echo "<textarea class=\"FormElement\" name=\"messages\" id=\"messages\" cols=\"40\" rows=\"".$messageCount."\">\n";
+echo "<table cellspacing=\"3\" cellpadding=\"3\" border=\"1\"> \n";
+echo "<tr> \n";
+echo "<td> \n";
+echo "Date Received \n";
+echo "</td> \n";
+echo "<td> \n";
+echo "Message \n";
+echo "</td> \n";
+echo "<td> \n";
+echo "From number \n";
+echo "</td> \n";
+echo "</tr> \n";
+for($i=0;$i<=$messageCount-1;$i++ ) {
+
+	echo "<tr> \n";
+
+	$messageQueueParts = explode("|",$pluginMessages[$i]);
+
+	//unix timestamp
+	echo "<td> \n";
+
+	echo date('d M Y H:i:s',$messageQueueParts[0]);
+	echo "</td> \n";
+
+	echo "<td> \n";
+	//message data
+	echo urldecode($messageQueueParts[1]);
+	
+	echo "</td> \n";
+
+	echo "<td> \n";
+	//message data
+	echo urldecode($messageQueueParts[3]);
+	
+	echo "</td> \n";
+
+	echo "<td> \n";
+	echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
+	echo "</td> \n";
+
+	//plugin Subscription
+	//echo "<td> \n";
+
+	//echo $messageQueueParts[2];
+	//echo "</td> \n";
+
+	echo "</tr> \n";
+	//echo $pluginMessages[$i];
+}
+
+echo "</table> \n";
+//echo "</textarea> \n";
+
 ?>
