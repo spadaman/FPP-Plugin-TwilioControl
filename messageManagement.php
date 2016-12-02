@@ -37,9 +37,14 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 	logEntry("Adding a blacklist number");
 	
 		
-		$blacklistNumber=$_POST["phoneNumber"];
-		$messageText=$_POST["messageText"];
+		$blacklistNumber=$_POST['phoneNumber'];
+		$messageText=$_POST['messageText'];
+		$messageID = $_POST['messageID'];
 	
+		if($DEBUG) {
+			echo "Black listing phone number: ID: ".$messageID." number: ".$blacklistNumber. " text: ".$messageText."<br/> \n";
+			
+		}
 	
 	//$blacklistNumber = $_POST['phoneNumber'];
 	//$messageText = $_POST['messageText'];
@@ -50,7 +55,7 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 	
 	}
 	
-	if(isset( $_POST['delBlacklist'])) {// != "") {
+	if(isset($_POST['delBlacklist'])) {// != "") {
 		
 		logEntry("Removing a blacklist number");
 		
