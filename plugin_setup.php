@@ -107,6 +107,7 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("MATRIX_MODE",urlencode($_POST["MATRIX_MODE"]),$pluginName);
 	WriteSettingToFile("NAMES_PRE_TEXT",urlencode($_POST["NAMES_PRE_TEXT"]),$pluginName);
 	
+	WriteSettingToFile("PROFANITY_RESPONSE",urlencode($_POST["PROFANITY_RESPONSE"]),$pluginName);
 }
 
 	
@@ -140,6 +141,12 @@ if(isset($_POST['submit']))
 	$MATRIX_MODE = urldecode($pluginSettings['MATRIX_MODE']);
 	
 	$NAMES_PRE_TEXT = urldecode($pluginSettings['NAMES_PRE_TEXT']);
+	
+	$PROFANITY_RESPONSE = urldecode($pluginSettings['PROFANITY_RESPONSE']);
+	
+	if (trim($PROFANITY_RESPONSE) == "") {
+		$PROFANITY_RESPONSE = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
+	}
 	
 	//if($DEBUG)
 		//print_r($pluginSettings);
@@ -446,6 +453,18 @@ echo "<input type=\"text\" name=\"API_KEY\" size=\"64\" value=\"".$API_KEY."\"> 
 
 
 echo "<p/> \n";
+
+echo "<hr> \n";
+echo "Responses: \n";
+echo "<br/> \n";
+echo "Response when the text contains profanity: \n";
+echo "<p/> \n";
+
+
+
+echo "<input type=\"text\" name=\"PROFANITY_RESPONSE\" size=\"64\" value=\"".$PROFANITY_RESPONSE."\"> \n";
+
+
 
 ?>
 <p/>

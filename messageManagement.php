@@ -33,6 +33,23 @@ $delBlacklistNumber=null;
 $blacklistNumber=null;
 $messageText=null;
 
+
+if(isset($_POST['sendReply'])) {
+	$blacklistNumber=urldecode($_POST['phoneNumber']);
+	$profanityReply=urldecode($_POST['profanityReply']);
+	$messageID = $_POST['messageID'];
+
+	
+	$TSMS_from = $blacklistNumber;
+	
+	if(substr($TSMS_from, 0) != "+") {
+		$TSMS_from .= "+".$TSMS_from;
+		
+	}
+	logEntry("Sending a reply ".$profanityReply." to phone number: ".$TSMS_from);
+	sendTSMSMessage($profanityReply);
+}
+
 if(isset($_POST['addBlacklist'])) {// != "") {
 	logEntry("Adding a blacklist number");
 	
@@ -222,6 +239,12 @@ echo "</td> \n";
 echo "<td> \n";
 echo "From number \n";
 echo "</td> \n";
+echo "<td> \n";
+echo "Blacklist Status \n";
+echo "</td> \n";
+echo "<td> \n";
+echo "Send message \n";
+echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
 
@@ -270,6 +293,10 @@ if($blackListCheck)  {
 
 	//echo $messageQueueParts[2];
 	//echo "</td> \n";
+	echo "<td> \n";
+	echo "<input type=\"text\" size=\"64\" name=\"profanityReply\"> \n";
+	echo "<input type=\"submit\" name=\"sendReply\" value=\"SEND\"> \n";
+	echo "</td> \n";
 
 	echo "</tr> \n";
 	//echo $pluginMessages[$i];

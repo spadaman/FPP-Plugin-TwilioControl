@@ -103,6 +103,7 @@ if (file_exists($pluginConfigFile))
 	$WHITELIST_NUMBER_ARRAY = explode(",",$WHITELIST_NUMBERS);
 	
 	
+	$PROFANITY_RESPONSE = urldecode($pluginSettings['PROFANITY_RESPONSE']);
 
 	$TSMS_from = "";
 	$TSMS_body = "";
@@ -530,10 +531,10 @@ if (file_exists($pluginConfigFile))
 
 							} else {
 								logEntry("message: ".$messageText." FAILED");
-								$REPLY_TEXT = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
+								//$REPLY_TEXT = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
 
 
-								sendTSMSMessage($REPLY_TEXT);
+								sendTSMSMessage($PROFANITY_RESPONSE);
 								addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
 								logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
 								
