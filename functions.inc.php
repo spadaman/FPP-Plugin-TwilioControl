@@ -26,31 +26,21 @@ function checkBlacklistNumber($numberToCheck) {
 			
 			
 		}
-		
-		$pos = strpos_array($line, $numberToCheck);
-		if($pos >0) {
+	$line = urldecode($line);
+	$numberToCheck = urldecode($numberToCheck);
+	
+		if (stripos($line, $numberToCheck) !== false) {
+			logEntry("Found number in blacklist: ".$numberToCheck);
+			
 			return true;
 		}
+		
 	}
+	logEntry("Did not find number: ".$numberToCheck." in blacklist");
 	return false;
 }
 
-function strpos_array($haystack, $needles) {
-	if ( is_array($needles) ) {
-		foreach ($needles as $str) {
-			if ( is_array($str) ) {
-				$pos = strpos_array($haystack, $str);
-			} else {
-				$pos = strpos($haystack, $str);
-			}
-			if ($pos !== FALSE) {
-				return $pos;
-			}
-		}
-	} else {
-		return 0;
-	}
-}
+
 //add to blacklist
 function addBlacklist($messageText,$pluginName,$pluginData="") {
 
