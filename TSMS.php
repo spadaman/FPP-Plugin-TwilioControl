@@ -477,7 +477,7 @@ if (file_exists($pluginConfigFile))
 								logEntry("Message: ".$messageText. " PASSED");
 						
 					
-								processSMSMessage($TSMS_from,$messageText);
+								processSMSMessage($TSMS_from,$messageText, $messageQueueFile);
 								sendTSMSMessage($REPLY_TEXT);
 					
 

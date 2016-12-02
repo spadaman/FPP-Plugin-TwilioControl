@@ -204,9 +204,12 @@ function getFPPLogLevel() {
 	return $logLevel;
 	
 }
-function processSMSMessage($from,$messageText) {
+function processSMSMessage($from,$messageText, $messageFile="") {
         global $pluginName,$MESSAGE_QUEUE_PLUGIN_ENABLED, $MATRIX_MODE, $NAMES_PRE_TEXT,$messageQueueFile;
 
+        if($messageFile == "") {
+        	$messageFile = $messageQueueFile;
+        }
         switch ($MATRIX_MODE) {
         	
         	case "FREE":
@@ -230,7 +233,7 @@ function processSMSMessage($from,$messageText) {
 
         logEntry("Adding message from: ".$from. ": ".$messageText. " to message queue");
         if($MESSAGE_QUEUE_PLUGIN_ENABLED) {
-                addNewMessage($messageText,$pluginName,$from);
+                addNewMessage($messageText,$pluginName,$from, $messageFile);
         } else {
                 logEntry("MessageQueue plugin is not enabled/installed: Cannot add message: ".$messageText);
         }
