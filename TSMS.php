@@ -416,7 +416,7 @@ if (file_exists($pluginConfigFile))
 							} else {
 								//check for number in blacklist
 								for($i=0;$i<=count($blacklistMessages)-1;$i++) {
-									$messageText = "";
+									//$messageText = "";
 									$messageQueueParts = explode("|",$blacklistMessages[$i]);
 									
 									$blacklistDate = date('d M Y H:i:s',$messageQueueParts[0]);
