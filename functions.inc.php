@@ -1,4 +1,34 @@
 <?php
+
+//check to see if a number is blacklisted
+function checkBlacklistNumber($numberToCheck) {
+	
+	global $blacklistFile;
+	
+	
+	
+	//open same file and use "w" to clear file
+	
+	$f=fopen($blacklistFile,"r");
+	
+	//loop through array using foreach
+	
+	foreach($f as $line)
+	{
+		if (strstr($line,$numberToCheck)) //look for $key in each line
+			logEntry("Found number: ".$numberToCheck." in blacklist");
+			fclose($f);
+			return true;
+	}
+	if($DEBUG){
+		logEntry("Did not find number: ".$numberToCheck." in blacklist");
+		
+	}
+	
+	return false;
+	//fclose($f);
+}
+
 //add to blacklist
 function addBlacklist($messageText,$pluginName,$pluginData="") {
 
