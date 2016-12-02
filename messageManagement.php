@@ -238,9 +238,6 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	
 	echo "</td> \n";
 
-	echo "<td> \n";
-	echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
-	echo "</td> \n";
 
 	//plugin Subscription
 	//echo "<td> \n";
