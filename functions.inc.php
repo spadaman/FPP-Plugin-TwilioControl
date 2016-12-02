@@ -52,13 +52,17 @@ function checkBlacklistNumber($numberToCheck) {
 //add to blacklist
 function addBlacklist($messageText,$pluginName,$pluginData="") {
 
-	global $blacklistFile;
+	global $blacklistFile, $DEBUG;
 
 	//logEntry("MESSAGEQUEUE_PLUGIN: Message File: ".$messageQueueFile);
 
 	//	logEntry("MESSAGEQUEUE_PLUGIN: Adding message to message queue: ".$messageText." :".$pluginName." :".$pluginData);
 
-
+	if($DEBUG) {
+		logEntry("Adding number: ".$pluginData. " to blacklist file: ".$blacklistFile);
+		
+	}
+	
 	$messageLine = "";
 
 	$messageLine = time()."| ".urlencode($messageText) . " | ".$pluginName. " | ".$pluginData."\n";
