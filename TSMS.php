@@ -282,23 +282,7 @@ if (file_exists($pluginConfigFile))
 		
 
 		//change the mode!
-		//profanity checker API
-		switch($PROFANITY_ENGINE) {
-				
-			case "NEUTRINO":
-				$profanityCheck = check_for_profanity_neutrinoapi($messageText);
-				break;
 		
-			case "WEBPURIFY":
-				$profanityCheck = check_for_profanity_WebPurify($messageText);
-				break;
-		
-			default:
-				//default turn off profanity check
-				$profanityCheck == false;
-				break;
-		}
-
 			
 
 
@@ -460,6 +444,23 @@ if (file_exists($pluginConfigFile))
 										addNewMessage($messageText,$pluginName,$TSMS_from,$messageQueueFile);
 										
 										//also check for profanity since we are going to exit anyway
+										//profanity checker API
+										switch($PROFANITY_ENGINE) {
+										
+											case "NEUTRINO":
+												$profanityCheck = check_for_profanity_neutrinoapi($messageText);
+												break;
+										
+											case "WEBPURIFY":
+												$profanityCheck = check_for_profanity_WebPurify($messageText);
+												break;
+										
+											default:
+												//default turn off profanity check
+												$profanityCheck == false;
+												break;
+										}
+										
 										if(!$profanityCheck) {
 										
 											logEntry("Message: ".$messageText. " PASSED");
@@ -500,7 +501,23 @@ if (file_exists($pluginConfigFile))
 							
 							logEntry("Continuing to check for Profanity");
 							//need to check for profanity
-
+							//profanity checker API
+							switch($PROFANITY_ENGINE) {
+							
+								case "NEUTRINO":
+									$profanityCheck = check_for_profanity_neutrinoapi($messageText);
+									break;
+							
+								case "WEBPURIFY":
+									$profanityCheck = check_for_profanity_WebPurify($messageText);
+									break;
+							
+								default:
+									//default turn off profanity check
+									$profanityCheck == false;
+									break;
+							}
+								
 							
 							if(!$profanityCheck) {
 
