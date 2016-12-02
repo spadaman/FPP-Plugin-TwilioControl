@@ -108,6 +108,8 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("NAMES_PRE_TEXT",urlencode($_POST["NAMES_PRE_TEXT"]),$pluginName);
 	
 	WriteSettingToFile("PROFANITY_RESPONSE",urlencode($_POST["PROFANITY_RESPONSE"]),$pluginName);
+	
+	WriteSettingToFile("PROFANITY_THRESHOLD",urlencode($_POST["PROFANITY_THRESHOLD"]),$pluginName);
 }
 
 	
@@ -143,6 +145,8 @@ if(isset($_POST['submit']))
 	$NAMES_PRE_TEXT = urldecode($pluginSettings['NAMES_PRE_TEXT']);
 	
 	$PROFANITY_RESPONSE = urldecode($pluginSettings['PROFANITY_RESPONSE']);
+	
+	$PROFANITY_THRESHOLD =urldecode($pluginSettings['PROFANITY_THRESHOLD']);
 	
 	if (trim($PROFANITY_RESPONSE) == "") {
 		$PROFANITY_RESPONSE = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
@@ -463,6 +467,15 @@ echo "<p/> \n";
 
 
 echo "<input type=\"text\" name=\"PROFANITY_RESPONSE\" size=\"64\" value=\"".$PROFANITY_RESPONSE."\"> \n";
+
+echo "<p/> \n";
+
+echo "Profanity Threshold. If a user sends in more than this number of profanity messages, will alert the control number: \n";
+echo "<p/> \n";
+
+
+
+echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"64\" value=\"".$PROFANITY_THRESHOLD."\"> \n";
 
 
 

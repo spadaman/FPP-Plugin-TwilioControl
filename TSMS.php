@@ -104,6 +104,8 @@ if (file_exists($pluginConfigFile))
 	
 	
 	$PROFANITY_RESPONSE = urldecode($pluginSettings['PROFANITY_RESPONSE']);
+	
+	$PROFANITY_THRESHOLD =urldecode($pluginSettings['PROFANITY_THRESHOLD']);
 
 	$TSMS_from = "";
 	$TSMS_body = "";
@@ -537,6 +539,25 @@ if (file_exists($pluginConfigFile))
 								sendTSMSMessage($PROFANITY_RESPONSE);
 								addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
 								logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
+								
+								//check the threshold and
+								//alert the control number(s) that there was profanity
+								
+								$profanityCount = checkProfanityCount($TSMS_from);
+								
+								if($profanityCount >= $PROFANITY_THRESHOLD) {
+									$messageText = "Number: ".$TSMS_from." has reached the profanity threshold";
+									foreach($CONTROL_NUMBER_ARRAY as $NOTIFY_NUMBER) {
+										$TSMS_from = $NOTIFY_NUMBER;
+										
+										logEntry("Sending profanity threshold notification to number: ".$TSMS_from);
+										sendTSMSMessage($messageText);
+									}
+								}
+								
+								
+								
+								
 								
 								lockHelper::unlock();
 								exit(0);

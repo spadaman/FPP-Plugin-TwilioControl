@@ -252,7 +252,7 @@ echo "<td> \n";
 echo "Blacklist Status \n";
 echo "</td> \n";
 echo "<td> \n";
-echo "Send message \n";
+echo "<center>Send message to person</center> \n";
 echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
