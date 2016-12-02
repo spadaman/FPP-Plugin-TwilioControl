@@ -43,7 +43,7 @@ if(isset($_POST['sendReply'])) {
 	$TSMS_from = $blacklistNumber;
 	
 	if(substr($TSMS_from, 0) != "+") {
-		$TSMS_from .= "+".$TSMS_from;
+		$TSMS_from = "+".$TSMS_from;
 		
 	}
 	logEntry("Sending a reply ".$profanityReply." to phone number: ".$TSMS_from);
