@@ -2,6 +2,7 @@
 //$DEBUG=true;
 
 include_once "/opt/fpp/www/common.php";
+include_once("/opt/fpp/www/config.php");
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
@@ -15,7 +16,7 @@ $logFile = $settings['logDirectory']."/".$pluginName.".log";
 
 $messageQueuePluginPath = $settings['pluginDirectory']."/".$messageQueue_Plugin."/";
 
-
+$DEBUG=urldecode($pluginSettings['DEBUG']);
 
 if(file_exists($messageQueuePluginPath."functions.inc.php"))
 {
