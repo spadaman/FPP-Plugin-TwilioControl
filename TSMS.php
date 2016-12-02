@@ -282,7 +282,22 @@ if (file_exists($pluginConfigFile))
 		
 
 		//change the mode!
+		//profanity checker API
+		switch($PROFANITY_ENGINE) {
+				
+			case "NEUTRINO":
+				$profanityCheck = check_for_profanity_neutrinoapi($messageText);
+				break;
 		
+			case "WEBPURIFY":
+				$profanityCheck = check_for_profanity_WebPurify($messageText);
+				break;
+		
+			default:
+				//default turn off profanity check
+				$profanityCheck == false;
+				break;
+		}
 
 			
 
@@ -444,6 +459,31 @@ if (file_exists($pluginConfigFile))
 										
 										addNewMessage($messageText,$pluginName,$TSMS_from,$messageQueueFile);
 										
+										//also check for profanity since we are going to exit anyway
+										if(!$profanityCheck) {
+										
+											logEntry("Message: ".$messageText. " PASSED");
+										
+												
+										//	processSMSMessage($TSMS_from,$messageText, $messageQueueFile);
+										//	sendTSMSMessage($REPLY_TEXT);
+												
+										
+										} else {
+											logEntry("message: ".$messageText." FAILED");
+											//$REPLY_TEXT = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
+										
+										
+											//sendTSMSMessage($REPLY_TEXT);
+											addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
+											logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
+										
+											//lockHelper::unlock();
+											//exit(0);
+												
+										
+										}
+										
 										sendTSMSMessage($REPLY_TEXT);
 									//	addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
 									//	logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
@@ -460,22 +500,7 @@ if (file_exists($pluginConfigFile))
 							
 							logEntry("Continuing to check for Profanity");
 							//need to check for profanity
-							//profanity checker API
-							switch($PROFANITY_ENGINE) {
-									
-								case "NEUTRINO":
-									$profanityCheck = check_for_profanity_neutrinoapi($messageText);
-									break;
 
-								case "WEBPURIFY":
-									$profanityCheck = check_for_profanity_WebPurify($messageText);
-									break;
-
-								default:
-									//default turn off profanity check
-									$profanityCheck == false;
-									break;
-							}
 							
 							if(!$profanityCheck) {
 

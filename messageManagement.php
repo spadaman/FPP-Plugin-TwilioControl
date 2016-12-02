@@ -171,6 +171,10 @@ echo "</table> \n";
 echo "<hr> \n";
 echo "<center><b><h2>Profanity Messages</h2></b></center>\n";
 
+//echo "<br/> \n";
+//echo "Messages received AFTER being blacklisted and also contain profanity will NOT be in this list <br/> \n";
+//echo "Those messages are checked for BlackListing First and therefore do not go to the profanity checker <br/> \n";
+//echo "<br/> \n";
 
 $pluginMessages = null;
 $messageCount = 0;
