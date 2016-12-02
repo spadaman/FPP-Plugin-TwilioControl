@@ -244,6 +244,8 @@ $messageCount = count($pluginMessages);
 echo "<hr> \n";
 echo "<center><b><h2>Blacklisted Messages</h2></b></center>\n";
 
+echo "<br/> \n";
+echo "Messages will also be highlighted in RED in the ALL messages area above <br/> \n";
 
 //echo "<textarea class=\"FormElement\" name=\"messages\" id=\"messages\" cols=\"40\" rows=\"".$messageCount."\">\n";
 echo "<table cellspacing=\"3\" cellpadding=\"3\" border=\"1\"> \n";
