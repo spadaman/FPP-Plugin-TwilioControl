@@ -479,7 +479,7 @@ echo "<p/> \n";
 
 
 
-echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"64\" value=\"".$PROFANITY_THRESHOLD."\"> \n";
+echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"3\" value=\"".$PROFANITY_THRESHOLD."\"> \n";
 
 
 
