@@ -20,23 +20,29 @@ function checkBlacklistNumber($numberToCheck) {
 	
 	foreach($fc as $line)
 	{
+		
+		if($DEBUG) {
+			logEntry("Looking at line: ".urldecode($line)." for blacklist number: ".$numberToCheck);
+			
+		}
 		if (strstr(urldecode($line),urldecode($numberToCheck))) { //look for $key in each line
 			logEntry("Found number: ".$numberToCheck." in blacklist");
 			fclose($fc);
 			$blacklist= true;
 			return $blacklist;
 			
-		} else {
+			} else {
 	
 		
-		logEntry("Did not find number: ".$numberToCheck." in blacklist");
+			logEntry("Did not find number: ".$numberToCheck." in blacklist");
 		
 		
+		}
 	}
-}
 	
+	
+	fclose($f);
 	return $blacklist;
-	//fclose($f);
 }
 
 //add to blacklist
