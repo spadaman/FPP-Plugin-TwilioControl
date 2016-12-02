@@ -24,8 +24,11 @@ function checkBlacklistNumber($numberToCheck) {
 		if($DEBUG) {
 			logEntry("Looking at line: ".urldecode($line)." for blacklist number: ".$numberToCheck);
 			
+			
 		}
-		if (strstr(urldecode($line),urldecode($numberToCheck))) { //look for $key in each line
+		if(strpos(urldecode($line), urldecode($numberToCheck))) {
+			
+	//	if (strstr(urldecode($line),urldecode($numberToCheck))) { //look for $key in each line
 			logEntry("Found number: ".$numberToCheck." in blacklist");
 			fclose($fc);
 			$blacklist= true;
