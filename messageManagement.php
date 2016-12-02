@@ -33,7 +33,7 @@ $delBlacklistNumber=null;
 $blacklistNumber=null;
 $messageText=null;
 
-if($_POST['addBlacklist'] != "") {
+if(isset($_POST['addBlacklist'])) {// != "") {
 	logEntry("Adding a blacklist number");
 	
 		
@@ -49,7 +49,8 @@ if($_POST['addBlacklist'] != "") {
 	//echo "Number: ".$blacklistNumber." added to ".$pluginName." Blacklist with message: ".$messageText;
 	
 	}
-	if( $_POST['delBlacklist'] != "") {
+	
+	if(isset( $_POST['delBlacklist'])) {// != "") {
 		
 		logEntry("Removing a blacklist number");
 		
