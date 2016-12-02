@@ -406,6 +406,50 @@ if (file_exists($pluginConfigFile))
 						} else if(!$MESSAGE_USED){
 
 							//not from a white listed or a control number so just a regular user
+							
+							//check the blaclist
+							$blacklistMessages = getPluginMessages($pluginName, $pluginLastRead=0, $blacklistFile);
+							if(count($blacklistMessages) <=0) {
+								logEntry("No blacklist messages to check");
+								break;
+							
+							} else {
+								//check for number in blacklist
+								for($i=0;$i<=count($blacklistMessages)-1;$i++) {
+									$messageText = "";
+									$messageQueueParts = explode("|",$pluginMessages[$i]);
+									
+									$blacklistDate = date('d M Y H:i:s',$messageQueueParts[0]);
+									//message data
+									$blacklistMessageText = urldecode($messageQueueParts[1]);
+									
+								
+									//message data
+									$blacklistPhonenumber = urldecode($messageQueueParts[3]);
+									
+									if($DEBUG) {
+										logEntry("TSMS from: ".$TSMS_from);
+										logEntry("Blacklist found: ".$blacklistPhonenumber);
+										
+										
+									}
+									if($TSMS_from == $blacklistPhonenumber) {
+										logEntry($TSMS_from . " is in the blacklist since date: ".$blacklistDate);
+										$REPLY_TEXT = "You have been placed on our blacklist due to profanity since: ".$blacklistDate;
+										
+										
+										sendTSMSMessage($REPLY_TEXT);
+									//	addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
+									//	logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
+										
+										lockHelper::unlock();
+										exit(0);
+										
+									}
+									
+									
+							}
+							
 							//need to check for profanity
 							//profanity checker API
 							switch($PROFANITY_ENGINE) {
