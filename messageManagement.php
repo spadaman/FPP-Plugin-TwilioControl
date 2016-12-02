@@ -59,8 +59,16 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 		
 		logEntry("Removing a blacklist number");
 		
+		$delBlacklistNumber=$_POST["phoneNumber"];
+		$messageText=$_POST['messageText'];
+		$messageID = $_POST['messageID'];
 		
-			$delBlacklistNumber=$_POST["phoneNumber"];
+		if($DEBUG) {
+			echo "Removing from blacklist phone number: ID: ".$messageID." number: ".$delBlacklistNumber. " text: ".$messageText."<br/> \n";
+				
+		}
+		
+			
 		//	$messageText=$_POST["messageText"][$i];
 		
 		//remote the blacklist from the file
