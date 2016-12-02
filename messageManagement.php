@@ -29,15 +29,13 @@ if(file_exists($messageQueuePluginPath."functions.inc.php"))
 
 $blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
 
+$delBlacklistNumber=null;
+$blacklistNumber=null;
+$messageText=null;
+
 if($_POST['addBlacklist'] != "") {
 	logEntry("Adding a blacklist number");
 	
-	if($DEBUG) {
-		echo "MessageID: ".$_POST['messageID']."<br/> \n";
-		echo "Mesage text: ".$_POST['messageText']."<br/> \n";
-		echo "phone number: ".$_POST['phoneNumber']."<br/> \n";
-	}
-
 		
 		$blacklistNumber=$_POST["phoneNumber"];
 		$messageText=$_POST["messageText"];
@@ -50,7 +48,8 @@ if($_POST['addBlacklist'] != "") {
 	
 	//echo "Number: ".$blacklistNumber." added to ".$pluginName." Blacklist with message: ".$messageText;
 	
-	} elseif( $_POST['delBlacklist'] != "") {
+	}
+	if( $_POST['delBlacklist'] != "") {
 		
 		logEntry("Removing a blacklist number");
 		
@@ -59,7 +58,7 @@ if($_POST['addBlacklist'] != "") {
 		//	$messageText=$_POST["messageText"][$i];
 		
 		//remote the blacklist from the file
-		$key = "waka";
+		
 		
 		//load file into $fc array
 		
