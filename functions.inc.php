@@ -1,5 +1,54 @@
 <?php
 
+//chec how many profanitys for a number in profanity queue
+
+function checkProfanityCount($numberToCheck) {
+	
+		global $profanityMessageQueueFile, $DEBUG;
+	
+	$blacklist = false;
+	$profanityCount =0;
+	
+	if($DEBUG)
+		logEntry("Inside Checking profanity number: ".$numberToCheck);
+	
+	
+	
+	//open same file and use "w" to clear file
+	
+		$fc=file($profanityMessageQueueFile);
+	
+	//loop through array using foreach
+	
+	foreach($fc as $line)
+	{
+		
+			if($DEBUG) {
+				logEntry("Looking at line: ".urldecode($line)." for profanity number: ".$numberToCheck);
+				
+				
+			}
+		$line = urldecode($line);
+		$numberToCheck = urldecode($numberToCheck);
+		
+		$messageQueueParts = explode("|",$line);
+		
+		$phoneNumber = trim(urldecode($messageQueueParts[3]));
+		if($DEBUG) {
+			logEntry("Number found in prfanity file: ".$phoneNumber. " number to check: ".$numberToCheck);
+		}
+		if($phoneNumber == $numberToCheck) {
+			
+				logEntry("Found number in profanity: ".$numberToCheck);
+				
+				$profanityCount++;
+			}
+		
+	}
+
+	return $profanityCount;
+	
+}
 //check to see if a number is blacklisted
 function checkBlacklistNumber($numberToCheck) {
 	
