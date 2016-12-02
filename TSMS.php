@@ -30,6 +30,8 @@ $messageQueuePluginPath = $pluginDirectory."/".$messageQueue_Plugin."/";
 
 $messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
 
+$profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
+
 if(file_exists($messageQueuePluginPath."functions.inc.php"))
 {
 	include $messageQueuePluginPath."functions.inc.php";
@@ -435,6 +437,11 @@ if (file_exists($pluginConfigFile))
 
 
 								sendTSMSMessage($REPLY_TEXT);
+								addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
+								logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
+								
+								lockHelper::unlock();
+								exit(0);
 					
 
 							}
