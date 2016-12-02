@@ -32,6 +32,11 @@ $blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist
 if($_POST['addBlacklist'] != "") {
 	logEntry("Adding a blacklist number");
 	
+	if($DEBUG) {
+		echo "MessageID: ".$_POST['messageID']."<br/> \n";
+		echo "Mesage text: ".$_POST['messageText']."<br/> \n";
+		echo "phone number: ".$_POST['phoneNumber']."<br/> \n";
+	}
 	for($i=0;$i<count($_POST["addBlacklist"]);$i++)
 	{
 		
