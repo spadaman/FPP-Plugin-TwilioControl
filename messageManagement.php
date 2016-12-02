@@ -117,6 +117,10 @@ $messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_P
 $blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
 $profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
 
+$TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);
+$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);
+$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);
+
 
 
 
