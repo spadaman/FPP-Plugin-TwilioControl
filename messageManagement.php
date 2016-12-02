@@ -37,12 +37,11 @@ if($_POST['addBlacklist'] != "") {
 		echo "Mesage text: ".$_POST['messageText']."<br/> \n";
 		echo "phone number: ".$_POST['phoneNumber']."<br/> \n";
 	}
-	for($i=0;$i<count($_POST["addBlacklist"]);$i++)
-	{
+
 		
-		$blacklistNumber=$_POST["phoneNumber"][$i];
-		$messageText=$_POST["messageText"][$i];
-	}
+		$blacklistNumber=$_POST["phoneNumber"];
+		$messageText=$_POST["messageText"];
+	
 	
 	//$blacklistNumber = $_POST['phoneNumber'];
 	//$messageText = $_POST['messageText'];
@@ -54,12 +53,11 @@ if($_POST['addBlacklist'] != "") {
 	} elseif( $_POST['delBlacklist'] != "") {
 		
 		logEntry("Removing a blacklist number");
-		for($i=0;$i<count($_POST["delBlacklist"]);$i++)
-		{
 		
-			$delBlacklistNumber=$_POST["phoneNumber"][$i];
+		
+			$delBlacklistNumber=$_POST["phoneNumber"];
 		//	$messageText=$_POST["messageText"][$i];
-		}
+		
 		//remote the blacklist from the file
 		$key = "waka";
 		
@@ -144,13 +142,13 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[1]);
-	echo "<input type=\"hidden\" name=\"messageText[]\" value=\"".urldecode($messageQueueParts[1])."\"> \n";
+	echo "<input type=\"hidden\" name=\"messageText\" value=\"".trim(urldecode($messageQueueParts[1]))."\"> \n";
 	echo "</td> \n";
 	
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
-	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
+	echo "<input type=\"hidden\" name=\"phoneNumber\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
 	echo "</td> \n";
 	
 	echo "<input type=\"hidden\" name=\"messageID\" value=\"".$i."\"> \n";
@@ -229,13 +227,13 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[1]);
-	echo "<input type=\"hidden\" name=\"messageText[]\" value=\"".urldecode($messageQueueParts[1])."\"> \n";
+	echo "<input type=\"hidden\" name=\"messageText\" value=\"".trim(urldecode($messageQueueParts[1]))."\"> \n";
 	echo "</td> \n";
 	
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
-	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
+	echo "<input type=\"hidden\" name=\"phoneNumber\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
 	echo "</td> \n";
 	echo "<input type=\"hidden\" name=\"messageID\" value=\"".$i."\"> \n";
 	echo "<td> \n";
@@ -311,7 +309,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
-	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
+	echo "<input type=\"hidden\" name=\"phoneNumber\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
 	echo "</td> \n";
 
 	echo "<td> \n";
