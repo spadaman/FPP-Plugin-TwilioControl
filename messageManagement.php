@@ -76,7 +76,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	
 	echo "<td> \n";
 	//message data
-	echo urldecode($messageQueueParts[2]);
+	echo urldecode($messageQueueParts[3]);
 	echo "</td> \n";
 	//plugin Subscription
 	//echo "<td> \n";
@@ -93,6 +93,8 @@ echo "</table> \n";
 
 echo "<hr> \n";
 echo "<center><b><h2>Profanity Messages</h2></b></center>\n";
+$pluginMessages = null;
+$messageCount = 0;
 $pluginMessages = getPluginMessages($pluginName, 0, $profanityMessageQueueFile);
 
 //print_r($pluginMessages);
@@ -132,7 +134,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	
 	echo "<td> \n";
 	//message data
-	echo urldecode($messageQueueParts[2]);
+	echo urldecode($messageQueueParts[3]);
 	echo "</td> \n";
 
 	//plugin Subscription
