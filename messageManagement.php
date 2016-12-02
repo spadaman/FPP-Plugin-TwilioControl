@@ -185,9 +185,9 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	
 	echo "</tr> \n";
 	//echo $pluginMessages[$i];
-}
-echo "</form> \n";
 
+echo "</form> \n";
+}
 echo "</table> \n";
 //echo "</textarea> \n";
 
@@ -273,10 +273,10 @@ if($blackListCheck)  {
 
 	echo "</tr> \n";
 	//echo $pluginMessages[$i];
-}
+
 
 echo "</form> \n";
-
+}
 echo "</table> \n";
 //echo "</textarea> \n";
 
@@ -345,10 +345,10 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 
 	echo "</tr> \n";
 	//echo $pluginMessages[$i];
-}
+
 
 echo "</form> \n";
-
+}
 echo "</table> \n";
 
 //echo "</form> \n";
