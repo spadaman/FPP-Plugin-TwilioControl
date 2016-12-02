@@ -433,6 +433,7 @@ if (file_exists($pluginConfigFile))
 										
 										
 									}
+									
 									if($TSMS_from == $blacklistPhonenumber) {
 										logEntry($TSMS_from . " is in the blacklist since date: ".$blacklistDate);
 										$REPLY_TEXT = "You have been placed on our blacklist due to profanity since: ".$blacklistDate;
@@ -447,7 +448,7 @@ if (file_exists($pluginConfigFile))
 										
 									}
 									
-									
+								}
 							}
 							
 							//need to check for profanity
