@@ -98,7 +98,7 @@ $pluginMessages = getPluginMessages($pluginName, 0, $messageQueueFile);
 //print_r($pluginMessages);
 $messageCount = count($pluginMessages);
 
-echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+
 
 
 echo "<center><h1><b>".$pluginName." Message Management</b></h1></center> <br/> \n";
@@ -121,7 +121,7 @@ echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
 
-	
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 	
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
 	
@@ -171,6 +171,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "</tr> \n";
 	//echo $pluginMessages[$i];
 }
+echo "</form> \n";
 
 echo "</table> \n";
 //echo "</textarea> \n";
@@ -209,7 +210,7 @@ echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
 
-	
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
 	$blackListCheck = checkBlacklistNumber(urldecode($messageQueueParts[3]));
@@ -255,6 +256,8 @@ if($blackListCheck)  {
 	//echo $pluginMessages[$i];
 }
 
+echo "</form> \n";
+
 echo "</table> \n";
 //echo "</textarea> \n";
 
@@ -288,7 +291,7 @@ echo "From number \n";
 echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
-
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 	echo "<tr> \n";
 
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
@@ -325,8 +328,10 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	//echo $pluginMessages[$i];
 }
 
+echo "</form> \n";
+
 echo "</table> \n";
 
-echo "</form> \n";
+//echo "</form> \n";
 //echo "</textarea> \n";
 ?>
