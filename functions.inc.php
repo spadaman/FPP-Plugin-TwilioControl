@@ -48,7 +48,7 @@ function strpos_array($haystack, $needles) {
 			}
 		}
 	} else {
-		return strpos($haystack, $needles);
+		return 0;
 	}
 }
 //add to blacklist
