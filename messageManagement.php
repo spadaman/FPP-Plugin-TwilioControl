@@ -187,7 +187,14 @@ $messageCount = count($pluginMessages);
 
 //echo "<textarea class=\"FormElement\" name=\"messages\" id=\"messages\" cols=\"40\" rows=\"".$messageCount."\">\n";
 echo "<table cellspacing=\"3\" cellpadding=\"3\" border=\"1\"> \n";
-echo "<tr> \n";
+//check if blacklisted..
+	$blackListCheck = checkBlacklistNumber(urldecode($messageQueueParts[3]));
+	
+	if($blackListCheck) {
+		echo "<tr bgcolor=\"red\"> \n";
+	} else {
+		echo "<tr> \n";
+	}
 echo "<td> \n";
 echo "Date Received \n";
 echo "</td> \n";
@@ -223,7 +230,11 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "</td> \n";
 	
 	echo "<td> \n";
-	echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
+if($blackListCheck)  {
+		echo "BLACK LISTED \n";
+	} else {
+		echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
+	}
 	echo "</td> \n";
 
 	//plugin Subscription
