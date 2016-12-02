@@ -145,7 +145,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
-	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".urldecode($messageQueueParts[3])."\"> \n";
+	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
 	echo "</td> \n";
 	
 	echo "<input type=\"hidden\" name=\"messageID\" value=\"".$i."\"> \n";
@@ -229,7 +229,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
-	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".urldecode($messageQueueParts[3])."\"> \n";
+	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
 	echo "</td> \n";
 	echo "<input type=\"hidden\" name=\"messageID\" value=\"".$i."\"> \n";
 	echo "<td> \n";
@@ -303,7 +303,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
-	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".urldecode($messageQueueParts[3])."\"> \n";
+	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".trim(urldecode($messageQueueParts[3]))."\"> \n";
 	echo "</td> \n";
 
 	echo "<td> \n";
