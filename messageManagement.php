@@ -16,6 +16,7 @@ $logFile = $settings['logDirectory']."/".$pluginName.".log";
 $messageQueuePluginPath = $settings['pluginDirectory']."/".$messageQueue_Plugin."/";
 
 $messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
+$blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
 
 if(file_exists($messageQueuePluginPath."functions.inc.php"))
 {
