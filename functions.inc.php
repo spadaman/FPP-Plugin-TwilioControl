@@ -26,7 +26,11 @@ function checkBlacklistNumber($numberToCheck) {
 			
 			
 		}
-		if(strpos(urldecode($line), urldecode($numberToCheck))) {
+		 $pos = strpos(urldecode($line), urldecode($numberToCheck));
+		 
+		 if($DEBUG)
+		 	logEntry("STRPOS: ".$pos);
+		 if ($pos !== false) {
 			
 	//	if (strstr(urldecode($line),urldecode($numberToCheck))) { //look for $key in each line
 			logEntry("Found number: ".$numberToCheck." in blacklist");
