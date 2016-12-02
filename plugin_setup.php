@@ -5,12 +5,13 @@ include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
-$pluginVersion ="2.3";
+$pluginVersion ="2.4";
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
 
+//2.4 - Dec 2  2016 - Profanity fixes
 
 //2.3 - Nov 30 2016 - Add default commands to new install
 
