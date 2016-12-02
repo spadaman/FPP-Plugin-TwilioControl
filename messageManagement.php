@@ -31,17 +31,20 @@ $blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist
 if($_POST['addBlacklist'] != "") {
 	logEntry("Adding a blacklist number");
 	
-	for($i=0;$i<count($_POST["product_name"]);$i++)
+	for($i=0;$i<count($_POST["addBlacklist"]);$i++)
 	{
-		$arr[]["product_id"]=$i;
-		$arr[]["product_name_".$id]=$_POST["product_name"][$i];
-		$arr[]["product_license_".$id]=$_POST["product_license"][$i];
+		
+		$blacklistNumber=$_POST["phoneNumber"][$i];
+		$messageText=$_POST["messageText"][$i];
 	}
 	
-	$blacklistNumber = $_POST['phoneNumber'];
-	$messageText = $_POST['messageText'];
+	//$blacklistNumber = $_POST['phoneNumber'];
+	//$messageText = $_POST['messageText'];
 	
 	addBlacklist($messageText,$pluginName,$blacklistNumber);
+	
+	echo "Number: ".$blacklistNumber." added to ".$pluginName." Blacklist with message: ".$messageText;
+	
 }
 
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
