@@ -470,6 +470,19 @@ if (file_exists($pluginConfigFile))
 						}
 						
 						logEntry("IMMEDIATE OUTPUT ENABLED");
+						
+						//write high water mark, so that if run-matrix is run it will not re-run old messages
+					
+							$pluginLatest = time();
+						
+						
+						
+						//logEntry("message queue latest: ".$pluginLatest);
+						logEntry("Writing high water mark for plugin: ".$pluginName." LAST_READ = ".$pluginLatest);
+						
+						//file_put_contents($messageQueuePluginPath.$pluginSubscriptions[$pluginIndex].".lastRead",$pluginLatest);
+						WriteSettingToFile("LAST_READ",urlencode($pluginLatest),$pluginName);
+						
 						logEntry("Matrix location: ".$MATRIX_LOCATION);
 						logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
 						$MATRIX_ACTIVE = true;
