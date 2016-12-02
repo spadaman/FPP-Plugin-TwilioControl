@@ -251,5 +251,23 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 
 echo "</table> \n";
 //echo "</textarea> \n";
+function addBlacklist($messageText,$pluginName,$pluginData="") {
 
+	global $blacklistFile;
+
+	//logEntry("MESSAGEQUEUE_PLUGIN: Message File: ".$messageQueueFile);
+
+	//	logEntry("MESSAGEQUEUE_PLUGIN: Adding message to message queue: ".$messageText." :".$pluginName." :".$pluginData);
+
+
+	$messageLine = "";
+
+	$messageLine = time()."| ".urlencode($messageText) . " | ".$pluginName. " | ".$pluginData."\n";
+	//$messageLine = date('Y-m-d h:i:s A',time())."| ".$messageText . " | ".$pluginName. " | ".$pluginData."\n";
+
+	//echo "writing message line \r\n".$messageLine;
+
+	file_put_contents($blacklistFile, $messageLine, FILE_APPEND | LOCK_EX);
+
+}
 ?>
