@@ -411,7 +411,7 @@ if (file_exists($pluginConfigFile))
 							$blacklistMessages = getPluginMessages($pluginName, $pluginLastRead=0, $blacklistFile);
 							if(count($blacklistMessages) <=0) {
 								logEntry("No blacklist messages to check");
-								break;
+								
 							
 							} else {
 								//check for number in blacklist
