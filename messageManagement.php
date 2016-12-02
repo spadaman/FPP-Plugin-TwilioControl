@@ -148,6 +148,8 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".urldecode($messageQueueParts[3])."\"> \n";
 	echo "</td> \n";
 	
+	echo "<input type=\"hidden\" name=\"messageID\" value=\"".$i."\"> \n";
+	
 	echo "<td> \n";
 	if($blackListCheck)  {
 		echo "BLACK LISTED \n";
@@ -229,7 +231,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo urldecode($messageQueueParts[3]);
 	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".urldecode($messageQueueParts[3])."\"> \n";
 	echo "</td> \n";
-	
+	echo "<input type=\"hidden\" name=\"messageID\" value=\"".$i."\"> \n";
 	echo "<td> \n";
 if($blackListCheck)  {
 		echo "BLACK LISTED \n";
@@ -306,6 +308,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 
 	echo "<td> \n";
 	echo "<input type=\"submit\" name=\"delBlacklist\" value=\"Remove From Blacklist\"> \n";
+	echo "<input type=\"hidden\" name=\"messageID\" value=\"".$i."\"> \n";
 	echo "</td> \n";
 	//plugin Subscription
 	//echo "<td> \n";
