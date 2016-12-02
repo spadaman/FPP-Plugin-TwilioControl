@@ -232,6 +232,7 @@ function processSMSMessage($from,$messageText, $messageFile="") {
         }
 
         logEntry("Adding message from: ".$from. ": ".$messageText. " to message queue");
+        logEntry("Message queue file: ".$messageFile);
         if($MESSAGE_QUEUE_PLUGIN_ENABLED) {
                 addNewMessage($messageText,$pluginName,$from, $messageFile);
         } else {
