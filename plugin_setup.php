@@ -5,12 +5,13 @@ include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
-$pluginVersion ="2.5";
+$pluginVersion ="2.6";
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
 
+//2.6 - Dec 2 2016 - Profanity Threshold added and the ability to add your own reply text for the message your message contains profanity
 //2.5 - Dec 2 2016 - added blacklist
 
 //2.4 - Dec 2  2016 - Profanity fixes
