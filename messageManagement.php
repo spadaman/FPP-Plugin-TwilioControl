@@ -58,7 +58,7 @@ $pluginMessages = getPluginMessages($pluginName, 0);
 //print_r($pluginMessages);
 $messageCount = count($pluginMessages);
 
-echo "<form name=\"messageManagement\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."\"> \n";
+echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 
 
 echo "<center><h1><b>".$pluginName." Message Management</b></h1></center> <br/> \n";
