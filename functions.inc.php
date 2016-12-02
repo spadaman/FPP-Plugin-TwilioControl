@@ -21,21 +21,29 @@ function checkBlacklistNumber($numberToCheck) {
 	foreach($fc as $line)
 	{
 		
+			if($DEBUG) {
+				logEntry("Looking at line: ".urldecode($line)." for blacklist number: ".$numberToCheck);
+				
+				
+			}
+		$line = urldecode($line);
+		$numberToCheck = urldecode($numberToCheck);
+		
+		$messageQueueParts = explode("|",$line);
+		
+		$phoneNumber = trim(urldecode($messageQueueParts[3]));
 		if($DEBUG) {
-			logEntry("Looking at line: ".urldecode($line)." for blacklist number: ".$numberToCheck);
-			
-			
+			logEntry("Number found in blacklist file: ".$phoneNumber. " number to check: ".$numberToCheck);
 		}
-	$line = urldecode($line);
-	$numberToCheck = urldecode($numberToCheck);
-	
-		if (stripos($line, $numberToCheck) !== false) {
-			logEntry("Found number in blacklist: ".$numberToCheck);
+		if($phoneNumber == $numberToCheck) {
 			
-			return true;
-		}
+				logEntry("Found number in blacklist: ".$numberToCheck);
+				
+				return true;
+			}
 		
 	}
+
 	logEntry("Did not find number: ".$numberToCheck." in blacklist");
 	return false;
 }
