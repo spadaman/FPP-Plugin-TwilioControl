@@ -152,6 +152,10 @@ if(isset($_POST['submit']))
 		$PROFANITY_RESPONSE = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
 	}
 	
+	if($PROFANITY_THRESHOLD =="") {
+		$PROFANITY_THRESHOLD = "3";
+	}
+	
 	//if($DEBUG)
 		//print_r($pluginSettings);
 		
