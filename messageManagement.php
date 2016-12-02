@@ -205,7 +205,7 @@ echo "<center><b><h2>Blacklisted Messages</h2></b></center>\n";
 echo "<table cellspacing=\"3\" cellpadding=\"3\" border=\"1\"> \n";
 echo "<tr> \n";
 echo "<td> \n";
-echo "Date Received \n";
+echo " Placed on Blacklist \n";
 echo "</td> \n";
 echo "<td> \n";
 echo "Message \n";
