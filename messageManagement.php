@@ -15,8 +15,7 @@ $logFile = $settings['logDirectory']."/".$pluginName.".log";
 
 $messageQueuePluginPath = $settings['pluginDirectory']."/".$messageQueue_Plugin."/";
 
-$messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
-$blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
+
 
 if(file_exists($messageQueuePluginPath."functions.inc.php"))
 {
@@ -51,8 +50,10 @@ if($_POST['addBlacklist'] != "") {
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
 
 
-
+$messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
+$blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
 $profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
+
 
 
 
