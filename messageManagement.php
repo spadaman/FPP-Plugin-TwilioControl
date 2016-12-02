@@ -36,6 +36,17 @@ $delBlacklistNumber=null;
 $blacklistNumber=null;
 $messageText=null;
 
+$gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
+
+
+$messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
+$blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
+$profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
+
+$TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);
+$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);
+$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);
+
 
 if(isset($_POST['sendReply'])) {
 	$blacklistNumber=urldecode($_POST['phoneNumber']);
@@ -113,16 +124,7 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 	}
 
 
-$gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
 
-
-$messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
-$blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
-$profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
-
-$TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);
-$TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);
-$TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);
 
 
 
