@@ -438,6 +438,11 @@ if (file_exists($pluginConfigFile))
 										logEntry($TSMS_from . " is in the blacklist since date: ".$blacklistDate);
 										$REPLY_TEXT = "You have been placed on our blacklist due to profanity since: ".$blacklistDate;
 										
+										//add the message anyway to the message queu - to show that they were blacklisted and tried 
+										//to send more messages :0
+										//their number will appear as blacklisted for all messages
+										
+										addNewMessage($messageText,$pluginName,$TSMS_from,$messageQueueFile);
 										
 										sendTSMSMessage($REPLY_TEXT);
 									//	addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
