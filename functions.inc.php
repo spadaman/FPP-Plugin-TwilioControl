@@ -5,6 +5,8 @@ function checkBlacklistNumber($numberToCheck) {
 	
 	global $blacklistFile, $DEBUG;
 	
+	$blacklist = false;
+	
 	if($DEBUG)
 		logEntry("Inside Checking blacklist number: ".$numberToCheck);
 	
@@ -18,17 +20,22 @@ function checkBlacklistNumber($numberToCheck) {
 	
 	foreach($fc as $line)
 	{
-		if (strstr(urldecode($line),urldecode($numberToCheck))) //look for $key in each line
+		if (strstr(urldecode($line),urldecode($numberToCheck))) { //look for $key in each line
 			logEntry("Found number: ".$numberToCheck." in blacklist");
 			fclose($fc);
-			return true;
-	}
-	if($DEBUG){
+			$blacklist= true;
+			return $blacklist;
+			
+		} else {
+	
+		
 		logEntry("Did not find number: ".$numberToCheck." in blacklist");
 		
+		
 	}
+}
 	
-	return false;
+	return $blacklist;
 	//fclose($f);
 }
 
