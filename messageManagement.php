@@ -93,6 +93,8 @@ echo "</table> \n";
 
 echo "<hr> \n";
 echo "<center><b><h2>Profanity Messages</h2></b></center>\n";
+
+
 $pluginMessages = null;
 $messageCount = 0;
 $pluginMessages = getPluginMessages($pluginName, 0, $profanityMessageQueueFile);
