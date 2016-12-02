@@ -3,7 +3,10 @@
 //check to see if a number is blacklisted
 function checkBlacklistNumber($numberToCheck) {
 	
-	global $blacklistFile;
+	global $blacklistFile, $DEBUG;
+	
+	if($DEBUG)
+		logEntry("Inside Checking blacklist number: ".$numberToCheck);
 	
 	
 	
