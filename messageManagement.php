@@ -45,7 +45,34 @@ if($_POST['addBlacklist'] != "") {
 	
 	//echo "Number: ".$blacklistNumber." added to ".$pluginName." Blacklist with message: ".$messageText;
 	
-}
+	} elseif( $_POST['delBlacklist'] != "") {
+		for($i=0;$i<count($_POST["delBlacklist"]);$i++)
+		{
+		
+			$delBlacklistNumber=$_POST["phoneNumber"][$i];
+		//	$messageText=$_POST["messageText"][$i];
+		}
+		//remote the blacklist from the file
+		$key = "waka";
+		
+		//load file into $fc array
+		
+		$fc=file($blacklistFile);
+		
+		//open same file and use "w" to clear file
+		
+		$f=fopen($blacklistFile,"w");
+		
+		//loop through array using foreach
+		
+		foreach($fc as $line)
+		{
+			if (!strstr($line,$delBlacklistNumber)) //look for $key in each line
+				fputs($f,$line); //place $line back in file
+		}
+		fclose($f);
+	}
+
 
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
 
@@ -189,7 +216,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 echo "</table> \n";
 //echo "</textarea> \n";
 
-echo "</form> \n";
+
 
 
 $pluginMessages = null;
@@ -237,10 +264,12 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 	echo "<td> \n";
 	//message data
 	echo urldecode($messageQueueParts[3]);
-	
+	echo "<input type=\"hidden\" name=\"phoneNumber[]\" value=\"".urldecode($messageQueueParts[3])."\"> \n";
 	echo "</td> \n";
 
-
+	echo "<td> \n";
+	echo "<input type=\"submit\" name=\"delBlacklist\" value=\"Remove From Blacklist\"> \n";
+	echo "</td> \n";
 	//plugin Subscription
 	//echo "<td> \n";
 
@@ -252,24 +281,7 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 }
 
 echo "</table> \n";
+
+echo "</form> \n";
 //echo "</textarea> \n";
-function addBlacklist($messageText,$pluginName,$pluginData="") {
 
-	global $blacklistFile;
-
-	//logEntry("MESSAGEQUEUE_PLUGIN: Message File: ".$messageQueueFile);
-
-	//	logEntry("MESSAGEQUEUE_PLUGIN: Adding message to message queue: ".$messageText." :".$pluginName." :".$pluginData);
-
-
-	$messageLine = "";
-
-	$messageLine = time()."| ".urlencode($messageText) . " | ".$pluginName. " | ".$pluginData."\n";
-	//$messageLine = date('Y-m-d h:i:s A',time())."| ".$messageText . " | ".$pluginName. " | ".$pluginData."\n";
-
-	//echo "writing message line \r\n".$messageLine;
-
-	file_put_contents($blacklistFile, $messageLine, FILE_APPEND | LOCK_EX);
-
-}
-?>
