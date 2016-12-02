@@ -43,7 +43,7 @@ if($_POST['addBlacklist'] != "") {
 	
 	addBlacklist($messageText,$pluginName,$blacklistNumber);
 	
-	echo "Number: ".$blacklistNumber." added to ".$pluginName." Blacklist with message: ".$messageText;
+	//echo "Number: ".$blacklistNumber." added to ".$pluginName." Blacklist with message: ".$messageText;
 	
 }
 
