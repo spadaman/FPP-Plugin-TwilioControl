@@ -1,6 +1,25 @@
 <?php
 
+//add profanity message to profanity file
+function addProfanityMessage($messageText,$pluginName,$pluginData="") {
 
+	global $profanityMessageQueueFile;
+
+	//logEntry("MESSAGEQUEUE_PLUGIN: Message File: ".$messageQueueFile);
+
+	logEntry("MESSAGEQUEUE_PLUGIN: Adding message to profanity message queue: ".$messageText." :".$pluginName." :".$pluginData);
+
+
+	$messageLine = "";
+
+	$messageLine = time()."| ".urlencode($messageText) . " | ".$pluginName. " | ".$pluginData."\n";
+	//$messageLine = date('Y-m-d h:i:s A',time())."| ".$messageText . " | ".$pluginName. " | ".$pluginData."\n";
+
+	//echo "writing message line \r\n".$messageLine;
+
+	file_put_contents($profanityMessageQueueFile, $messageLine, FILE_APPEND | LOCK_EX);
+
+}
 //send a TSMS message https post
 function sendTSMSMessage($messageText) {
 	global $DEBUG,$TSMS_BODY_CONTAINED_HEX,$TSMS_phoneNumber,$TSMS_from,$TSMS_body,$TSMS_account_sid, $TSMS_auth_token;
