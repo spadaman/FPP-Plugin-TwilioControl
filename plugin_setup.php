@@ -487,7 +487,7 @@ echo "DEBUG: ";
 
 //if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
 //	echo "<input type=\"checkbox\" checked name=\"IMMEDIATE_OUTPUT\"> \n";
-PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "false", $pluginName = $pluginName, $callbackName = "");
+PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $pluginName = $pluginName, $callbackName = "");
 
 ?>
 <p/>
