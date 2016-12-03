@@ -59,6 +59,13 @@ if(isset($_POST['delMessageQueue'])) {
 	
 	exec($DELETE_CMD);
 	
+	//touch a new file
+	
+	$TOUCH_CMD = "/bin/touch ".$messageQueueFile;
+	
+	exec($TOUCH_CMD);
+	
+	
 }
 
 if(isset($_POST['delProfanityQueue'])) {
