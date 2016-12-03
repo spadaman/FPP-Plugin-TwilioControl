@@ -5,11 +5,12 @@ include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
-$pluginVersion ="2.7";
+$pluginVersion ="2.8";
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
+//2.8 - Dec 2 2016 - do not add a message to the queue if it is profanity for those running not in immeidate mode it could send that out
 
 //2.7 - Dec 2 2016 - Added more checking and message queue file managment
 //2.6 - Dec 2 2016 - Profanity Threshold added and the ability to add your own reply text for the message your message contains profanity

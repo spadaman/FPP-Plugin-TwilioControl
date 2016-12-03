@@ -539,7 +539,10 @@ if (file_exists($pluginConfigFile))
 								sendTSMSMessage($PROFANITY_RESPONSE);
 								addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
 								//add to regular file as well
-								addNewMessage($messageText,$pluginName,$TSMS_from,$messageQueueFile);
+								//cannot add the message to the file - as if you are running the RUN-MATRIX it would dump this message!! would 
+								//have to scan for profanity again!
+								
+								//addNewMessage($messageText,$pluginName,$TSMS_from,$messageQueueFile);
 								
 								logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
 								
@@ -605,7 +608,7 @@ if (file_exists($pluginConfigFile))
 						//file_put_contents($messageQueuePluginPath.$pluginSubscriptions[$pluginIndex].".lastRead",$pluginLatest);
 						WriteSettingToFile("LAST_READ",urlencode($pluginLatest),$pluginName);
 						
-						do{
+					//	do{
 						
 						logEntry("Matrix location: ".$MATRIX_LOCATION);
 						logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
@@ -633,7 +636,7 @@ if (file_exists($pluginConfigFile))
 						$MATRIX_ACTIVE = false;
 						WriteSettingToFile("MATRIX_ACTIVE",urlencode($MATRIX_ACTIVE),$pluginName);
 						
-						} while (count(getNewPluginMessages($pluginName)) >0);
+						//} while (count(getNewPluginMessages($pluginName)) >0);
 					}
 
 			//	sleep(1);
