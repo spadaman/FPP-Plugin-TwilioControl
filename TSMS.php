@@ -538,6 +538,9 @@ if (file_exists($pluginConfigFile))
 
 								sendTSMSMessage($PROFANITY_RESPONSE);
 								addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
+								//add to regular file as well
+								addNewMessage($messageText,$pluginName,$TSMS_from,$messageQueueFile);
+								
 								logEntry("Added message to profanity queue file: ".$profanityMessageQueueFile);
 								
 								//check the threshold and
