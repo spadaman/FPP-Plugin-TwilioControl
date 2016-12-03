@@ -47,6 +47,63 @@ $TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);
 $TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);
 $TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);
 
+if(isset($_POST['delMessageQueue'])) {
+	//delete message queue
+	logEntry("Deleting message queue file");
+	$DELETE_CMD = "/bin/rm ".$messageQueueFile;
+	
+	exec($DELETE_CMD);
+	
+}
+
+if(isset($_POST['delProfanityQueue'])) {
+	//delete message queue
+	logEntry("Deleting profanity queue file");
+	$DELETE_CMD = "/bin/rm ".$profanityMessageQueueFile;
+
+	exec($DELETE_CMD);
+
+}
+
+if(isset($_POST['delBlacklistQueue'])) {
+	//delete message queue
+	logEntry("Deleting blakclist queue file");
+	$DELETE_CMD = "/bin/rm ".$blacklistFile;
+
+	exec($DELETE_CMD);
+
+}
+
+if(isset($_POST['removeProfanity'])) {
+	logEntry("Removing a profanity list number");
+	
+	$delProfanityNumber=$_POST["phoneNumber"];
+	$messageText=$_POST['messageText'];
+	$messageID = $_POST['messageID'];
+	
+	if($DEBUG) {
+		echo "Removing from profanity phone number: ".$delProfanityNumber;
+	
+	}
+	
+		
+	//load file into $fc array
+	
+	$fc=file($profanityMessageQueueFile);
+	
+	//open same file and use "w" to clear file
+	
+	$f=fopen($profanityMessageQueueFile,"w");
+	
+	//loop through array using foreach
+	
+	foreach($fc as $line)
+	{
+		if (!strstr($line,$delProfanityNumber)) //look for $key in each line
+			fputs($f,$line); //place $line back in file
+	}
+	fclose($f);
+}
 
 if(isset($_POST['sendReply'])) {
 	$blacklistNumber=urldecode($_POST['phoneNumber']);
@@ -254,6 +311,9 @@ echo "</td> \n";
 echo "<td> \n";
 echo "<center>Send message to person</center> \n";
 echo "</td> \n";
+echo "<td> \n";
+echo "Remove from Profanity File \n";
+echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
 
@@ -296,12 +356,9 @@ if($blackListCheck)  {
 		echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
 	}
 	echo "</td> \n";
-
-	//plugin Subscription
-	//echo "<td> \n";
-
-	//echo $messageQueueParts[2];
-	//echo "</td> \n";
+	echo "<td> \n";
+	echo "<input type=\"submit\" name=\"removeProfanity\" value=\"REMOVE\"> \n";
+	echo "</td> \n";
 	echo "<td> \n";
 	echo "<input type=\"text\" size=\"64\" name=\"profanityReply\"> \n";
 	echo "<input type=\"submit\" name=\"sendReply\" value=\"SEND\"> \n";
@@ -386,6 +443,14 @@ for($i=0;$i<=$messageCount-1;$i++ ) {
 echo "</form> \n";
 }
 echo "</table> \n";
+
+echo "<hr/> \n";
+echo "Message file management \n";
+echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+echo "<input type=\"submit\" name=\"delMessageQueue\" value=\"Delete Message Queue\"> \n";
+echo "<input type=\"submit\" name=\"delProfanityQueue\" value=\"Delete Profanity Queue\"> \n";
+echo "<input type=\"submit\" name=\"delBlacklistQueue\" value=\"Delete Blacklist Queue\"> \n";
+echo "</form> \n";
 
 //echo "</form> \n";
 //echo "</textarea> \n";
