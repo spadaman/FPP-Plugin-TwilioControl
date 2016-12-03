@@ -482,7 +482,12 @@ echo "<p/> \n";
 
 echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"3\" value=\"".$PROFANITY_THRESHOLD."\"> \n";
 
+echo "<p/> \n";
+echo "DEBUG: ";
 
+//if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
+//	echo "<input type=\"checkbox\" checked name=\"IMMEDIATE_OUTPUT\"> \n";
+PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "false", $pluginName = $pluginName, $callbackName = "");
 
 ?>
 <p/>
