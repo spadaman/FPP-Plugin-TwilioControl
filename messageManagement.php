@@ -43,6 +43,11 @@ $messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_P
 $blacklistFile = $settings['configDirectory']."/plugin.".$pluginName.".Blacklist";
 $profanityMessageQueueFile = $settings['configDirectory']."/plugin.".$pluginName.".ProfanityQueue";
 
+if($DEBUG) {
+	print_r ($_POST);
+	
+}
+
 $TSMS_account_sid = urldecode($pluginSettings['TSMS_ACCOUNT_SID']);
 $TSMS_auth_token = urldecode($pluginSettings['TSMS_AUTH_TOKEN']);
 $TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);
@@ -308,11 +313,13 @@ echo "</td> \n";
 echo "<td> \n";
 echo "Blacklist Status \n";
 echo "</td> \n";
-echo "<td> \n";
-echo "<center>Send message to person</center> \n";
-echo "</td> \n";
+
 echo "<td> \n";
 echo "Remove from Profanity File \n";
+echo "</td> \n";
+
+echo "<td> \n";
+echo "<center>Send message to person</center> \n";
 echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
