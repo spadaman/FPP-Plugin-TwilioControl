@@ -605,6 +605,8 @@ if (file_exists($pluginConfigFile))
 						//file_put_contents($messageQueuePluginPath.$pluginSubscriptions[$pluginIndex].".lastRead",$pluginLatest);
 						WriteSettingToFile("LAST_READ",urlencode($pluginLatest),$pluginName);
 						
+						do{
+						
 						logEntry("Matrix location: ".$MATRIX_LOCATION);
 						logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
 						$MATRIX_ACTIVE = true;
@@ -612,36 +614,26 @@ if (file_exists($pluginConfigFile))
 						logEntry("MATRIX ACTIVE: ".$MATRIX_ACTIVE);
 						
 
-						//if($MATRIX_LOCATION != "127.0.0.1") {
-							//$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1'";// > /dev/null";
+					
 							$curlURL = "http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1&subscribedPlugin=".$pluginName."&onDemandMessage=".urlencode($messageText);
 							if($DEBUG)
 							logEntry("MATRIX TRIGGER: ".$curlURL);
 							
 							$ch = curl_init();
 							curl_setopt($ch,CURLOPT_URL,$curlURL);
-							//curl_setopt($ch,CURLOPT_POST,count($fields));
-							//curl_setopt($ch,CURLOPT_POSTFIELDS,$fields_string);
+							
 							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 							curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'do_nothing');
 							curl_setopt($ch, CURLOPT_VERBOSE, false);
-							//curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100);
+							
 							$result = curl_exec($ch);
 							logEntry("Curl result: ".$result);// $result;
 							curl_close ($ch);
-						//	forkExec($remoteCMD);
-						//	lockHelper::unlock();
-						//	exit(0);
-							//exec($remoteCMD);
-					//	} else {
-					//		$IMMEDIATE_CMD = $settings['pluginDirectory']."/".$MATRIX_MESSAGE_PLUGIN_NAME."/matrix.php";
-					//		logEntry("LOCAL command: ".$IMMEDIATE_CMD);
-					
-						//	exec($IMMEDIATE_CMD);
-							
-						//}
+			
 						$MATRIX_ACTIVE = false;
 						WriteSettingToFile("MATRIX_ACTIVE",urlencode($MATRIX_ACTIVE),$pluginName);
+						
+						} while (count(getNewPluginMessages($pluginName)) >0);
 					}
 
 			//	sleep(1);
