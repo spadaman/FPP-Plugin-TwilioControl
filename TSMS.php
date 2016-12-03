@@ -606,7 +606,7 @@ if (file_exists($pluginConfigFile))
 						logEntry("Writing high water mark for plugin: ".$pluginName." LAST_READ = ".$pluginLatest);
 						
 						//file_put_contents($messageQueuePluginPath.$pluginSubscriptions[$pluginIndex].".lastRead",$pluginLatest);
-						WriteSettingToFile("LAST_READ",urlencode($pluginLatest),$pluginName);
+					//	WriteSettingToFile("LAST_READ",urlencode($pluginLatest),$pluginName);
 						
 					//	do{
 						
