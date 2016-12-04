@@ -582,8 +582,8 @@ if (file_exists($pluginConfigFile))
 
 					if($IMMEDIATE_OUTPUT != "ON") {
 						logEntry("NOT immediately outputting to matrix");
-					} elseif(!$MATRIX_ACTIVE) {
-						
+				//	} elseif(!$MATRIX_ACTIVE) {
+					} else {	
 						//add the message pre text to the names before sending it to the matrix!
 						switch ($MATRIX_MODE) {
 								
