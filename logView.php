@@ -107,64 +107,37 @@ if (file_exists($pluginConfigFile))
 	$TSMS_from = "";
 	$TSMS_body = "";
 	$TSMS_BODY_CONTAINED_HEX = false;
-
-
-$log = $logFile;
-$lines = 20;
-
-$cmd = "tail -$lines $log";
-exec("$cmd 2>&1", $output);
-
-foreach ($output as $line) {
-	echo "$line<br>";
-}
-?>
-<script language="javascript" type="text/JavaScript">
-        function getLog(log, lines) {
-                var url = "getLogFile.php?log=" + log + "&lines=" + lines;
-                request.open("GET", url, true);
-                request.onreadystatechange = updatePage;
-                request.send(null);
-        }
-
-        function tail(command,log,lines) {
-                if (command == "start") {
-                        document.getElementById("watchStart").disabled = true;
-                        document.getElementById("watchStop").disabled = false;
-                        timer = setInterval(function() {getLog(log,lines);},5000);
-                } else {
-                        document.getElementById("watchStart").disabled = false;
-                        document.getElementById("watchStop").disabled = true;
-                        clearTimeout(timer);
-                }
-        }
-
-        function updatePage() {
-                if (request.readyState == 4) {
-                        if (request.status == 200) {
-                                var currentLogValue = request.responseText.split("\n");
-                                eval(currentLogValue);
-
-                                document.getElementById("log").innerHTML = currentLogValue;
-                        }
-                }
-        }
-
-        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : (window.ActiveXObject ? new window.ActiveXObject("Microsoft.XMLHTTP") : false);
-</script>
-
-<html>
-
-<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
-
-
-
-<div id="log" style="width:100%; height:90%; overflow:auto;"></div>
-
-                   
-<input type="button" style="width:40px; 0px" id="watchStart" name="watch" value="Start" onclick="tail('start',document.getElementById('logfile').value, document.getElementById('loglength').value);">
-<input type="button" style="width:40px; 0px" id="watchStop" name="watch" value="Stop" disabled=true onclick="tail('stop','','');">
-
-</form>
-
-</html>
+	
+	if (isset($_GET['ajax'])) {
+		session_start();
+		$handle = fopen($logFile, 'r');
+		if (isset($_SESSION['offset'])) {
+			$data = stream_get_contents($handle, -1, $_SESSION['offset']);
+			echo nl2br($data);
+		} else {
+			fseek($handle, 0, SEEK_END);
+			$_SESSION['offset'] = ftell($handle);
+		}
+		exit();
+	}
+	?>
+	<!doctype html>
+	<html lang="en">
+	<head>
+	  <meta charset="UTF-8">
+	  <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+	  <script src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+	  <script>
+	  $(function() {
+	    $.repeat(1000, function() {
+	      $.get('tail.php?ajax', function(data) {
+	        $('#tail').append(data);
+	      });
+	    });
+	  });
+	  </script>
+	</head>
+	<body>
+	  <div id="tail">Starting up...</div>
+	</body>
+	</html>
