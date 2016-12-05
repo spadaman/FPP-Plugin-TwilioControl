@@ -155,15 +155,16 @@ foreach ($output as $line) {
 
 <html>
 
+<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
+
 
 
 <div id="log" style="width:100%; height:90%; overflow:auto;"></div>
 
-<td style="width:100px;">Watch</td>
-                        <td>
-                                <input type="button" style="width:40px; 0px" id="watchStart" name="watch" value="Start" onclick="tail('start',document.getElementById('logfile').value, document.getElementById('loglength').value);">
-                                <input type="button" style="width:40px; 0px" id="watchStop" name="watch" value="Stop" disabled=true onclick="tail('stop','','');">
-                        </td>
+                   
+<input type="button" style="width:40px; 0px" id="watchStart" name="watch" value="Start" onclick="tail('start',document.getElementById('logfile').value, document.getElementById('loglength').value);">
+<input type="button" style="width:40px; 0px" id="watchStop" name="watch" value="Stop" disabled=true onclick="tail('stop','','');">
 
+</form>
 
 </html>
