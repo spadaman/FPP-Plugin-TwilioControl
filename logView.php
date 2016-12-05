@@ -130,7 +130,7 @@ if (file_exists($pluginConfigFile))
 	  <script>
 	  $(function() {
 	    $.repeat(1000, function() {
-	      $.get('tail.php?ajax', function(data) {
+	      $.get($_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php'?ajax', function(data) {
 	        $('#tail').append(data);
 	      });
 	    });
