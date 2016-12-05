@@ -194,3 +194,4 @@ if($_GET['getLog']){
 		<div id="scrollLock"> <input class="disableScrollLock" type="button" value="Disable Scroll Lock" /> <input class="enableScrollLock" style="display: none;" type="button" value="Enable Scroll Lock" /></div>
 	</body>
 </html>
+<?php  } ?>
