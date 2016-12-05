@@ -508,7 +508,9 @@ PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $p
 <input id="MessageManagementButton" name="Message Management" type="submit" value="Message Management">
 </form>
 
-
+<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
+<input id="logView" name="logViewer" type="submit" value="Log Viewer">
+</form>
 
 
 <p>To report a bug, please file it against the sms Control plugin project on Git:<? echo $gitURL;?> 
