@@ -54,16 +54,50 @@ $TSMS_phoneNumber = urldecode($pluginSettings['TSMS_PHONE_NUMBER']);
 
 if(isset($_POST['delMessageQueue'])) {
 	//delete message queue
-	logEntry("Deleting message queue file");
-	$DELETE_CMD = "/bin/rm ".$messageQueueFile;
+	logEntry("Deleting TwilioControl messages from message queue file");
+	//$DELETE_CMD = "/bin/rm ".$messageQueueFile;
 	
-	exec($DELETE_CMD);
+	//exec($DELETE_CMD);
 	
 	//touch a new file
 	
-	$TOUCH_CMD = "/bin/touch ".$messageQueueFile;
+	//$TOUCH_CMD = "/bin/touch ".$messageQueueFile;
 	
-	exec($TOUCH_CMD);
+	//exec($TOUCH_CMD);
+	
+	//logEntry("Removing a blacklist number");
+	
+	//$delBlacklistNumber=$_POST["phoneNumber"];
+	//$messageText=$_POST['messageText'];
+	//$messageID = $_POST['messageID'];
+	
+	//if($DEBUG) {
+	//	echo "Removing from blacklist phone number: ID: ".$messageID." number: ".$delBlacklistNumber. " text: ".$messageText."<br/> \n";
+	
+	//}
+	
+		
+	//	$messageText=$_POST["messageText"][$i];
+	
+	//remote the blacklist from the file
+	
+	
+	//load file into $fc array
+	
+	$fc=file($messageQueueFile);
+	
+	//open same file and use "w" to clear file
+	
+	$f=fopen($messageQueueFile,"w");
+	
+	//loop through array using foreach
+	
+	foreach($fc as $line)
+	{
+		if (!strstr($line,$pluginName)) //look for $key in each line
+			fputs($f,$line); //place $line back in file
+	}
+	fclose($f);
 	
 	
 }
@@ -461,7 +495,7 @@ echo "</table> \n";
 echo "<hr/> \n";
 echo "Message file management \n";
 echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
-echo "<input type=\"submit\" name=\"delMessageQueue\" value=\"Delete Message Queue\"> \n";
+echo "<input type=\"submit\" name=\"delMessageQueue\" value=\"Delete Twilio Messages from Message Queue\"> \n";
 echo "<input type=\"submit\" name=\"delProfanityQueue\" value=\"Delete Profanity Queue\"> \n";
 echo "<input type=\"submit\" name=\"delBlacklistQueue\" value=\"Delete Blacklist Queue\"> \n";
 echo "</form> \n";
