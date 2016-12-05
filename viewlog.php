@@ -1,6 +1,5 @@
 <?php
 
-
 //Version 1 for release
 $pluginName ="TwilioControl";
 $myPid = getmypid();
@@ -107,66 +106,5 @@ if (file_exists($pluginConfigFile))
 	$TSMS_from = "";
 	$TSMS_body = "";
 	$TSMS_BODY_CONTAINED_HEX = false;
-	?>
-	<html>
-	<head>
-	<script type="text/javascript">
-	function createRequestObject() {
-	
-		var req;
-	
-		if(window.XMLHttpRequest){
-			// Firefox, Safari, Opera...
-			req = new XMLHttpRequest();
-		} else if(window.ActiveXObject) {
-			// Internet Explorer 5+
-			req = new ActiveXObject("Microsoft.XMLHTTP");
-		} else {
-			// There is an error creating the object,
-			// just as an old browser is being used.
-			alert('There was a problem creating the XMLHttpRequest object');
-		}
-	
-		return req;
-	
-	}
-	
-	// Make the XMLHttpRequest object
-	var http = createRequestObject();
-	
-	function sendRequest() {
-	
-		// Open PHP script for requests
-		http.open('get', 'viewlog.php');
-		http.onreadystatechange = handleResponse;
-		http.send(null);
-	
-	}
-	
-	function handleResponse() {
-	
-		if(http.readyState == 4 && http.status == 200){
-	
-			// Text returned FROM PHP script
-			var response = http.responseText;
-	
-			if(response) {
-				// UPDATE ajaxTest content
-				document.getElementById("log").innerHTML = response;
-				setTimeout(update,1000);
-			}
-	
-		}
-	}
-	
-	function update() {
-		sendRequest();
-	}
-	</script>
-	</head>
-	<body onLoad="sendRequest()" />
-	<pre>
-	<span id="log" name="log"></span>
-	</pre>
-	</body>
-	</html>
+echo shell_exec('tail -n '.$logFile);
+?>
