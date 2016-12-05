@@ -112,7 +112,7 @@ if (file_exists($pluginConfigFile))
 $log = $logFile;
 $lines = 20;
 
-$cmd = "tail -$lines $log";
+$cmd = "tail -f $log";
 exec("$cmd 2>&1", $output);
 
 foreach ($output as $line) {
