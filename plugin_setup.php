@@ -512,6 +512,9 @@ PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $p
 <input id="LogViewer" name="logviewer" type="submit" value="Log Viewer">
 </form>
 
+<?
+echo "<a html=\"".$_SERVER['SERVER_NAME']?>/plugin.php?plugin=".$pluginName."&page=logView.php\" target=\"_top\">Log Viewer</a> \n";
+?>
 <p>To report a bug, please file it against the sms Control plugin project on Git:<? echo $gitURL;?> 
 </fieldset>
 </div>

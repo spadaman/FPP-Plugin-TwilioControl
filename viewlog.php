@@ -15,11 +15,7 @@ include_once("/opt/fpp/www/config.php");
 include_once("/opt/fpp/www/common.php");
 include_once("functions.inc.php");
 include_once("commonFunctions.inc.php");
-include_once("profanity.inc.php");
 
-// this line loads the library
-//require('Twilio/Services/Twilio.php');
-require ('Twilio/autoload.php');
 
 
 
