@@ -261,7 +261,7 @@ echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
 
-	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 	
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
 	
@@ -365,7 +365,7 @@ echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
 
-	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
 	$blackListCheck = checkBlacklistNumber(urldecode($messageQueueParts[3]));
@@ -451,7 +451,7 @@ echo "From number \n";
 echo "</td> \n";
 echo "</tr> \n";
 for($i=0;$i<=$messageCount-1;$i++ ) {
-	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 	echo "<tr> \n";
 
 	$messageQueueParts = explode("|",$pluginMessages[$i]);
@@ -494,7 +494,7 @@ echo "</table> \n";
 
 echo "<hr/> \n";
 echo "Message file management \n";
-echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"".$_SERVER['PHP_SELF']."?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 echo "<input type=\"submit\" name=\"delMessageQueue\" value=\"Delete Twilio Messages from Message Queue\"> \n";
 echo "<input type=\"submit\" name=\"delProfanityQueue\" value=\"Delete Profanity Queue\"> \n";
 echo "<input type=\"submit\" name=\"delBlacklistQueue\" value=\"Delete Blacklist Queue\"> \n";
