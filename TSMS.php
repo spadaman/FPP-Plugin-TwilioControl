@@ -1,8 +1,12 @@
 <?php
 error_reporting(0);
 //
+//
 //Version 1 for release
+//TwilioVersion 2.0 = Dec 27 2016 - SQLLite messages
+
 $pluginName ="TwilioControl";
+$TwilioVersion = "2.0";
 $myPid = getmypid();
 
 $messageQueue_Plugin = "MessageQueue";
