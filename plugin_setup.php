@@ -5,11 +5,17 @@ include_once "/opt/fpp/www/common.php";
 include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
+$TwilioVersion = "2.0";
 $pluginVersion ="2.8";
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
+
+$Plugin_DBName = "/tmp/FPP.".$pluginName.".db";
+
+//2.9 - Dec 27 2016 - SqlLite integration
+
 //2.8 - Dec 2 2016 - do not add a message to the queue if it is profanity for those running not in immeidate mode it could send that out
 
 //2.7 - Dec 2 2016 - Added more checking and message queue file managment
@@ -184,7 +190,13 @@ if($REPLY_TEXT == "") {
 	$REPLY_TEXT = "Thank you for your message, it has been added to the Queue";
 }
 
-	
+
+
+$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
+
+//create the default tables if they do not exist!
+createTwilioTables($db);
+
 	//crate the event file
 	function createSMSEventFile() {
 		

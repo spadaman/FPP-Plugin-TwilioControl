@@ -1,17 +1,152 @@
 <?php
+//create database
+function createTwilioTables($db) {
+	//global $db;
 
+	$createQuery = "CREATE TABLE IF NOT EXISTS profanity (messageID INTEGER PRIMARY KEY AUTOINCREMENT, timestamp int(16) NOT NULL, message varchar(255), pluginName varchar(64), pluginData varchar(64));";
+
+	logEntry("TWILIO: CREATING Messages Table for TWILIO: ".$createQuery);
+
+	$db->exec($createQuery) or die('Create Table Failed');
+
+	$createQuery = "CREATE TABLE IF NOT EXISTS blacklist (messageID INTEGER PRIMARY KEY AUTOINCREMENT, timestamp int(16) NOT NULL, message varchar(255), pluginName varchar(64), pluginData varchar(64));";
+	
+	logEntry("TWILIO: CREATING Messages Table for TWILIO: ".$createQuery);
+	
+	$db->exec($createQuery) or die('Create Table Failed');
+	
+	$createQuery = "CREATE TABLE IF NOT EXISTS messages (messageID INTEGER PRIMARY KEY AUTOINCREMENT, timestamp int(16) NOT NULL, message varchar(255), pluginName varchar(64), pluginData varchar(64));";
+	
+	logEntry("TWILIO: CREATING Messages Table for TWILIO: ".$createQuery);
+	
+	$db->exec($createQuery) or die('Create Table Failed');
+
+}
+function insertMessage($message, $pluginName, $pluginData) {
+	global $db;
+	$messagesTable = "messages";
+	//$db = new SQLite3($DBName) or die('Unable to open database');
+
+	$insertQuery = "INSERT INTO ".$messagesTable." (timestamp, message, pluginName, pluginData) VALUES ('".time()."','".urlencode($message)."','".$pluginName."','".$pluginData."');";
+
+	logEntry("TWILIO: INSERT query string: ".$insertQuery);
+	$db->exec($insertQuery) or die('could not insert into database');
+
+
+}
+function insertBlacklistMessage($message, $pluginName, $pluginData) {
+	global $db;
+	$blackListTable = "blacklist";
+	//$db = new SQLite3($DBName) or die('Unable to open database');
+
+	$insertQuery = "INSERT INTO ".$blackListTable." (timestamp, message, pluginName, pluginData) VALUES ('".time()."','".urlencode($message)."','".$pluginName."','".$pluginData."');";
+
+	logEntry("TWILIO: INSERT query string: ".$insertQuery);
+	$db->exec($insertQuery) or die('could not insert into database');
+
+
+}
+
+function insertProfanityMessage($message, $pluginName, $pluginData) {
+	global $db;
+	$profanityListTable = "profanity";
+	//$db = new SQLite3($DBName) or die('Unable to open database');
+
+	$insertQuery = "INSERT INTO ".$profanityListTable." (timestamp, message, pluginName, pluginData) VALUES ('".time()."','".urlencode($message)."','".$pluginName."','".$pluginData."');";
+
+	logEntry("TWILIO: INSERT query string: ".$insertQuery);
+	$db->exec($insertQuery) or die('could not insert into database');
+
+
+}
+//check if the user is in the blacklist
+function checkBlacklist($fromNumber) {
+	global $db;
+	
+	$blackListTable = "blacklist";
+	
+	$blackListQuery = "SELECT * FROM ".$blackListTable." WHERE pluginData = '".$fromNumber."'";
+	logEntry("TWILIO: Blacklist query: ".$blackListQuery);
+	
+	$result = $db->query($blackListQuery) or die('Query failed');
+	
+	//$rows = $result->numRows();//($result);
+	
+	while ($row = $result->fetchArray())
+	{
+		//TODO: return
+ 		 $blackListDate = $row['timestamp'];
+ 		 return $blackListDate;
+ 		 
+	}
+	return null;
+	
+	//$blackListQueryCount = "SELECT COUNT(*) FROM ".$blackListTable." WHERE pluginData = ".$fromNumber;
+	
+//	$blackListCount = $db->query($blackListQueryCount) or die('Query failed');
+	
+	//$rows = $result->numRows();//($result);
+	
+	//if ($blackListCount > 0) {
+//		return true;
+	//} else {
+	//	return false;
+//	}
+	
+	
+	
+}
 //chec how many profanitys for a number in profanity queue
 
 function checkProfanityCount($numberToCheck) {
 	
-		global $profanityMessageQueueFile, $DEBUG;
+		global $db, $profanityMessageQueueFile, $DEBUG, $TwilioVersion;
 	
 	$blacklist = false;
 	$profanityCount =0;
 	
 	if($DEBUG)
-		logEntry("Inside Checking profanity number: ".$numberToCheck);
+		logEntry("TWILIO: Inside Checking profanity number: ".$numberToCheck);
 	
+		switch($TwilioVersion) {
+			
+			
+			case "2.0":
+				$profanityListTable = "profanity";
+				
+				$profanityQuery = "SELECT COUNT(*) FROM ".$profanityListTable." WHERE pluginData = '".$numberToCheck."'";
+				
+				logEntry("TWILIO: Profanity search count query: ".$profanityQuery);
+				
+				//$profanityCheckCountResult = $db->query($profanityQuery) or die('Query failed');
+				$profanityCheckCountResult = $db->querySingle($profanityQuery) or die('Query failed');
+				
+				logEntry("TWILIO: Profanity check counter: ".$profanityCheckCountResult);
+				//$rows = $result->numRows();//($result);
+				
+				return $profanityCheckCountResult;
+				
+				while ($row = $result->fetchArray())
+				{
+					//TODO: return
+					$profanityListDate = $row['timestamp'];
+				}
+				
+				$rows = $result->numRows();//($result);
+				
+				if ($rows > 0) {
+					return $rows;
+				} else {
+					return 0;
+				}
+				
+				break;
+				
+				
+			default:
+				
+				break;
+		}
 	
 	
 	//open same file and use "w" to clear file
@@ -52,7 +187,7 @@ function checkProfanityCount($numberToCheck) {
 //check to see if a number is blacklisted
 function checkBlacklistNumber($numberToCheck) {
 	
-	global $blacklistFile, $DEBUG;
+	global $blacklistFile, $DEBUG, $DB;
 	
 	$blacklist = false;
 	
@@ -60,6 +195,26 @@ function checkBlacklistNumber($numberToCheck) {
 		logEntry("Inside Checking blacklist number: ".$numberToCheck);
 	
 	
+		
+		switch ($TwilioVersion) {
+			
+			
+			case "2.0":
+				
+				
+				$result = $db->query('SELECT count(*) FROM blacklist where pluginData =\'".$numberToCheck."') or die('Query failed');
+				if($result >0) {
+					return true;
+				} else {
+					return false;
+				}
+				
+				break;
+				
+				
+			default:
+				
+		}
 	
 	//open same file and use "w" to clear file
 	
@@ -352,14 +507,17 @@ function processSMSMessage($from,$messageText, $messageFile="") {
         		break;
         		
         }
+        
+        logEntry("TWILIO: Adding message from: ".$from. ": ".$messageText. " to Twillio message queue");
+        insertMessage($messageText, $pluginName, $from);
 
-        logEntry("Adding message from: ".$from. ": ".$messageText. " to message queue");
-        logEntry("Message queue file: ".$messageFile);
-        if($MESSAGE_QUEUE_PLUGIN_ENABLED) {
-                addNewMessage($messageText,$pluginName,$from, $messageFile);
-        } else {
-                logEntry("MessageQueue plugin is not enabled/installed: Cannot add message: ".$messageText);
-        }
+      //  logEntry("TWILIO: Adding message from: ".$from. ": ".$messageText. " to message queue");
+      //  logEntry("TWILIO: Message queue file: ".$messageFile);
+      //  if($MESSAGE_QUEUE_PLUGIN_ENABLED) {
+      //          addNewMessage($messageText,$pluginName,$from, $messageFile);
+     //   } else {
+      //          logEntry("TWILIO: MessageQueue plugin is not enabled/installed: Cannot add message: ".$messageText);
+      //  }
 
         return;
 
