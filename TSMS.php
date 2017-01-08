@@ -48,14 +48,16 @@ if (file_exists ( $messageQueuePluginPath . "functions.inc.php" )) {
 }
 
 // set up DB connection
-$DB_NAME = "/tmp/FPP." . $pluginName . ".db";
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 
-$db = new SQLite3 ( $DB_NAME ) or die ( 'Unable to open database' );
+//echo "PLUGIN DB:NAME: ".$Plugin_DBName;
+
+$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 
 // logEntry("DB: ".$db);
 
 if ($db != null) {
-	
+	//create the tables if this is the first time!!!! this is also done in the plugin-setup !
 	createTwilioTables ( $db );
 }
 
@@ -521,9 +523,9 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 }
 
 if ($IMMEDIATE_OUTPUT != "ON") {
-	logEntry ( "NOT immediately outputting to matrix" );
+	logEntry ( "TWILIO: NOT immediately outputting to matrix" );
 	// } elseif(!$MATRIX_ACTIVE) {
-} else {
+	} else {
 	// add the message pre text to the names before sending it to the matrix!
 	switch ($MATRIX_MODE) {
 		

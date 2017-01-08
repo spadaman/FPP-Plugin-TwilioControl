@@ -40,9 +40,12 @@ $messageText=null;
 
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
 // set up DB connection
-$DB_NAME = "/tmp/FPP." . $pluginName . ".db";
+// set up DB connection
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 
-$db = new SQLite3 ( $DB_NAME ) or die ( 'Unable to open database' );
+//echo "PLUGIN DB:NAME: ".$Plugin_DBName;
+
+$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 
 $messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
 logEntry("TWILIO MESSAGE MANAGEMENT: ".$messageQueueFile);
@@ -203,7 +206,7 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 
 
 
-	$db = new SQLite3($DB_NAME) or die('Unable to open database');
+	$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 	$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."'";
 	
 	$messagesResult = $db->query($messagesQuery) or die('Query failed');

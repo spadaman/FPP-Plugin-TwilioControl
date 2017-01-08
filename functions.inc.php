@@ -22,7 +22,7 @@ function createTwilioTables($db) {
 	$db->exec($createQuery) or die('Create Table Failed');
 
 }
-function insertMessage($message, $pluginName, $pluginData) {
+function insertTwilioMessage($message, $pluginName, $pluginData) {
 	global $db;
 	$messagesTable = "messages";
 	//$db = new SQLite3($DBName) or die('Unable to open database');
@@ -509,7 +509,7 @@ function processSMSMessage($from,$messageText, $messageFile="") {
         }
         
         logEntry("TWILIO: Adding message from: ".$from. ": ".$messageText. " to Twillio message queue");
-        insertMessage($messageText, $pluginName, $from);
+        insertTwilioMessage($messageText, $pluginName, $from);
 
       //  logEntry("TWILIO: Adding message from: ".$from. ": ".$messageText. " to message queue");
       //  logEntry("TWILIO: Message queue file: ".$messageFile);
@@ -761,15 +761,22 @@ function processNewMessages($SMS_FROM, $SMS_BODY) {
 //process read/sent messages
 
 
-function logEntry($data,$logLevel=1) {
+function logEntry($data,$logLevel=1,$sourceFile, $sourceLine) {
 
 	global $logFile,$myPid, $LOG_LEVEL;
 
 	
 	if($logLevel <= $LOG_LEVEL) 
-		return
+		//return
 		
-		$data = $_SERVER['PHP_SELF']." : [".$myPid."] ".$data;
+		if($sourceFile == "") {
+			$sourceFile = $_SERVER['PHP_SELF'];
+		}
+		$data = $sourceFile." : [".$myPid."] ".$data;
+		
+		if($sourceLine !="") {
+			$data .= " (Line: ".$sourceLine.")";
+		}
 		
 		$logWrite= fopen($logFile, "a") or die("Unable to open file!");
 		fwrite($logWrite, date('Y-m-d h:i:s A',time()).": ".$data."\n");

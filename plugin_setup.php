@@ -12,7 +12,10 @@ $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
 
-$Plugin_DBName = "/tmp/FPP.".$pluginName.".db";
+//$Plugin_DBName = "/tmp/FPP.".$pluginName.".db";
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
+
+//$DB_NAME = $settings['pluginData']."/FPP.".$pluginName.".db";
 
 //2.9 - Dec 27 2016 - SqlLite integration
 
@@ -191,6 +194,9 @@ if($REPLY_TEXT == "") {
 }
 
 
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
+
+//echo "PLUGIN DB:NAME: ".$Plugin_DBName;
 
 $db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 
