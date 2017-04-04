@@ -13,9 +13,12 @@ function curl_post_request($url, $data)
 
 //function uses WebPurify
 function check_for_profanity_WebPurify($message) {
-	global $DEBUG,$pluginSettings,$API_USER_ID, $API_KEY;
+	global $DEBUG,$pluginSettings,$API_USER_ID, $API_KEY, $PROFANITY_LANGUAGE;
 	
-	$checkurl = "http://api1.webpurify.com/services/rest/?method=webpurify.live.check&api_key=".$API_KEY."&text=".urlencode($message);
+	if($PROFANITY_LANGUAGE== "" || $PROFANITY_LANGUAGE== null) {
+		$PROFANITY_LANGUAGE= "en";
+	}
+	$checkurl = "http://api1.webpurify.com/services/rest/?method=webpurify.live.check&api_key=".$API_KEY."&lang=".$PROFANITY_LANGUAGE."&text=".urlencode($message);
 	
 	
 	if($DEBUG)

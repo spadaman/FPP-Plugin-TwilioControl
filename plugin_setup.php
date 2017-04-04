@@ -122,6 +122,8 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("PROFANITY_RESPONSE",urlencode($_POST["PROFANITY_RESPONSE"]),$pluginName);
 	
 	WriteSettingToFile("PROFANITY_THRESHOLD",urlencode($_POST["PROFANITY_THRESHOLD"]),$pluginName);
+	WriteSettingToFile("PROFANITY_LANGUAGE",urlencode($_POST["PROFANITY_LANGUAGE"]),$pluginName);
+	
 }
 
 	
@@ -159,6 +161,12 @@ if(isset($_POST['submit']))
 	$PROFANITY_RESPONSE = urldecode($pluginSettings['PROFANITY_RESPONSE']);
 	
 	$PROFANITY_THRESHOLD =urldecode($pluginSettings['PROFANITY_THRESHOLD']);
+	
+	$PROFANITY_LANGUAGE =urldecode($pluginSettings['PROFANITY_LANGUAGE']);
+	
+	if($PROFANITY_LANGUAGE == "" || $PROFANITY_LANGUAGE == null) {
+		$PROFANITY_LANGUAGE = "en";
+	}
 	
 	if (trim($PROFANITY_RESPONSE) == "") {
 		$PROFANITY_RESPONSE = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
@@ -271,7 +279,7 @@ createTwilioTables($db);
 </ul>
 
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_ADDR'];?>/plugin.php?plugin=<?echo $pluginName;?>&page=plugin_setup.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_NAME'];?>/plugin.php?plugin=<?echo $pluginName;?>&page=plugin_setup.php">
 
 
 <?
@@ -479,6 +487,11 @@ echo "<p/> \n";
 echo "Profanity API KEY: \n";
 
 echo "<input type=\"text\" name=\"API_KEY\" size=\"64\" value=\"".$API_KEY."\"> \n";
+echo "<p/> \n";
+
+echo "Profanity Language (2 letter Code: en, es, fr, de, etc: \n";
+
+echo "<input type=\"text\" name=\"PROFANITY_LANGUAGE\" size=\"3\" value=\"".$PROFANITY_LANGUAGE."\"> \n";
 
 
 echo "<p/> \n";
@@ -522,16 +535,16 @@ PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $p
 </form>
 
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_ADDR']?>/plugin.php?plugin=<?echo $pluginName;?>&page=messageManagement.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=messageManagement.php">
 <input id="MessageManagementButton" name="Message Management" type="submit" value="Message Management">
 </form>
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_ADDR']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
 <input id="LogViewer" name="logviewer" type="submit" value="Log Viewer">
 </form>
 
 <?
-echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=logView.php target=\"_top\">Log Viewer</a> \n";
+echo "<a href=\"http://".$_SERVER['SERVER_NAME']."/plugin.php?plugin=".$pluginName."&page=logView.php target=\"_top\">Log Viewer</a> \n";
 ?>
 <p>To report a bug, please file it against the sms Control plugin project on Git:<? echo $gitURL;?> 
 </fieldset>

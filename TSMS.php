@@ -123,7 +123,7 @@ $WHITELIST_NUMBER_ARRAY = explode ( ",", $WHITELIST_NUMBERS );
 $PROFANITY_RESPONSE = urldecode ( $pluginSettings ['PROFANITY_RESPONSE'] );
 
 $PROFANITY_THRESHOLD = urldecode ( $pluginSettings ['PROFANITY_THRESHOLD'] );
-
+$PROFANITY_LANGUAGE = urldecode ( $pluginSettings ['PROFANITY_LANGUAGE'] );
 $TSMS_from = "";
 $TSMS_body = "";
 $TSMS_BODY_CONTAINED_HEX = false;
