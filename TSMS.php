@@ -178,6 +178,14 @@ if ($lenNew !== $lenOriginal) {
 
 $TSMS_body = $TSMS_body_NEW;
 
+//if in DEBUG mode - print out the entire Twilio incomming POST array
+if($DEBUG) {
+	foreach($_POST as $key => $value) {
+		logEntry(" _POST key: ".$key." = ".$value);
+	}
+	
+}
+
 if (in_array ( $TSMS_from, $CONTROL_NUMBER_ARRAY )) {
 	if ($DEBUG) {
 		logEntry ( "Inside checking for enable / disable" );
