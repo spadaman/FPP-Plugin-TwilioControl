@@ -24,7 +24,7 @@ include_once ("profanity.inc.php");
 
 // this line loads the library
 // require('Twilio/Services/Twilio.php');
-require ('Twilio/autoload.php');
+require ('twilio/autoload.php');
 
 // set default settings
 $CONTROL_NUMBER_USED = false;
