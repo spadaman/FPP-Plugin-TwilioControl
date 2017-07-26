@@ -279,7 +279,7 @@ createTwilioTables($db);
 </ul>
 
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_NAME'];?>/plugin.php?plugin=<?echo $pluginName;?>&page=plugin_setup.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_ADDRE'];?>/plugin.php?plugin=<?echo $pluginName;?>&page=plugin_setup.php">
 
 
 <?
@@ -535,16 +535,16 @@ PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $p
 </form>
 
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=messageManagement.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_ADDR']?>/plugin.php?plugin=<?echo $pluginName;?>&page=messageManagement.php">
 <input id="MessageManagementButton" name="Message Management" type="submit" value="Message Management">
 </form>
 
-<form method="post" action="http://<? echo $_SERVER['SERVER_NAME']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
+<form method="post" action="http://<? echo $_SERVER['SERVER_ADDR']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
 <input id="LogViewer" name="logviewer" type="submit" value="Log Viewer">
 </form>
 
 <?
-echo "<a href=\"http://".$_SERVER['SERVER_NAME']."/plugin.php?plugin=".$pluginName."&page=logView.php target=\"_top\">Log Viewer</a> \n";
+echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=logView.php target=\"_top\">Log Viewer</a> \n";
 ?>
 <p>To report a bug, please file it against the sms Control plugin project on Git:<? echo $gitURL;?> 
 </fieldset>

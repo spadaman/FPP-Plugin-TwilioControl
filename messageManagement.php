@@ -64,7 +64,7 @@ $CONTROL_NUMBER_ARRAY = explode ( ",", $CONTROL_NUMBERS );
 
 $WHITELIST_NUMBER_ARRAY = explode ( ",", $WHITELIST_NUMBERS );
 $REFRESH_SECONDS = 5;
-$REFRESH_PAGE = "http://".$_SERVER['SERVER_NAME']."/plugin.php?plugin="."TwilioControl"."&page=messageManagement.php&REFRESH=true&AUTO_REFRESH=ON";
+$REFRESH_PAGE = "http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin="."TwilioControl"."&page=messageManagement.php&REFRESH=true&AUTO_REFRESH=ON";
 
 if(isset($_GET['REFRESH']) && isset($_GET['AUTO_REFRESH'])) {
 ?>
@@ -242,7 +242,7 @@ echo "</td> \n";
 echo "</tr> \n";
 while ($row = $messagesResult->fetchArray()) {
 
-	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_NAME']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 	
 	
 	
@@ -352,7 +352,7 @@ echo "</td> \n";
 echo "</tr> \n";
 while ($row = $profanityMessageQueryResult->fetchArray()) {
 
-	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_NAME']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 
 	
 	$blackListCheck = checkBlacklist($row['pluginData']);
@@ -444,7 +444,7 @@ echo "From number \n";
 echo "</td> \n";
 echo "</tr> \n";
 while ($row = $blackListMessageQueryResult->fetchArray()) {
-	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_NAME']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 		if (in_array ( $row['pluginData'], $CONTROL_NUMBER_ARRAY )) {
 		$TR = "yellow";
 	}
@@ -496,7 +496,7 @@ echo "</table> \n";
 
 echo "<hr/> \n";
 echo "Message file management \n";
-echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_NAME']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
 echo "<input type=\"submit\" name=\"delMessageQueue\" value=\"Delete Twilio Messages from Message Queue\"> \n";
 echo "<input type=\"submit\" name=\"delProfanityQueue\" value=\"Delete Profanity Queue\"> \n";
 echo "<input type=\"submit\" name=\"delBlacklistQueue\" value=\"Delete Blacklist Queue\"> \n";
