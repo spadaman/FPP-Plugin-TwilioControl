@@ -126,6 +126,11 @@ if(isset($_POST['submit']))
 	
 }
 
+sleep(1);
+$pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
+if (file_exists($pluginConfigFile))
+	$pluginSettings = parse_ini_file($pluginConfigFile);
+
 	
 	$PLAYLIST_NAME = urldecode($pluginSettings['PLAYLIST_NAME']);
 	$REMOTE_FPP_ENABLED = urldecode($pluginSettings['REMOTE_FPP_ENABLED']);
