@@ -542,7 +542,7 @@ PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $p
 ?>
 </form>
 
-
+<!--  
 <form method="post" action="http://<? echo $_SERVER['SERVER_ADDR']?>/plugin.php?plugin=<?echo $pluginName;?>&page=messageManagement.php">
 <input id="MessageManagementButton" name="Message Management" type="submit" value="Message Management">
 </form>
@@ -550,6 +550,7 @@ PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $p
 <form method="post" action="http://<? echo $_SERVER['SERVER_ADDR']?>/plugin.php?plugin=<?echo $pluginName;?>&page=logView.php">
 <input id="LogViewer" name="logviewer" type="submit" value="Log Viewer">
 </form>
+-->
 
 <?
 echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=logView.php target=\"_top\">Log Viewer</a> \n";
