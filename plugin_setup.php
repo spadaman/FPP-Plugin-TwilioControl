@@ -6,7 +6,10 @@ include_once 'functions.inc.php';
 include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
 $TwilioVersion = "2.0";
-$pluginVersion ="2.8";
+
+
+include_once 'version.inc';
+
 $PLAYLIST_NAME="";
 $MAJOR = "98";
 $MINOR = "01";
