@@ -80,6 +80,8 @@ $MATRIX_MESSAGE_PLUGIN_NAME = "MatrixMessage";
 // page name to run the matrix code to output to matrix (remote or local);
 $MATRIX_EXEC_PAGE_NAME = "matrix.php";
 
+$FORCE_UPPERCASE = urldecode ( $pluginSettings ['FORCE_UPPERCASE'] );
+
 $PLAYLIST_NAME = urldecode ( $pluginSettings ['PLAYLIST_NAME'] );
 $WHITELIST_NUMBERS = urldecode ( $pluginSettings ['WHITELIST_NUMBERS'] );
 $CONTROL_NUMBERS = urldecode ( $pluginSettings ['CONTROL_NUMBERS'] );
@@ -294,6 +296,9 @@ $statusCommandsArray = explode ( ",", trim ( strtoupper ( $statusCommands ) ) );
 if ($DEBUG)
 	logEntry ( "processing message: from: " . $TSMS_from . " Message: " . $TSMS_body );
 
+	if($FORCE_UPPERCASE) {
+		$TSMS_body = strtoupper($TSMS_body);
+	}
 $messageText = preg_replace ( '/\s+/', ' ', $TSMS_body );
 $messageParts = explode ( " ", $messageText );
 

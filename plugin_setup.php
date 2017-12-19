@@ -91,7 +91,7 @@ if(isset($_POST['submit']))
 
 
 //	echo "Writring config fie <br/> \n";
-	
+	//WriteSettingToFile("FORCE_UPPERCASE",urlencode($_POST["PLAYLIST_NAME"]),$pluginName);
 	WriteSettingToFile("PLAYLIST_NAME",urlencode($_POST["PLAYLIST_NAME"]),$pluginName);
 	WriteSettingToFile("WHITELIST_NUMBERS",urlencode($_POST["WHITELIST_NUMBERS"]),$pluginName);
 	WriteSettingToFile("CONTROL_NUMBERS",urlencode($_POST["CONTROL_NUMBERS"]),$pluginName);
@@ -134,7 +134,7 @@ $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
 
-	
+	$FORCE_UPPERCASE = urldecode($pluginSettings['FORCE_UPPERCASE']);
 	$PLAYLIST_NAME = urldecode($pluginSettings['PLAYLIST_NAME']);
 	$REMOTE_FPP_ENABLED = urldecode($pluginSettings['REMOTE_FPP_ENABLED']);
 	$REMOTE_FPP_IP = urldecode($pluginSettings['REMOTE_FPP_IP']);
@@ -301,14 +301,20 @@ $reboot=0;
 
 echo "ENABLE PLUGIN: ";
 
-//if($ENABLED== 1 || $ENABLED == "on") {
-	//	echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
+
 PrintSettingCheckbox("Plugin: ".$pluginName." ", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
-//	} else {
-//		echo "<input type=\"checkbox\"  name=\"ENABLED\"> \n";
-//}
+
 
 echo "<p/> \n";
+
+echo "FORCE UPPERCASE: ";
+
+
+PrintSettingCheckbox("FORCE Upper Case", "FORCE_UPPERCASE", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+
+
+echo "<p/> \n";
+
 echo "Immediately output to Matrix (Run MATRIX plugin): ";
 
 //if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
