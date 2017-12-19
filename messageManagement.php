@@ -259,12 +259,12 @@ while ($row = $messagesResult->fetchArray()) {
 	
 	if (in_array ( $row['pluginData'], $CONTROL_NUMBER_ARRAY )) {
 		$TR = "yellow";
-	}
-	if (in_array ( $row['pluginData'], $WHITELIST_NUMBER_ARRAY )) {
+	}elseif (in_array ( $row['pluginData'], $WHITELIST_NUMBER_ARRAY )) {
 		$TR = "yellow";
-	}
-	if($blackListCheck != null) {
+	}elseif($blackListCheck != null) {
 		$TR = "red";
+	} else {
+		$TR="";
 	}
 	
 	echo "<tr bgcolor=\"".$TR."\"> \n";
