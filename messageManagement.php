@@ -313,7 +313,10 @@ while ($row = $messagesResult->fetchArray()) {
 	echo "</td> \n";
 	echo "<td> \n";
 	echo "<input type=\"text\" size=\"64\" name=\"normalReply\"> \n";
+	echo "<br/> \n";
+	echo "<center> \n";
 	echo "<input type=\"submit\" name=\"sendStandardReply\" value=\"SEND\"> \n";
+	echo "</center> \n";
 	echo "</td> \n";
 	//plugin Subscription
 	//echo "<td> \n";
