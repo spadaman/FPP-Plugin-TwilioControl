@@ -126,6 +126,13 @@ $PROFANITY_RESPONSE = urldecode ( $pluginSettings ['PROFANITY_RESPONSE'] );
 
 $PROFANITY_THRESHOLD = urldecode ( $pluginSettings ['PROFANITY_THRESHOLD'] );
 $PROFANITY_LANGUAGE = urldecode ( $pluginSettings ['PROFANITY_LANGUAGE'] );
+
+$BLACKLIST_RESPONSE = urldecode ( $pluginSettings ['BLACKLIST_RESPONSE'] );
+
+if(trim($BLACKLIST_RESPONSE) == "") {
+	$BLACKLIST_RESPONSE = "We're sorry, we cannot allow this message to be displayed or you have been placed on our blacklist";
+}
+
 $TSMS_from = "";
 $TSMS_body = "";
 $TSMS_BODY_CONTAINED_HEX = false;
@@ -413,7 +420,8 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 			logEntry ( "Blacklist found: " . $blacklistPhonenumber );
 		}
 		logEntry ( $TSMS_from . " is in the blacklist since date: " . date('d M Y H:i:s',$blackListed) );
-		$REPLY_TEXT = "You have been placed on our blacklist due to profanity since ". date('d M Y H:i:s',$blackListed);// since ".$blackListed;// TODO: since: ".$blacklistDate;
+		$REPLY_TEXT = $BLACKLIST_RESPONSE;
+		//$REPLY_TEXT = "You have been placed on our blacklist due to profanity since ". date('d M Y H:i:s',$blackListed);// since ".$blackListed;// TODO: since: ".$blacklistDate;
 		                                                                        
 		// add the message anyway to the message queu - to show that they were blacklisted and tried
 		                                                                        // to send more messages :0

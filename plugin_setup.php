@@ -115,7 +115,7 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("STOP_COMMANDS",urlencode($_POST["STOP_COMMANDS"]),$pluginName);
 	WriteSettingToFile("REPEAT_COMMANDS",urlencode($_POST["REPEAT_COMMANDS"]),$pluginName);
 	WriteSettingToFile("STATUS_COMMANDS",urlencode($_POST["STATUS_COMMANDS"]),$pluginName);
-	
+	WriteSettingToFile("BLACKLIST_RESPONSE",urlencode($_POST["BLACKLIST_RESPONSE"]),$pluginName);
 	
 	WriteSettingToFile("REMOTE_FPP_IP",urlencode($_POST["REMOTE_FPP_IP"]),$pluginName);
 	
@@ -172,6 +172,8 @@ if (file_exists($pluginConfigFile))
 	
 	$PROFANITY_LANGUAGE =urldecode($pluginSettings['PROFANITY_LANGUAGE']);
 	
+	$BLACKLIST_RESPONSE = urldecode($pluginSettings['BLACKLIST_RESPONSE']);
+	
 	if($PROFANITY_LANGUAGE == "" || $PROFANITY_LANGUAGE == null) {
 		$PROFANITY_LANGUAGE = "en";
 	}
@@ -202,6 +204,10 @@ if (file_exists($pluginConfigFile))
 	
 	if(trim($statusCommands) == "") {
 		$statusCommands = "status";
+	}
+	
+	if(trim($BLACKLIST_RESPONSE) == "") {
+		$BLACKLIST_RESPONSE = "We're sorry, we cannot allow this message to be displayed or you have been placed on our blacklist";
 	}
 	
 
@@ -530,6 +536,16 @@ echo "<p/> \n";
 echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"3\" value=\"".$PROFANITY_THRESHOLD."\"> \n";
 
 echo "<p/> \n";
+echo "<br/> \n";
+echo "Blacklist response: \n";
+echo "<p/> \n";
+
+
+
+echo "<input type=\"text\" name=\"BLACKLIST_RESPONSE\" size=\"64\" value=\"".$BLACKLIST_RESPONSE."\"> \n";
+
+echo "<p/> \n";
+
 echo "DEBUG: ";
 
 //if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
