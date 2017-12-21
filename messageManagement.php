@@ -348,7 +348,7 @@ echo "<center><b><h2>Profanity Messages</h2></b></center>\n";
 
 
 
-$profanityMessageQuery = "SELECT * FROM profanity WHERE pluginName = '".$pluginName."'";
+$profanityMessageQuery = "SELECT * FROM profanity WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
 
 $profanityMessageQueryResult = $db->query($profanityMessageQuery) or die('Query failed');
 
