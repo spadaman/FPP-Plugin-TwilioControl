@@ -2,6 +2,7 @@
 //create database
 function createTwilioTables($db) {
 	//global $db;
+	global $DEBUG;
 
 	$createQuery = "CREATE TABLE IF NOT EXISTS profanity (messageID INTEGER PRIMARY KEY AUTOINCREMENT, timestamp int(16) NOT NULL, message varchar(255), pluginName varchar(64), pluginData varchar(64));";
 
@@ -61,12 +62,13 @@ function insertProfanityMessage($message, $pluginName, $pluginData) {
 }
 //check if the user is in the blacklist
 function checkBlacklist($fromNumber) {
-	global $db;
+	global $db, $DEBUG;
 	
 	$blackListTable = "blacklist";
 	
 	$blackListQuery = "SELECT * FROM ".$blackListTable." WHERE pluginData = '".$fromNumber."'";
-	logEntry("TWILIO: Blacklist query: ".$blackListQuery);
+	if($DEBUG)
+		logEntry("TWILIO: Blacklist query: ".$blackListQuery);
 	
 	$result = $db->query($blackListQuery) or die('Query failed');
 	
@@ -248,7 +250,9 @@ function checkBlacklistNumber($numberToCheck) {
 		
 	}
 
-	logEntry("Did not find number: ".$numberToCheck." in blacklist");
+	if($DEBUG)
+		logEntry("Did not find number: ".$numberToCheck." in blacklist");
+	
 	return false;
 }
 
