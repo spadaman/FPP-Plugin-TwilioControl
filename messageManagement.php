@@ -140,6 +140,21 @@ if(isset($_POST['removeProfanity'])) {
 	
 	//$db.close();
 }
+if(isset($_POST['sendStandardReply'])) {
+	$replyToNumber=urldecode($_POST['phoneNumber']);
+	$normalReply=urldecode($_POST['normalReply']);
+	$messageID = $_POST['messageID'];
+	
+	
+	$TSMS_from = $replyToNumber;
+	
+	if(substr($TSMS_from, 0) != "+") {
+		$TSMS_from = "+".$TSMS_from;
+		
+	}
+	logEntry("Sending a reply ".$normalReply." to phone number: ".$TSMS_from);
+	sendTSMSMessage($normalReply);
+}
 
 if(isset($_POST['sendReply'])) {
 	$blacklistNumber=urldecode($_POST['phoneNumber']);
@@ -295,6 +310,10 @@ while ($row = $messagesResult->fetchArray()) {
 	} else {
 		echo "<input type=\"submit\" name=\"addBlacklist\" value=\"BLACKLIST\"> \n";
 	}
+	echo "</td> \n";
+	echo "<td> \n";
+	echo "<input type=\"text\" size=\"64\" name=\"normalReply\"> \n";
+	echo "<input type=\"submit\" name=\"sendStandardReply\" value=\"SEND\"> \n";
 	echo "</td> \n";
 	//plugin Subscription
 	//echo "<td> \n";
