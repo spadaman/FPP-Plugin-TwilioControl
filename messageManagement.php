@@ -254,6 +254,12 @@ echo "</td> \n";
 echo "<td> \n";
 echo "From number \n";
 echo "</td> \n";
+echo "<td> \n";
+echo "Options \n";
+echo "</td> \n";
+echo "<td> \n";
+echo "Send reply \n";
+echo "</td> \n";
 echo "</tr> \n";
 while ($row = $messagesResult->fetchArray()) {
 
