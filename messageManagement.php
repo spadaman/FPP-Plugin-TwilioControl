@@ -209,7 +209,8 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 	
 		
 		//$db = new SQLite3($DB_NAME) or die('Unable to open database');
-		$deleteBlacklistQuery = "DELETE FROM blacklist WHERE pluginData = '".$delBlacklistNumber."' AND timestamp ='".$messageTimestamp."'";
+		//delete from blacklist all entries of that number!
+		$deleteBlacklistQuery = "DELETE FROM blacklist WHERE pluginData = '".$delBlacklistNumber."'";// AND timestamp ='".$messageTimestamp."'";
 		
 		logEntry("TWILIO MESSAGE MANAGEMENT: Delete blacklist query: ".$deleteBlacklistQuery);
 		
