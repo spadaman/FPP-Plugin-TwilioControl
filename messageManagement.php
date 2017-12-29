@@ -263,7 +263,9 @@ if(isset($_GET['END'])) {
 echo "<center><h1><b>".$pluginName." Message Management</b></h1></center> <br/> \n";
 
 echo "<hr> \n";
-echo "<center><h2><b>ALL Messages (Latest on top)</b></h2></center> <br/> \n";
+echo "<center><h2><b>ALL Messages (Latest on top)</b></h2> \n";
+echo "<br/> \n";
+echo  date('d M Y H:i:s',$CURRENT_DAY_START_TIMESTAMP)." thru ".date('d M Y H:i:s',$CURRENT_DAY_END_TIMESTAMP)."</center> <br/> \n";
 //echo "<textarea class=\"FormElement\" name=\"messages\" id=\"messages\" cols=\"40\" rows=\"".$messageCount."\">\n";
 echo "<table cellspacing=\"3\" cellpadding=\"3\" border=\"1\"> \n";
 echo "<tr> \n";
