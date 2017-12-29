@@ -83,6 +83,10 @@ if($DEBUG) {
 	print_r ($_POST);
 	
 }
+if($DEBUG) {
+	print_r($_GET);
+	
+}
 if(isset($_POST['delMessageQueue'])) {
 	//delete message queue
 	
@@ -219,19 +223,31 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 		}
 
 
+if(isset($_GET['START'])) {
+	$CURRENT_DAY_START_TIMESTAMP = $_GET['START'];
+} else {
+	$CURRENT_DAY_START_TIMESTAMP = mkTimestamp(date("Y"),date("m"),date("d"),0,0,0);
+}
 
+if(isset($_GET['END'])) {
+	$CURRENT_DAY_END_TIMESTAMP = $_GET['END'];
+} else {
+	$CURRENT_DAY_END_TIMESTAMP = mkTimestamp(date("Y"),date("m"),date("d"), 23,59,59);
+}
 
-
-	$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
+//duplicate from above!
+//	$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 	//$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
+	
 	
 	
 	echo "<br/> \n";
 	echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=exportMessages.php\">EXPORT Messages</a> \n";
-
+	echo "&nbsp&nbsp&nbsp&nbsp \n";
+	echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php?START=".($CURRENT_DAY_START_TIMESTAMP-86400)."&END=".($CURRENT_DAY_END_TIMESTAMP-86400)."\">Previous Day</a> \n";
+	
 	echo "<br/> \n";
-	$CURRENT_DAY_START_TIMESTAMP = mkTimestamp(date("Y"),date("m"),date("d"),0,0,0);
-	$CURRENT_DAY_END_TIMESTAMP = mkTimestamp(date("Y"),date("m"),date("d"), 23,59,59);
+
 	
 	//put the links as form links to go backwards and forwards to see messages
 	//ability to EXPORT messages as CSV
