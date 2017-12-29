@@ -1,44 +1,38 @@
-<?php
-// Set headers to make the browser download the results as a csv file
-header("Content-type: text/csv");
-header("Content-Disposition: attachment; filename=filename.csv");
-header("Pragma: no-cache");
-header("Expires: 0");
-$skipJSsettings = 1;
+<?php $skipJSsettings = 1;
 //include_once "/opt/fpp/www/common.php";
 //include_once("/opt/fpp/www/config.php");
 //include_once 'functions.inc.php';
 //include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
-
+$tmpDownloadFilename = "/tmp/messages.csv";
 	// filename for download
 
-	
+	$tmpData = "";
 	$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."'  ORDER BY timestamp DESC";
 	
 	$messagesResult = $db->query($messagesQuery) or die('Query failed');
 	// Fetch the first row
-	$row = $messagesResult->fetch(PDO::FETCH_ASSOC);
+	while ($row = $messagesResult->fetchArray()) {
 	
-	// If no results are found, echo a message and stop
-	if ($row == false){
-		echo "No results";
-		exit;
-	}
-	
-	// Print the titles using the first line
-	print_titles($row);
-	// Iterate over the results and print each one in a line
-	while ($row != false) {
-		// Print the line
-		echo implode(array_values($row), ",") . "\n";
+
+		$tmpData .= implode(array_values($row), ",") . "\n";
 		// Fetch the next line
-		$row = $query->fetch(PDO::FETCH_ASSOC);
+		
 	}
 	
-	// Prints the column names
-	function print_titles($row){
-		echo implode(array_keys($row), ",") . "\n";
-	}
+	//Write a copy locally as well
+	$tmpDownloadFilename= $settings['configDirectory'] . "/" . $backup_fname;
+	//Write data into backup file
+	file_put_contents($tmpDownloadFilename, $tmpData);
+	
+	///Generate the headers to prompt browser to start download
+	header("Content-Disposition: attachment; filename=\"" . $tmpDownloadFilename. "\"");
+	header("Content-Type: application/csv");
+	header("Content-Length: " . filesize($tmpDownloadFilename));
+	header("Connection: close");
+	//Output the file
+	readfile($tmpDownloadFilename);
+	//die
+	exit;
 
 ?>
