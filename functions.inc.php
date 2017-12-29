@@ -1,4 +1,10 @@
 <?php
+
+function mkTimestamp($year,$month,$day, $hours=0,$minutes=0,$seconds=0){
+	// Same as mktime() but parameters are in most significant to least significant order.
+	return mktime($hours,$minutes,$seconds, $month,$day,$year);
+}
+
 //create database
 function createTwilioTables($db) {
 	//global $db;
