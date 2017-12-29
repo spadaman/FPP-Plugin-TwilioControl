@@ -242,7 +242,7 @@ if(isset($_GET['END'])) {
 	
 	
 	echo "<br/> \n";
-	echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=exportMessages.php\">EXPORT Messages</a> \n";
+	echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=exportMessages.php&nopage=1\">EXPORT Messages</a> \n";
 	echo "&nbsp&nbsp&nbsp&nbsp \n";
 	echo "<a href=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php&START=".($CURRENT_DAY_START_TIMESTAMP-86400)."&END=".($CURRENT_DAY_END_TIMESTAMP-86400)."\">Previous Day</a> \n";
 	
