@@ -5,10 +5,10 @@ header("Content-Disposition: attachment; filename=filename.csv");
 header("Pragma: no-cache");
 header("Expires: 0");
 $skipJSsettings = 1;
-include_once "/opt/fpp/www/common.php";
-include_once("/opt/fpp/www/config.php");
-include_once 'functions.inc.php';
-include_once 'commonFunctions.inc.php';
+//include_once "/opt/fpp/www/common.php";
+//include_once("/opt/fpp/www/config.php");
+//include_once 'functions.inc.php';
+//include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
 
 	// filename for download
