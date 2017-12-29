@@ -28,7 +28,7 @@ $db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 	}
 	
 	//Write a copy locally as well
-	$tmpDownloadFilename= $settings['configDirectory'] . "/" . $backup_fname;
+	//$tmpDownloadFilename= $settings['configDirectory'] . "/" . $backup_fname;
 	//Write data into backup file
 	file_put_contents($tmpDownloadFilename, $tmpData);
 	
