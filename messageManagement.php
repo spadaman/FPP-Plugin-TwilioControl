@@ -226,6 +226,11 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 	//$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
 	
 	if(isset($_POST['EXPORT'])) {
+		// filename for download
+		$filename = "website_data_" . date('Ymd') . ".csv";
+		
+		header("Content-Disposition: attachment; filename=\"$filename\"");
+		header("Content-Type: text/csv");
 		
 		$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."'  ORDER BY timestamp DESC";
 		
