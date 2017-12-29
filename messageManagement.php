@@ -233,9 +233,11 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 		$row = $messagesResult->fetchArray();
 		$out = fopen('php://output', 'w');
 		// print column header
-		fputcsv($out, array_keys($row));
+		//fputcsv($out, array_keys($row));
 		//or print content directly
+		while ($row = $messagesResult->fetchArray()) {
 		fputcsv($out, array_values($row));
+		}
 		fclose($out);
 	}
 	echo "<br/> \n";
