@@ -1,10 +1,16 @@
 <?php $skipJSsettings = 1;
-//include_once "/opt/fpp/www/common.php";
+include_once "/opt/fpp/www/common.php";
 //include_once("/opt/fpp/www/config.php");
 //include_once 'functions.inc.php';
 //include_once 'commonFunctions.inc.php';
 $pluginName = "TwilioControl";
 $tmpDownloadFilename = "/tmp/messages.csv";
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
+
+//echo "PLUGIN DB:NAME: ".$Plugin_DBName;
+
+$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
+
 	// filename for download
 
 	$tmpData = "";
