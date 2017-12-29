@@ -1,6 +1,11 @@
 <?php
-include 'functions.inc.php';
-include 'commonFunctions.inc.php';
+//$DEBUG=true;
+$skipJSsettings = 1;
+include_once "/opt/fpp/www/common.php";
+include_once("/opt/fpp/www/config.php");
+include_once 'functions.inc.php';
+include_once 'commonFunctions.inc.php';
+$pluginName = "TwilioControl";
 if(isset($_POST['EXPORT'])) {
 	// filename for download
 	$filename = "website_data_" . date('Ymd') . ".csv";
