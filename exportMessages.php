@@ -1,11 +1,11 @@
 <?php
+header('Content-Type: text/csv; charset=utf-8');
+header('Content-Disposition: attachment; filename=data.csv');
 $pluginName = "TwilioControl";
 $tmpDownloadFilename = "/tmp/messages.csv";
 $Plugin_DBName = "/home/fpp/media/config/FPP.".$pluginName.".db";
 $db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 $tmpData = "";
-header('Content-Type: text/csv; charset=utf-8');
-header('Content-Disposition: attachment; filename=data.csv');
 // create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
 $messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."'  ORDER BY timestamp DESC";
