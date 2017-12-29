@@ -462,7 +462,7 @@ echo "</form> \n";
 echo "</table> \n";
 //echo "</textarea> \n";
 
-$blacklistMessageQuery = "SELECT * FROM blacklist WHERE pluginName = '".$pluginName."'";
+$blacklistMessageQuery = "SELECT * FROM blacklist WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
 
 $blackListMessageQueryResult = $db->query($blacklistMessageQuery) or die('Query failed');
 
