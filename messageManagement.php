@@ -223,7 +223,9 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 
 
 	$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
-	$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
+	//$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
+	
+	$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' AND DATE(FROM_UNIXTIME(timestamp)) = '".date("Y-m-d")." ORDER BY timestamp DESC";
 	
 	$messagesResult = $db->query($messagesQuery) or die('Query failed');
 	
