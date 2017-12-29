@@ -225,8 +225,30 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 	$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 	//$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
 	
+	if(isset($_POST['EXPORT'])) {
+		
+		$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."'  ORDER BY timestamp DESC";
+		
+		$messagesResult = $db->query($messagesQuery) or die('Query failed');
+		$row = $messagesResult->fetchArray();
+		$out = fopen('php://output', 'w');
+		// print column header
+		fputcsv($out, array_keys($row));
+		//or print content directly
+		fputcsv($out, array_values($row));
+		fclose($out);
+	}
+	echo "<br/> \n";
+	echo "<form name=\"messageManagementBlacklist\" method=\"post\" action=\"http://".$_SERVER['SERVER_ADDR']."/plugin.php?plugin=".$pluginName."&page=messageManagement.php\"> \n";
+	echo "<input type=\"submit\" name=\"EXPORT\" value=\"EXPORT Messages\"> \n";
+	echo "</form> \n";
+	echo "<br/> \n";
 	$CURRENT_DAY_START_TIMESTAMP = mkTimestamp(date("Y"),date("m"),date("d"),0,0,0);
 	$CURRENT_DAY_END_TIMESTAMP = mkTimestamp(date("Y"),date("m"),date("d"), 23,59,59);
+	
+	//put the links as form links to go backwards and forwards to see messages
+	//ability to EXPORT messages as CSV
+	
 	$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' AND timestamp > ".$CURRENT_DAY_START_TIMESTAMP." AND timestamp < ".$CURRENT_DAY_END_TIMESTAMP." ORDER BY timestamp DESC";
 	
 	$messagesResult = $db->query($messagesQuery) or die('Query failed');
