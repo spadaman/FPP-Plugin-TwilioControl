@@ -290,8 +290,8 @@ if (trim ( $statusCommands ) == "") {
 	$statusCommands = "STATUS";
 }
 
-if ($DEBUG)
-	print_r ( $pluginSettings );
+//if ($DEBUG)
+//	print_r ( $pluginSettings );
 
 $playCommandsArray = explode ( ",", trim ( strtoupper ( $playCommands ) ) );
 $stopCommandsArray = explode ( ",", trim ( strtoupper ( $stopCommands ) ) );
@@ -318,7 +318,8 @@ if (in_array ( $TSMS_from, $CONTROL_NUMBER_ARRAY )) {
 	$CONTROL_NUMBER_USED = true;
 	$WHITELIST_NUMBER_USED = false;
 	
-	logEntry ( "Control number found: " . $TSMS_from );
+	if($DEBUG)
+		logEntry ( "Control number found: " . $TSMS_from );
 	
 	if (in_array ( trim ( strtoupper ( $messageParts [0] ) ), $playCommandsArray )) {
 		logEntry ( "SMS play cmd FOUND!!!" );
@@ -346,10 +347,12 @@ if (in_array ( $TSMS_from, $CONTROL_NUMBER_ARRAY )) {
 		
 		$MODE = strtoupper ( $messageParts [1] );
 		
-		logEntry ( "Mode: " . $MODE );
+		if($DEBUG)
+			logEntry ( "Mode: " . $MODE );
 		
 		if ($MODE == "NAMES" || $MODE == "FREE") {
-			logEntry ( "We got a mode from a control number" );
+			if($DEBUG)
+				logEntry ( "We got a mode from a control number" );
 			
 			WriteSettingToFile ( "MATRIX_MODE", urlencode ( $MODE ), $pluginName );
 			
@@ -370,6 +373,7 @@ if (in_array ( $TSMS_from, $CONTROL_NUMBER_ARRAY )) {
 		logEntry ( "Command request: " . $messageText . " in uppercase is in control array" );
 		// do we have a playlist name?
 		if ($messageParts [1] != "") {
+			//TODO: check for a valid cmd type first??
 			processSMSCommand ( $TSMS_from, $CMD, $messageParts [1] );
 			// processSMSCommand($from,$messageParts[0],$messageParts[1]);
 		} else {
