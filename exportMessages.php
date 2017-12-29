@@ -1,45 +1,23 @@
-<?php $skipJSsettings = 1;
-include_once "/opt/fpp/www/common.php";
-//include_once("/opt/fpp/www/config.php");
-//include_once 'functions.inc.php';
-//include_once 'commonFunctions.inc.php';
-//test
+<?php $skipJSsettings = 1; ?>
+<?php include_once "/opt/fpp/www/common.php"; ?>
+<?
 $pluginName = "TwilioControl";
 $tmpDownloadFilename = "/tmp/messages.csv";
 $Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
-
-//echo "PLUGIN DB:NAME: ".$Plugin_DBName;
-
 $db = new SQLite3($Plugin_DBName) or die('Unable to open database');
-
-	// filename for download
-
-	$tmpData = "";
+$tmpData = "";
 	$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."'  ORDER BY timestamp DESC";
-	
 	$messagesResult = $db->query($messagesQuery) or die('Query failed');
-	// Fetch the first row
 	while ($row = $messagesResult->fetchArray()) {
-	
-
-		$tmpData .= implode(array_values($row), ",") . "\n";
+	$tmpData .= implode(array_values($row), ",") . "\n";
 		// Fetch the next line
-		
-	}
-	
-	//Write a copy locally as well
-	//$tmpDownloadFilename= $settings['configDirectory'] . "/" . $backup_fname;
-	//Write data into backup file
-	file_put_contents($tmpDownloadFilename, $tmpData);
-	
-	///Generate the headers to prompt browser to start download
+		}
+file_put_contents($tmpDownloadFilename, $tmpData);
 	header("Content-Disposition: attachment; filename=\"" . $tmpDownloadFilename. "\"");
-	header("Content-Type: application/csv");
+	header("Content-Type: text/csv");
 	header("Content-Length: " . filesize($tmpDownloadFilename));
-	header("Connection: close");
-	//Output the file
+//	header("Connection: close");
 	readfile($tmpDownloadFilename);
 	//die
 	exit;
-
 ?>
