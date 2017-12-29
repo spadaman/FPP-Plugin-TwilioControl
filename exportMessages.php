@@ -1,8 +1,9 @@
 <?php
-$filename = "website_data_" . date('Ymd') . ".csv";
-header("Content-Disposition: attachment; filename=\"$filename\"");
-header("Content-Type: text/csv");
-//$DEBUG=true;
+// Set headers to make the browser download the results as a csv file
+header("Content-type: text/csv");
+header("Content-Disposition: attachment; filename=filename.csv");
+header("Pragma: no-cache");
+header("Expires: 0");
 $skipJSsettings = 1;
 include_once "/opt/fpp/www/common.php";
 include_once("/opt/fpp/www/config.php");
@@ -16,14 +17,28 @@ $pluginName = "TwilioControl";
 	$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."'  ORDER BY timestamp DESC";
 	
 	$messagesResult = $db->query($messagesQuery) or die('Query failed');
-	$row = $messagesResult->fetchArray();
-	$out = fopen('php://output', 'w');
-	// print column header
-	//fputcsv($out, array_keys($row));
-	//or print content directly
-	while ($row = $messagesResult->fetchArray()) {
-		fputcsv($out, array_values($row));
+	// Fetch the first row
+	$row = $messagesResult->fetch(PDO::FETCH_ASSOC);
+	
+	// If no results are found, echo a message and stop
+	if ($row == false){
+		echo "No results";
+		exit;
 	}
-	fclose($out);
+	
+	// Print the titles using the first line
+	print_titles($row);
+	// Iterate over the results and print each one in a line
+	while ($row != false) {
+		// Print the line
+		echo implode(array_values($row), ",") . "\n";
+		// Fetch the next line
+		$row = $query->fetch(PDO::FETCH_ASSOC);
+	}
+	
+	// Prints the column names
+	function print_titles($row){
+		echo implode(array_keys($row), ",") . "\n";
+	}
 
 ?>
