@@ -126,6 +126,7 @@ if(isset($_POST['submit']))
 	
 	WriteSettingToFile("PROFANITY_THRESHOLD",urlencode($_POST["PROFANITY_THRESHOLD"]),$pluginName);
 	WriteSettingToFile("PROFANITY_LANGUAGE",urlencode($_POST["PROFANITY_LANGUAGE"]),$pluginName);
+	WriteSettingToFile("SYSTEM_DISABLED_RESPONSE",urlencode($_POST["SYSTEM_DISABLED_RESPONSE"]),$pluginName);
 	
 }
 
@@ -173,6 +174,12 @@ if (file_exists($pluginConfigFile))
 	$PROFANITY_LANGUAGE =urldecode($pluginSettings['PROFANITY_LANGUAGE']);
 	
 	$BLACKLIST_RESPONSE = urldecode($pluginSettings['BLACKLIST_RESPONSE']);
+	
+	$SYSTEM_DISABLED_RESPONSE = urldecode($pluginSettings['SYSTEM_DISABLED_RESPONSE']);
+	
+	if(trim($SYSTEM_DISABLED_RESPONSE) == "" ) {
+		$SYSTEM_DISABLED_RESPONSE = "We're sorry, the system is not accepting SMS at this time";
+	}
 	
 	if($PROFANITY_LANGUAGE == "" || $PROFANITY_LANGUAGE == null) {
 		$PROFANITY_LANGUAGE = "en";
@@ -516,6 +523,12 @@ echo "<input type=\"text\" name=\"PROFANITY_LANGUAGE\" size=\"3\" value=\"".$PRO
 
 echo "<p/> \n";
 
+echo "Profanity Threshold. If a user sends in more than this number of profanity messages, will alert the control number: \n";
+echo "<p/> \n";
+echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"3\" value=\"".$PROFANITY_THRESHOLD."\"> \n";
+
+echo "<p/> \n";
+
 echo "<hr> \n";
 echo "Responses: \n";
 echo "<br/> \n";
@@ -528,14 +541,9 @@ echo "<input type=\"text\" name=\"PROFANITY_RESPONSE\" size=\"64\" value=\"".$PR
 
 echo "<p/> \n";
 
-echo "Profanity Threshold. If a user sends in more than this number of profanity messages, will alert the control number: \n";
-echo "<p/> \n";
 
 
 
-echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"3\" value=\"".$PROFANITY_THRESHOLD."\"> \n";
-
-echo "<p/> \n";
 echo "<br/> \n";
 echo "Blacklist response: \n";
 echo "<p/> \n";
@@ -543,6 +551,20 @@ echo "<p/> \n";
 
 
 echo "<input type=\"text\" name=\"BLACKLIST_RESPONSE\" size=\"64\" value=\"".$BLACKLIST_RESPONSE."\"> \n";
+
+echo "<p/> \n";
+
+
+
+
+echo "<br/> \n";
+echo "System not enabled response: \n";
+echo "<p/> \n";
+
+
+
+echo "<input type=\"text\" name=\"SYSTEM_DISABLED_RESPONSE\" size=\"64\" value=\"".$SYSTEM_DISABLED_RESPONSE."\"> \n";
+
 
 echo "<p/> \n";
 

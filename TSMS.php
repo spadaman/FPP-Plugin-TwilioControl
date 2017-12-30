@@ -129,6 +129,11 @@ $PROFANITY_LANGUAGE = urldecode ( $pluginSettings ['PROFANITY_LANGUAGE'] );
 
 $BLACKLIST_RESPONSE = urldecode ( $pluginSettings ['BLACKLIST_RESPONSE'] );
 
+$SYSTEM_DISABLED_RESPONSE = urldecode($pluginSettings['SYSTEM_DISABLED_RESPONSE']);
+if(trim($SYSTEM_DISABLED_RESPONSE) == "" ) {
+	$SYSTEM_DISABLED_RESPONSE = "We're sorry, the system is not accepting SMS at this time";
+}
+
 if(trim($BLACKLIST_RESPONSE) == "") {
 	$BLACKLIST_RESPONSE = "We're sorry, we cannot allow this message to be displayed or you have been placed on our blacklist";
 }
@@ -260,8 +265,9 @@ if (in_array ( $TSMS_from, $CONTROL_NUMBER_ARRAY )) {
 }
 
 if (strtoupper ( $ENABLED ) != "ON") {
-	$REPLY_TEXT_PLUGIN_DISABLED = "We're sorry, the system is not accepting SMS at this time";
-	sendTSMSMessage ( $REPLY_TEXT_PLUGIN_DISABLED );
+	//$SYSTEM_DISABLED_RESPONSE = urldecode($pluginSettings['SYSTEM_DISABLED_RESPONSE']);
+	//$REPLY_TEXT_PLUGIN_DISABLED = "We're sorry, the system is not accepting SMS at this time";
+	sendTSMSMessage ( $SYSTEM_DISABLED_RESPONSE);
 	logEntry ( "Plugin Status: DISABLED Please enable in Plugin Setup to use" );
 	lockHelper::unlock ();
 	exit ( 0 );
