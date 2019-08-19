@@ -4,8 +4,6 @@
 $pluginName ="TwilioControl";
 $myPid = getmypid();
 
-$messageQueue_Plugin = "MessageQueue";
-$MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
 //MATRIX ACTIVE - true / false to catch more messages if they arrive
 $MATRIX_ACTIVE = false;
@@ -16,6 +14,8 @@ include_once("/opt/fpp/www/common.php");
 include_once("functions.inc.php");
 include_once("commonFunctions.inc.php");
 
+$messageQueue_Plugin = findPlugin("MessageQueue");
+$MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
 
 
@@ -48,7 +48,7 @@ if (file_exists($pluginConfigFile))
 	$DEBUG=urldecode($pluginSettings['DEBUG']);
 
 
-	$MATRIX_MESSAGE_PLUGIN_NAME = "MatrixMessage";
+	$MATRIX_MESSAGE_PLUGIN_NAME = findPlugin("MatrixMessage");
 	//page name to run the matrix code to output to matrix (remote or local);
 	$MATRIX_EXEC_PAGE_NAME = "matrix.php";
 

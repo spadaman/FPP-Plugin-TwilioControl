@@ -43,7 +43,7 @@ $Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 $SMSEventFile = $eventDirectory."/".$MAJOR."_".$MINOR.$eventExtension;
 $SMSGETScriptFilename = $scriptDirectory."/".$pluginName."_GET.sh";
 
-$messageQueue_Plugin = "MessageQueue";
+$messageQueue_Plugin = findPlugin("MessageQueue");
 $MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
 

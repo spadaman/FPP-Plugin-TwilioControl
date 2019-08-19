@@ -9,9 +9,6 @@ $pluginName = "TwilioControl";
 $TwilioVersion = "2.0";
 $myPid = getmypid ();
 
-$messageQueue_Plugin = "MessageQueue";
-$MESSAGE_QUEUE_PLUGIN_ENABLED = false;
-
 // MATRIX ACTIVE - true / false to catch more messages if they arrive
 $MATRIX_ACTIVE = false;
 
@@ -25,6 +22,11 @@ include_once ("profanity.inc.php");
 // this line loads the library
 // require('Twilio/Services/Twilio.php');
 require ('twilio/autoload.php');
+    
+$messageQueue_Plugin = findPlugin("MessageQueue");
+$MESSAGE_QUEUE_PLUGIN_ENABLED = false;
+
+
 
 // set default settings
 $CONTROL_NUMBER_USED = false;
@@ -76,7 +78,7 @@ $DEBUG = urldecode ( $pluginSettings ['DEBUG'] );
 
 // $CONSOLE_DEBUG = true;
 
-$MATRIX_MESSAGE_PLUGIN_NAME = "MatrixMessage";
+$MATRIX_MESSAGE_PLUGIN_NAME = findPlugin("MatrixMessage");
 // page name to run the matrix code to output to matrix (remote or local);
 $MATRIX_EXEC_PAGE_NAME = "matrix.php";
 

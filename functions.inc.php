@@ -1,5 +1,19 @@
 <?php
 
+function findPlugin($plugin) {
+    if (is_dir("/home/fpp/media/plugins/FPP-Plugin-" . $plugin)) {
+        return "FPP-Plugin-" . $plugin;
+    }
+    if (is_dir("/home/fpp/media/plugins/" . $plugin)) {
+        return $plugin;
+    }
+    if ($plugin == "MatrixMessage") {
+        return findPlugin("Matrix-Message");
+    }
+    echo "Plugin not found: " . $plugin . "\n";
+    return $plugin;
+}
+    
 function mkTimestamp($year,$month,$day, $hours=0,$minutes=0,$seconds=0){
 	// Same as mktime() but parameters are in most significant to least significant order.
 	return mktime($hours,$minutes,$seconds, $month,$day,$year);

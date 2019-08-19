@@ -6,8 +6,6 @@
 $pluginName ="TwilioControl";
 $myPid = getmypid();
 
-$messageQueue_Plugin = "MessageQueue";
-$MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
 
 
@@ -21,6 +19,8 @@ include_once("profanity.inc.php");
 // this line loads the library
 //require('Twilio/Services/Twilio.php');
 require ('Twilio/autoload.php');
+$messageQueue_Plugin = findPlugin("MessageQueue");
+$MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
 
 
