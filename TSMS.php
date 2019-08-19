@@ -42,18 +42,18 @@ $profanityMessageQueueFile = $settings ['configDirectory'] . "/plugin." . $plugi
 
 $blacklistFile = $settings ['configDirectory'] . "/plugin." . $pluginName . ".Blacklist";
 
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 if (file_exists ( $messageQueuePluginPath . "functions.inc.php" )) {
 	include $messageQueuePluginPath . "functions.inc.php";
 	$MESSAGE_QUEUE_PLUGIN_ENABLED = true;
+    $Plugin_DBName = $settings['configDirectory']."/FPP." . $messageQueue_Plugin . ".db";
 } else {
 	logEntry ( "Message Queue Plugin not installed, some features will be disabled" );
 }
 
 // set up DB connection
-$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 
 //echo "PLUGIN DB:NAME: ".$Plugin_DBName;
-
 $db = new SQLite3($Plugin_DBName) or die('Unable to open database');
 
 // logEntry("DB: ".$db);
@@ -558,7 +558,7 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 if ($IMMEDIATE_OUTPUT != "ON") {
 	logEntry ( "TWILIO: NOT immediately outputting to matrix" );
 	// } elseif(!$MATRIX_ACTIVE) {
-	} else {
+} else {
 	// add the message pre text to the names before sending it to the matrix!
 	switch ($MATRIX_MODE) {
 		

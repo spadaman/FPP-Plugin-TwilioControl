@@ -22,12 +22,12 @@ $messageQueuePluginPath = $settings['pluginDirectory']."/".$messageQueue_Plugin.
 
 $DEBUG=urldecode($pluginSettings['DEBUG']);
 
-
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 if(file_exists($messageQueuePluginPath."functions.inc.php"))
 {
 	include $messageQueuePluginPath."functions.inc.php";
 	$MESSAGE_QUEUE_PLUGIN_ENABLED=true;
-
+    $Plugin_DBName = $settings['configDirectory']."/FPP." . $messageQueue_Plugin . ".db";
 } else {
 	logEntry("Message Queue Plugin not installed, some features will be disabled");
 }
@@ -39,9 +39,6 @@ $blacklistNumber=null;
 $messageText=null;
 
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-TwilioControl.git";
-// set up DB connection
-// set up DB connection
-$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 
 //echo "PLUGIN DB:NAME: ".$Plugin_DBName;
 
@@ -90,21 +87,15 @@ if($DEBUG) {
 if(isset($_POST['delMessageQueue'])) {
 	//delete message queue
 	
-	
-		
-	//$db = new SQLite3($DB_NAME) or die('Unable to open database');
 	$deleteMessageQueue = "DELETE FROM messages";
 	
 	logEntry("TWILIO MESSAGE MANAGEMENT: Deleting TwilioControl messages from message queue file ".$deleteMessageQueue);
 	
 	$deleteTwilioMessageQueueResult = $db->query($deleteMessageQueue) or die('Unable to delete Twilio Message Table');
-	
-	
 }
 
 if(isset($_POST['delProfanityQueue'])) {
 	//delete message queue
-	//$db = new SQLite3($DB_NAME) or die('Unable to open database');
 	$deleteMessageQueue = "DELETE FROM profanity";
 	
 	logEntry("TWILIO MESSAGE MANAGEMENT: Deleting TwilioControl messages from profanity queue file ".$deleteMessageQueue);
@@ -115,7 +106,6 @@ if(isset($_POST['delProfanityQueue'])) {
 
 if(isset($_POST['delBlacklistQueue'])) {
 	//delete message queue
-	//$db = new SQLite3($DB_NAME) or die('Unable to open database');
 	$deleteMessageQueue = "DELETE FROM blacklist";
 	
 	logEntry("TWILIO MESSAGE MANAGEMENT: Deleting TwilioControl messages from blacklist queue file ".$deleteMessageQueue);
@@ -134,7 +124,6 @@ if(isset($_POST['removeProfanity'])) {
 	
 	
 	
-	//$db = new SQLite3($DB_NAME) or die('Unable to open database');
 	$deleteProfanityMessageQuery = "DELETE FROM profanity WHERE pluginData = '".$delProfanityNumber."' AND timestamp ='".$messageTimestamp."'";
 	
 	logEntry("TWILIO MESSAGE MANAGEMENT: Delete profanity query: ".$deleteProfanityMessageQuery);
@@ -212,7 +201,6 @@ if(isset($_POST['addBlacklist'])) {// != "") {
 	
 	
 		
-		//$db = new SQLite3($DB_NAME) or die('Unable to open database');
 		//delete from blacklist all entries of that number!
 		$deleteBlacklistQuery = "DELETE FROM blacklist WHERE pluginData = '".$delBlacklistNumber."'";// AND timestamp ='".$messageTimestamp."'";
 		
@@ -234,10 +222,6 @@ if(isset($_GET['END'])) {
 } else {
 	$CURRENT_DAY_END_TIMESTAMP = mkTimestamp(date("Y"),date("m"),date("d"), 23,59,59);
 }
-
-//duplicate from above!
-//	$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
-	//$messagesQuery = "SELECT * FROM messages WHERE pluginName = '".$pluginName."' ORDER BY timestamp DESC";
 	
 	
 	

@@ -46,7 +46,6 @@ function createTwilioTables($db) {
 function insertTwilioMessage($message, $pluginName, $pluginData) {
 	global $db;
 	$messagesTable = "messages";
-	//$db = new SQLite3($DBName) or die('Unable to open database');
 
 	$insertQuery = "INSERT INTO ".$messagesTable." (timestamp, message, pluginName, pluginData) VALUES ('".time()."','".urlencode($message)."','".$pluginName."','".$pluginData."');";
 
@@ -58,7 +57,6 @@ function insertTwilioMessage($message, $pluginName, $pluginData) {
 function insertBlacklistMessage($message, $pluginName, $pluginData) {
 	global $db;
 	$blackListTable = "blacklist";
-	//$db = new SQLite3($DBName) or die('Unable to open database');
 
 	$insertQuery = "INSERT INTO ".$blackListTable." (timestamp, message, pluginName, pluginData) VALUES ('".time()."','".urlencode($message)."','".$pluginName."','".$pluginData."');";
 
@@ -71,7 +69,6 @@ function insertBlacklistMessage($message, $pluginName, $pluginData) {
 function insertProfanityMessage($message, $pluginName, $pluginData) {
 	global $db;
 	$profanityListTable = "profanity";
-	//$db = new SQLite3($DBName) or die('Unable to open database');
 
 	$insertQuery = "INSERT INTO ".$profanityListTable." (timestamp, message, pluginName, pluginData) VALUES ('".time()."','".urlencode($message)."','".$pluginName."','".$pluginData."');";
 

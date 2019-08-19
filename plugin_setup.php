@@ -15,8 +15,6 @@ $MAJOR = "98";
 $MINOR = "01";
 $eventExtension = ".fevt";
 
-//$Plugin_DBName = "/tmp/FPP.".$pluginName.".db";
-$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
 
 //$DB_NAME = $settings['pluginData']."/FPP.".$pluginName.".db";
 
@@ -46,6 +44,8 @@ $SMSGETScriptFilename = $scriptDirectory."/".$pluginName."_GET.sh";
 $messageQueue_Plugin = findPlugin("MessageQueue");
 $MESSAGE_QUEUE_PLUGIN_ENABLED=false;
 
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
+
 
 $logFile = $settings['logDirectory']."/".$pluginName.".log";
 
@@ -59,7 +59,7 @@ if(file_exists($messageQueuePluginPath."functions.inc.php"))
 {
 	include $messageQueuePluginPath."functions.inc.php";
 	$MESSAGE_QUEUE_PLUGIN_ENABLED=true;
-
+    $Plugin_DBName = $settings['configDirectory']."/FPP." . $messageQueue_Plugin . ".db";
 } else {
 	logEntry("Message Queue Plugin not installed, some features will be disabled");
 }
