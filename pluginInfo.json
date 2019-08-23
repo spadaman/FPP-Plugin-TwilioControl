@@ -6,7 +6,7 @@
     "description": "Control FPP with Twilio SMS",
     "homeURL": "https://github.com/FalconChristmas/FPP-Plugin-TwilioControl",
     "srcURL": "https://github.com/FalconChristmas/FPP-Plugin-TwilioControl.git",
-    "bugURL": "https://github.com/FalconChristmas/FPP-Pluginn-TwilioControl/issues",
+    "bugURL": "https://github.com/FalconChristmas/FPP-Plugin-TwilioControl/issues",
     "allowUpdates": 1,
     "versions": [
         {
