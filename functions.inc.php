@@ -327,7 +327,7 @@ function sendTSMSMessage($messageText) {
 	if($TSMS_BODY_CONTAINED_HEX) {
 		$messageText .= " However; we removed any emoticons or non text characters";
 	}
-
+    
     if($DEBUG)
     logEntry("Inside sendTSMSMessage");
 	
@@ -594,7 +594,7 @@ function processSMSCommand($from,$SMSCommand="",$playlistName="") {
        
               
         } 
-       $cmd = "/opt/fpp/bin.pi/fpp ";
+       $cmd = "/opt/fpp/src/fpp ";
       
        
 
