@@ -145,7 +145,6 @@ $TSMS_body = "";
 $TSMS_BODY_CONTAINED_HEX = false;
 
 if (isset ( $_POST ['From'] ) || $TSMS_from != "") {
-	
 	$TSMS_from = $_POST ['From'];
 } elseif ($CONSOLE_DEBUG) {
 	$TSMS_from = "+16195666240";
@@ -165,7 +164,11 @@ if (isset ( $_POST ['Body'] ) || $TSMS_body != "") {
 	lockHelper::unlock ();
 	exit ( 0 );
 }
+if ($TSMS_phoneNumber == "" && isset ( $_POST ['To'] )) {
+    $TSMS_phoneNumber = $_POST ['To'];
+}
 
+    
 if ($DEBUG) {
 	logEntry ( "Twilio account_sid: " . $TSMS_account_sid );
 	logEntry ( "Twilio account pass: " . $TSMS_auth_token );
@@ -589,6 +592,7 @@ if ($IMMEDIATE_OUTPUT != "ON") {
 	logEntry ( "MATRIX ACTIVE: " . $MATRIX_ACTIVE );
 	
 	$curlURL = "http://" . $MATRIX_LOCATION . "/plugin.php?plugin=" . $MATRIX_MESSAGE_PLUGIN_NAME . "&page=" . $MATRIX_EXEC_PAGE_NAME . "&nopage=1&subscribedPlugin=" . $pluginName . "&onDemandMessage=" . urlencode ( $messageText );
+    
 	if ($DEBUG)
 		logEntry ( "MATRIX TRIGGER: " . $curlURL );
 	

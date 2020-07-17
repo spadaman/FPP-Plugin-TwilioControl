@@ -401,7 +401,7 @@ echo "<p/> \n";
 
 echo "Twilio Auth Token: \n";
 
-echo "<input type=\"text\" name=\"TSMS_AUTH_TOKEN\" size=\"64\" value=\"".$TSMS_auth_token."\"> \n";
+echo "<input type=\"password\" name=\"TSMS_AUTH_TOKEN\" size=\"64\" value=\"".$TSMS_auth_token."\"> \n";
 
 
 echo "<p/> \n";
@@ -513,7 +513,7 @@ echo "<p/> \n";
 
 echo "Profanity API KEY: \n";
 
-echo "<input type=\"text\" name=\"API_KEY\" size=\"64\" value=\"".$API_KEY."\"> \n";
+echo "<input type=\"password\" name=\"API_KEY\" size=\"64\" value=\"".$API_KEY."\"> \n";
 echo "<p/> \n";
 
 echo "Profanity Language (2 letter Code: en, es, fr, de, etc: \n";

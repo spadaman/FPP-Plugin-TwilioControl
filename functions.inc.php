@@ -327,8 +327,9 @@ function sendTSMSMessage($messageText) {
 	if($TSMS_BODY_CONTAINED_HEX) {
 		$messageText .= " However; we removed any emoticons or non text characters";
 	}
-if($DEBUG)
-	logEntry("Inside sendTSMSMessage");
+
+    if($DEBUG)
+    logEntry("Inside sendTSMSMessage");
 	
 	$TSMS_URL = "https://api.twilio.com/2010-04-01/Accounts/".$TSMS_account_sid."/Messages.json";
 	//$postfields = array(urlencode("To=".$TSMS_from),
@@ -346,7 +347,7 @@ if($DEBUG)
 						);
 	
 	$ch2 = curl_init();
-	curl_setopt($ch2, CURLOPT_USERPWD, "$TSMS_account_sid:$TSMS_auth_token");
+    curl_setopt($ch2, CURLOPT_USERPWD, "" . $TSMS_account_sid . ":" . $TSMS_auth_token);
 	curl_setopt($ch2, CURLOPT_URL, $TSMS_URL);
 	curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 	//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
