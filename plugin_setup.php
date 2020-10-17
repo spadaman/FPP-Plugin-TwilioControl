@@ -127,7 +127,10 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("PROFANITY_THRESHOLD",urlencode($_POST["PROFANITY_THRESHOLD"]),$pluginName);
 	WriteSettingToFile("PROFANITY_LANGUAGE",urlencode($_POST["PROFANITY_LANGUAGE"]),$pluginName);
 	WriteSettingToFile("SYSTEM_DISABLED_RESPONSE",urlencode($_POST["SYSTEM_DISABLED_RESPONSE"]),$pluginName);
-	
+		
+	// @spadaman added.
+	WriteSettingToFile("TOO_MANY_MSG_QUEUED_RESPONSE",urlencode($_POST["TOO_MANY_MSG_QUEUED_RESPONSE"]),$pluginName);
+	WriteSettingToFile("MAX_PENDING_MSG_PER_NUMBER",urlencode($_POST["MAX_PENDING_MSG_PER_NUMBER"]),$pluginName);
 }
 
 sleep(1);
@@ -176,11 +179,18 @@ if (file_exists($pluginConfigFile))
 	$BLACKLIST_RESPONSE = urldecode($pluginSettings['BLACKLIST_RESPONSE']);
 	
 	$SYSTEM_DISABLED_RESPONSE = urldecode($pluginSettings['SYSTEM_DISABLED_RESPONSE']);
-	
+
 	if(trim($SYSTEM_DISABLED_RESPONSE) == "" ) {
 		$SYSTEM_DISABLED_RESPONSE = "We're sorry, the system is not accepting SMS at this time";
 	}
 	
+	// @spadaman added.
+	$MAX_PENDING_MSG_PER_NUMBER = urldecode($pluginSettings['MAX_PENDING_MSG_PER_NUMBER']);
+	$TOO_MANY_MSG_QUEUED_RESPONSE = urldecode($pluginSettings['TOO_MANY_MSG_QUEUED_RESPONSE']);
+	if(trim($TOO_MANY_MSG_QUEUED_RESPONSE) == "" ) {
+			$TOO_MANY_MSG_QUEUED_RESPONSE = "You have too many messages queued for display. Please wait until you see your message in the display before sending another message.";
+	}
+
 	if($PROFANITY_LANGUAGE == "" || $PROFANITY_LANGUAGE == null) {
 		$PROFANITY_LANGUAGE = "en";
 	}
@@ -529,6 +539,13 @@ echo "<input type=\"text\" name=\"PROFANITY_THRESHOLD\" size=\"3\" value=\"".$PR
 
 echo "<p/> \n";
 
+
+echo "<p> \n";
+echo "The number of messages a single phone number may have in the upcoming messages queue (to avoid a single user dominating the messages): \n";
+echo "<input type=\"text\" name=\"MAX_PENDING_MSG_PER_NUMBER\" size=\"3\" value=\"".$MAX_PENDING_MSG_PER_NUMBER."\"> \n";
+echo </p> \n";
+
+
 echo "<hr> \n";
 echo "Responses: \n";
 echo "<br/> \n";
@@ -564,6 +581,17 @@ echo "<p/> \n";
 
 
 echo "<input type=\"text\" name=\"SYSTEM_DISABLED_RESPONSE\" size=\"64\" value=\"".$SYSTEM_DISABLED_RESPONSE."\"> \n";
+
+
+echo "<p/> \n";
+
+echo "<br/> \n";
+echo "Too many messages in the queue for a single user: \n";
+echo "<p/> \n";
+
+
+
+echo "<input type=\"text\" name=\"TOO_MANY_MSG_QUEUED_RESPONSE\" size=\"64\" value=\"".$TOO_MANY_MSG_QUEUED_RESPONSE."\"> \n";
 
 
 echo "<p/> \n";

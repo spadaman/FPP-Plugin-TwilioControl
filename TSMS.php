@@ -481,7 +481,8 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 			insertProfanityMessage ( $messageText, $pluginName, $TSMS_from );
 		}
 		
-		sendTSMSMessage ( $REPLY_TEXT );
+		// @spadaman commented out. Do not SMS users back at all once they're banned.
+		//sendTSMSMessage ( $REPLY_TEXT );
 		
 		lockHelper::unlock ();
 		exit ( 0 );
@@ -512,6 +513,22 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 			break;
 	}
 	
+	// @spadaman added. Only allow up to a defined number of messages in the upcoming queue per phone number.
+	// this prevents a single user dominating the messages.
+	$dbCheck = new SQLite3($messageQueueFile) or die('Unable to open database');
+	$q = "SELECT COUNT(*) FROM messages WHERE pluginName ='".$pluginName."' AND pluginData = '".$TSMS_from."' AND timestamp > ".ReadSettingFromFile("LAST_READ",$pluginName)."";
+	logEntry($q);
+	$countResult = $dbCheck->querySingle($q); // or die('Query failed');
+	logEntry("Count result is ".$countResult);
+	//$resultRow = $result->fetchArray();
+	if ($countResult >= ReadSettingFromFile("MAX_PENDING_MSG_PER_NUMBER", $pluginName)) {
+			//insertProfanityMessage ("[too many messages from this number] ". $messageText, $pluginName, $TSMS_from );
+			logEntry ( "TWILIO: Sending too many messages in the queue notification to number: " . $TSMS_from );
+			sendTSMSMessage (urldecode(ReadSettingFromFile("TOO_MANY_MSG_QUEUED_RESPONSE", $pluginName)));
+			lockHelper::unlock ();
+			exit ( 0 );
+	}
+
 	if (! $profanityCheck) {
 		
 		if ($NO_PROFANITY_FILTER) {
