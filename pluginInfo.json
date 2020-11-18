@@ -2,11 +2,11 @@
     "repoName": "TwilioControl",
     "name": "Twilio SMS Control",
     "linkName": "TwilioControl",
-    "author": "Ben Shaver (bshaver) & Pat Delaney (patdelaney)",
+    "author": "Ben Shaver (bshaver) & Pat Delaney (patdelaney). Enhanced by spadaman",
     "description": "Control FPP with Twilio SMS",
-    "homeURL": "https://github.com/FalconChristmas/FPP-Plugin-TwilioControl",
-    "srcURL": "https://github.com/FalconChristmas/FPP-Plugin-TwilioControl.git",
-    "bugURL": "https://github.com/FalconChristmas/FPP-Plugin-TwilioControl/issues",
+    "homeURL": "https://github.com/spadaman/FPP-Plugin-TwilioControl",
+    "srcURL": "https://github.com/spadaman/FPP-Plugin-TwilioControl.git",
+    "bugURL": "https://github.com/spadaman/FPP-Plugin-TwilioControl/issues",
     "allowUpdates": 1,
     "versions": [
         {
