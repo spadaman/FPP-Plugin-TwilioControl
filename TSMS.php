@@ -541,11 +541,15 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 		processSMSMessage ( $TSMS_from, $messageText, $messageQueueFile );
 		sendTSMSMessage ( $REPLY_TEXT );
 	} else {
+		insertProfanityMessage ( $messageText, $pluginName, $TSMS_from );
+		$profanityCount = checkProfanityCount ( $TSMS_from );
+
 		logEntry ( "message: " . $messageText . " FAILED" );
 		// $REPLY_TEXT = "Your message contains Profanity, Sorry. More messages like this will ban your phone number";
 		
-		sendTSMSMessage ( $PROFANITY_RESPONSE );
-		insertProfanityMessage ( $messageText, $pluginName, $TSMS_from );
+		if ($profanityCount < $PROFANITY_THRESHOLD) { sendTSMSMessage ( $PROFANITY_RESPONSE ); }
+
+		
 		// addProfanityMessage($messageText,$pluginName,$pluginData=$TSMS_from);
 		// add to regular file as well
 		// cannot add the message to the file - as if you are running the RUN-MATRIX it would dump this message!! would
@@ -554,13 +558,14 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 		// addNewMessage($messageText,$pluginName,$TSMS_from,$messageQueueFile);
 		
 		logEntry ( "Added message to profanity queue file: " . $profanityMessageQueueFile );
-		
+
 		// check the threshold and
 		// alert the control number(s) that there was profanity
 		
-		$profanityCount = checkProfanityCount ( $TSMS_from );
+		
 		
 		if ($profanityCount >= $PROFANITY_THRESHOLD) {
+			insertBlacklistMessage ( $messageText, $pluginName, $TSMS_from );
 			$messageText = "Number: " . $TSMS_from . " has reached the profanity threshold";
 			foreach ( $CONTROL_NUMBER_ARRAY as $NOTIFY_NUMBER ) {
 				$TSMS_from = $NOTIFY_NUMBER;
@@ -568,7 +573,8 @@ if (! $WHITELIST_NUMBER_USED && ! $CONTROL_NUMBER_USED) {
 				logEntry ( "TWILIO: Sending profanity threshold notification to number: " . $TSMS_from );
 				sendTSMSMessage ( $messageText );
 			}
-		}
+		} 
+
 		
 		lockHelper::unlock ();
 		exit ( 0 );

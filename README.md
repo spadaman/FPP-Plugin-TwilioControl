@@ -17,3 +17,5 @@ You can set how many messages are played per run, so you can add the RUN-MATRIX.
 
 You can set an effect sequence file that will run at start of each message being displayed, so you can have the text scroll across a nice backdrop.
 * Set via EFFECT_FOR_DISPLAY on the MatrixMessage plugin setup page. Beware: Case sensitive!
+
+Auto ban numbers that reach the profanity threshold. Don't respond to users via text once they are banned.
