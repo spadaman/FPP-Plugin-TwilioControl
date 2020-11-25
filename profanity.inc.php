@@ -29,8 +29,8 @@ function check_for_profanity_WebPurify($message) {
 
 	$response = simplexml_load_file($checkurl,'SimpleXMLElement', LIBXML_NOCDATA);
 
-	if($DEBUG)
-		print_r($response);
+	//if($DEBUG)
+		//print_r($response);
 	
 	//if($DEBUG)
 	//echo $response->found;
